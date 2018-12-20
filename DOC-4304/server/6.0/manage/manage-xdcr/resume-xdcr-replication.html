@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3553,9 +3474,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-After an XDCR replication has been paused, resuming it restarts the
-replication of data
-from the source bucket to the target.
+After an XDCR replication has been paused, resuming it restarts the replication of data from the source bucket to the target.
 </blockquote>
 </div>
 </div>
@@ -3564,18 +3483,8 @@ from the source bucket to the target.
 <h2 id="examples-on-this-page-resume-xdcr"><a class="anchor" href="#examples-on-this-page-resume-xdcr"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show how to resume a
-replication; using the
-<a href="#resume-an-xdcr-replication-with-the-ui">UI</a>,
-the
-<a href="#resume-an-xdcr-replication-with-the-cli">CLI</a>,
-and the
-<a href="#resume-an-xdcr-replication-with-the-rest-api">REST
-API</a>
-respectively. As their starting-point, the
-examples assume the scenario that concluded the page
-<a href="pause-xdcr-replication.html" class="page">Pause a
-Replication</a>.</p>
+<p>The examples in the subsections below show how to resume a replication; using the <a href="#resume-an-xdcr-replication-with-the-ui">UI</a>, the <a href="#resume-an-xdcr-replication-with-the-cli">CLI</a>, and the <a href="#resume-an-xdcr-replication-with-the-rest-api">REST API</a> respectively.
+As their starting-point, the examples assume the scenario that concluded the page <a href="pause-xdcr-replication.html" class="page">Pause a Replication</a>.</p>
 </div>
 </div>
 </div>
@@ -3588,8 +3497,8 @@ Replication</a>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Access Couchbase Web Console. Left-click on the <strong>XDCR</strong> tab, in the
-right-hand navigation menu.</p>
+<p>Access Couchbase Web Console.
+Left-click on the <strong>XDCR</strong> tab, in the right-hand navigation menu.</p>
 <div id="left_click_on_xdcr_tab" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/left-click-on-xdcr-tab.png" alt="left click on xdcr tab" width="100">
@@ -3597,9 +3506,7 @@ right-hand navigation menu.</p>
 </div>
 <div class="paragraph">
 <p>This displays the <strong>XDCR Replications</strong> screen.
-The lower part of the main panel, entitled <strong>Remote Clusters</strong>, features
-and <strong>Ongoing Replications</strong> panel that currently
-has the following appearance:</p>
+The lower part of the main panel, entitled <strong>Remote Clusters</strong>, features and <strong>Ongoing Replications</strong> panel that currently has the following appearance:</p>
 </div>
 <div id="xdcr-ongoing-replications-panel-replication-paused" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3619,8 +3526,7 @@ In the <code>status</code> column, this replication is shown to be <code>Paused<
 </div>
 </div>
 <div class="paragraph">
-<p>The start symbol changes back to a pause symbol, and the word <code>Paused</code> changes
-to <code>Replicating</code>:</p>
+<p>The start symbol changes back to a pause symbol, and the word <code>Paused</code> changes to <code>Replicating</code>:</p>
 </div>
 <div id="xdcr-resume-replication-button-after" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3639,9 +3545,7 @@ to <code>Replicating</code>:</p>
 <h2 id="resume-an-xdcr-replication-with-the-cli"><a class="anchor" href="#resume-an-xdcr-replication-with-the-cli"></a>Resume an XDCR Replication with the CLI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>From the starting-point defined above, in
-<a href="#examples-on-this-page-resume-xdcr">Examples on This Page</a>,
-use the CLI <code>xdcr-replicate</code> command with the <code>--resume</code> flag, to pause an XDCR replication as follows:</p>
+<p>From the starting-point defined above, in <a href="#examples-on-this-page-resume-xdcr">Examples on This Page</a>, use the CLI <code>xdcr-replicate</code> command with the <code>--resume</code> flag, to pause an XDCR replication as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3653,10 +3557,7 @@ use the CLI <code>xdcr-replicate</code> command with the <code>--resume</code> f
 </div>
 </div>
 <div class="paragraph">
-<p>The value specified for the <code>--xdcr-replicator</code> flag is that retrieved by
-means of the <code>--list</code> flag, shown in
-<a href="pause-xdcr-replication.html#pause-an-xdcr-replication-with-the-cli" class="page">Pause an
-XDCR Replication with the CLI</a>.</p>
+<p>The value specified for the <code>--xdcr-replicator</code> flag is that retrieved by means of the <code>--list</code> flag, shown in <a href="pause-xdcr-replication.html#pause-an-xdcr-replication-with-the-cli" class="page">Pause an XDCR Replication with the CLI</a>.</p>
 </div>
 <div class="paragraph">
 <p>If successful, the command returns the following:</p>
@@ -3675,9 +3576,7 @@ XDCR Replication with the CLI</a>.</p>
 <h2 id="resume-an-xdcr-replication-with-the-rest-api"><a class="anchor" href="#resume-an-xdcr-replication-with-the-rest-api"></a>Resume an XDCR Replication with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>From the starting-point defined above, in
-<a href="#examples-on-this-page-resume-xdcr">Examples on This Page</a>,
-use the REST API to resume an XDCR replication as follows.</p>
+<p>From the starting-point defined above, in <a href="#examples-on-this-page-resume-xdcr">Examples on This Page</a>, use the REST API to resume an XDCR replication as follows.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3687,12 +3586,9 @@ http://10.142.180.101:8091/settings/replications/570d0ca2db3b1e128e2fafd362a1bfd
 </div>
 </div>
 <div class="paragraph">
-<p>The endpoint used here features, in sequence, the <code>id</code> of the reference, the
-name of the source bucket, and the name of the remote bucket. These were obtained
-in
-<a href="pause-xdcr-replication.html#pause-an-xdcr-replication-with-the-rest-api
-" class="page">Pause an XDCR Replication with the REST API</a>. The value of the <code>pauseRequested</code>
-flag is here set to <code>false</code>.</p>
+<p>The endpoint used here features, in sequence, the <code>id</code> of the reference, the name of the source bucket, and the name of the remote bucket.
+These were obtained in <a href="pause-xdcr-replication.html#pause-an-xdcr-replication-with-the-rest-api " class="page">Pause an XDCR Replication with the REST API</a>.
+The value of the <code>pauseRequested</code> flag is here set to <code>false</code>.</p>
 </div>
 <div class="paragraph">
 <p>The output is as follows:</p>
@@ -3726,10 +3622,8 @@ flag is here set to <code>false</code>.</p>
 <h2 id="next-xdcr-steps-after-resume-replication"><a class="anchor" href="#next-xdcr-steps-after-resume-replication"></a>Next Steps</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Once a replication is no longer needed, you can
-<em>delete</em> it. See
-<a href="delete-xdcr-replication.html" class="page">Delete a
-Replication</a>.</p>
+<p>Once a replication is no longer needed, you can <em>delete</em> it.
+See <a href="delete-xdcr-replication.html" class="page">Delete a Replication</a>.</p>
 </div>
 </div>
 </div>

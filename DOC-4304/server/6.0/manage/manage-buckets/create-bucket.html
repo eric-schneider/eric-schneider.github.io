@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3553,18 +3474,16 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-<em>Full</em> and <em>Cluster</em> Administrators can use the Couchbase Web Console, CLI, or
-REST API to create a bucket: this section takes you through the procedure provided by the Couchbase Web Console, step by step.
+<em>Full</em> and <em>Cluster</em> Administrators can use Couchbase Web Console, the CLI, or the REST API to create a bucket: this section takes you through the procedures provided by Couchbase Web Console, step by step.
 </blockquote>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="create-a-bucket-using-the-couchbase-web-console"><a class="anchor" href="#create-a-bucket-using-the-couchbase-web-console"></a>Create a Bucket Using the Couchbase Web Console</h2>
+<h2 id="create-bucket-using-couchbase-web-console"><a class="anchor" href="#create-bucket-using-couchbase-web-console"></a>Create a Bucket Using Couchbase Web Console</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Access the Couchbase Web Console, and left-click on the <strong class="ui">Buckets</strong> tab,
-in the vertical navigation-bar at the left-hand side:</p>
+<p>Access Couchbase Web Console, and left-click on the <strong class="ui">Buckets</strong> tab, in the vertical navigation-bar at the left-hand side:</p>
 </div>
 <div id="access_bucket_tab" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3572,10 +3491,8 @@ in the vertical navigation-bar at the left-hand side:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The <strong class="ui">Buckets</strong> screen now appears, showing the buckets that have already
-been defined for your system.
-If you are accessing this screen immediately after cluster-initialization, no
-buckets are yet defined:</p>
+<p>The <strong class="ui">Buckets</strong> screen now appears, showing the buckets that have already been defined for your system.
+If you are accessing this screen immediately after cluster-initialization, no buckets are yet defined:</p>
 </div>
 <div id="buckets_view_initial" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3599,7 +3516,7 @@ buckets are yet defined:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Enter a bucket-name into the interactive <strong class="ui">Name</strong> text-field.
+<p>Enter a bucket name into the interactive <strong class="ui">Name</strong> text-field.
 A bucket name can only contain characters in the ranges of A-Z, a-z, and 0-9; with the addition of the underscore, period, dash and percent characters; and can be no more than 100 characters in length.</p>
 </div>
 <div class="paragraph">
@@ -3668,18 +3585,15 @@ The setting is applied to all documents created after the setting is itself esta
 </li>
 <li>
 <p><strong class="ui">Compression Mode</strong>: Controls whether and how compression is applied to data within the bucket.
-For detailed information, see
-<a href="../../learn/buckets-memory-and-storage/compression.html" class="page">Compression</a>.</p>
+For detailed information, see <a href="../../learn/buckets-memory-and-storage/compression.html" class="page">Compression</a>.</p>
 </li>
 <li>
 <p><strong class="ui">Conflict Resolution</strong>: A <em>conflict</em> occurs during XDCR, when a document has been modified in different ways in different locations; necessitating that one of the versions be chosen for retention, and the other discarded.
 There are two methods for making this choice: these are represented by the <strong class="ui">Sequence number</strong> and <strong class="ui">Timestamp</strong> checkboxes.
 The method you choose is permanently established for the current bucket: it cannot subsequently be changed.
-For information on the significance of each method, see
-<a href="../../learn/clusters-and-availability/xdcr-conflict-resolution.html" class="page">XDCR Conflict Resolution</a>.</p>
+For information on the significance of each method, see <a href="../../learn/clusters-and-availability/xdcr-conflict-resolution.html" class="page">XDCR Conflict Resolution</a>.</p>
 <div class="paragraph">
-<p>Note that you can also set the conflict resolution method using the CLI
-<a href="../../cli/cbcli/couchbase-cli-bucket-create.html" class="page">bucket-create</a> command, or the <a href="../../rest-api/rest-bucket-create.html" class="page">REST API</a>.</p>
+<p>Note that you can also set the conflict resolution method using the CLI <a href="../../cli/cbcli/couchbase-cli-bucket-create.html" class="page">bucket-create</a> command, or the <a href="../../rest-api/rest-bucket-create.html" class="page">REST API</a>.</p>
 </div>
 </li>
 <li>

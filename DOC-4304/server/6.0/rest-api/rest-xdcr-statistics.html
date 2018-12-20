@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3583,11 +3504,11 @@ You need to provide a properly URL-encoded URI string for the destination endpoi
 <div class="sect2">
 <h3 id="http-method-and-uri"><a class="anchor" href="#http-method-and-uri"></a>HTTP method and URI</h3>
 <div class="paragraph">
-<p>The destination endpoint follows the <code>/pools/default/buckets/@xdcr-[source_bucket]/stats/</code> URI endpoint:</p>
+<p>The destination endpoint follows the <code>/pools/default/buckets/[source_bucket]/stats/</code> URI endpoint:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>GET /pools/default/buckets/@xdcr-[source_bucket]/stats/[destination_endpoint]</pre>
+<pre>GET /pools/default/buckets/[source_bucket]/stats/[destination_endpoint]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3603,7 +3524,7 @@ You need to provide a properly URL-encoded URI string for the destination endpoi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://[node address]:[port]/pools/@xdcr-[source_bucket]/buckets/[bucket_name]/stats/replications/ \
+<pre>http://[node address]:[port]/pools/[source_bucket]/buckets/[bucket_name]/stats/replications/ \
   [remote_UUID]/[source_bucket]/[destination_bucket]/[stat_name]</pre>
 </div>
 </div>
@@ -3612,7 +3533,7 @@ You need to provide a properly URL-encoded URI string for the destination endpoi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://[node address]:[port]/pools/@xdcr-[source_bucket]/buckets/[bucket_name]/stats/ \
+<pre>http://[node address]:[port]/pools/[source_bucket]/buckets/[bucket_name]/stats/ \
     replications%2F[remote_UUID]%2F[source_bucket]%2F[destination_bucket]%2F[stat_name]</pre>
 </div>
 </div>
@@ -3745,7 +3666,7 @@ curl -u Administrator:password http://10.5.2.54:8091/pools/default/remoteCluster
 <h3 id="http-method-and-uri-2"><a class="anchor" href="#http-method-and-uri-2"></a>HTTP method and URI</h3>
 <div class="listingblock">
 <div class="content">
-<pre>GET /pools/default/buckets/@xdcr-[source_bucket]/stats/[destination_endpoint]</pre>
+<pre>GET /pools/default/buckets/[source_bucket]/stats/[destination_endpoint]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3765,7 +3686,7 @@ curl -u Administrator:password http://10.5.2.54:8091/pools/default/remoteCluster
 <div class="listingblock">
 <div class="content">
 <pre>curl -u [admin]:[password]
-    http://[node address]:8091/pools/default/buckets/@xdcr-[source_bucket]/stats/
+    http://[node address]:8091/pools/default/buckets/[source_bucket]/stats/
     replications%2F[remote_UUID]%2F[source_bucket]%2F[destination_bucket]%2Fdocs_written</pre>
 </div>
 </div>
@@ -3778,7 +3699,7 @@ curl -u Administrator:password http://10.5.2.54:8091/pools/default/remoteCluster
 <div class="listingblock">
 <div class="content">
 <pre>curl -u Administrator:password \
-    http://10.5.2.54:8091/pools/default/buckets/@xdcr-default/stats/ \
+    http://10.5.2.54:8091/pools/default/buckets/default/stats/ \
     replications%2F8ba6870d88cd72b3f1db113fc8aee675%2Fdefault%2Fdefault%2Fdocs_written</pre>
 </div>
 </div>
@@ -3816,7 +3737,7 @@ curl -u Administrator:password http://10.5.2.54:8091/pools/default/remoteCluster
 <h3 id="http-method-and-uri-3"><a class="anchor" href="#http-method-and-uri-3"></a>HTTP method and URI</h3>
 <div class="listingblock">
 <div class="content">
-<pre>GET /pools/default/buckets/@xdcr-[source_bucket]/stats/[destination_endpoint]</pre>
+<pre>GET /pools/default/buckets/[source_bucket]/stats/[destination_endpoint]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3849,7 +3770,7 @@ curl -u Administrator:password http://10.5.2.54:8091/pools/default/remoteCluster
 <div class="listingblock">
 <div class="content">
 <pre>curl -u Administrator:password \
-    http://10.5.2.54:8091/pools/default/buckets/@xdcr-default/stats/ \
+    http://10.5.2.54:8091/pools/default/buckets/default/stats/ \
     replications%2F8ba6870d88cd72b3f1db113fc8aee675%2Fdefault%2Fdefault%2Frate_replication</pre>
 </div>
 </div>
@@ -3883,7 +3804,7 @@ curl -u Administrator:password http://10.5.2.54:8091/pools/default/remoteCluster
 <h3 id="http-method-and-uri-4"><a class="anchor" href="#http-method-and-uri-4"></a>HTTP method and URI</h3>
 <div class="listingblock">
 <div class="content">
-<pre>GET /pools/default/buckets/@xdcr-[source_bucket]/stats/[destination_endpoint]</pre>
+<pre>GET /pools/default/buckets/[source_bucket]/stats/[destination_endpoint]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3941,7 +3862,7 @@ curl -u Administrator:password http://10.5.2.54:8091/pools/default/remoteCluster
 <div class="listingblock">
 <div class="content">
 <pre>curl -s -u Administrator:password \
-http://10.3.121.119:8091/pools/default/buckets/@xdcr-default/stats/ \
+http://10.3.121.119:8091/pools/default/buckets/default/stats/ \
 replications%2fdef03dbf5e968a47309194ebe052ed21%2fdefault%2fdefault%2fdocs_opt_repd</pre>
 </div>
 </div>

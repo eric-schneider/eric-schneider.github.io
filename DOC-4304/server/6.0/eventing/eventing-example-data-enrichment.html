@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3575,22 +3496,23 @@ The original document, in the source bucket, is not changed.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create target and metadata buckets.
-To create a bucket, refer to <a href="../manage/manage-buckets/create-bucket.html" class="page">Create a Bucket</a>.
-The target bucket contains documents that will be created by the Function.
-Don’t add any documents explicitly to this bucket.</p>
+<p>Create three buckets source, target and metadata buckets. The target bucket contains documents<br>
+that will be created after the Function execution step. Don’t add any documents explicitly to the<br>
+target bucket.<br>
+To create a bucket, refer to <a href="../manage/manage-buckets/create-bucket.html" class="page">Create a Bucket</a>.</p>
 </li>
 <li>
-<p>Follow Step 1.
-and create a source bucket.
-In the Source bucket screen:</p>
+<p>From the <strong>Couchbase Web Console</strong> &gt; <strong>Buckets</strong> page, click <strong>source</strong> bucket.</p>
+</li>
+<li>
+<p>In the <strong>source</strong> bucket screen:</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
 <p>Click <strong>Add Document</strong>.</p>
 </li>
 <li>
-<p>In the <strong>Add Document</strong> window, specify the name <strong>SampleDocument</strong> as the <strong>New</strong>*Document ID*</p>
+<p>In the <strong>Add Document</strong> window, specify the name <strong>SampleDocument</strong> as the <strong>New Document ID</strong></p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>

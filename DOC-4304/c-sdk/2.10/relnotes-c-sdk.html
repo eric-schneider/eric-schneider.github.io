@@ -449,7 +449,7 @@ sudo apt-get install libcouchbase-dev libcouchbase2-bin build-essential</code></
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Install Couchbase's GPG key
 sudo wget -O - http://packages.couchbase.com/ubuntu/couchbase.key | sudo apt-key add -
 # Adding Ubuntu 18.04 LTS repo to apt/sources.list
-sudo echo "deb http://packages.couchbase.com/ubuntu bionic bionic/main" &gt; /etc/apt/sources.list.d/couchbase.list
+echo "deb http://packages.couchbase.com/ubuntu bionic bionic/main" | sudo tee /etc/apt/sources.list.d/couchbase.list
 # To install or upgrade packages
 sudo apt-get update
 sudo apt-get install libcouchbase-dev libcouchbase2-bin build-essential</code></pre>

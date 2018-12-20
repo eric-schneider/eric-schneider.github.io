@@ -492,19 +492,19 @@ See the SDK <a href="/server/other-products/release-notes-archives/dotnet-sdk">R
 <h2 id="further-information-on-rbac"><a class="anchor" href="#further-information-on-rbac"></a>Further Information on RBAC</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>All aspects of the Couchbase RBAC system are covered in the section <a href="#">6.0@server:security:security-authorization.adoc</a>.
+<p>All aspects of the Couchbase RBAC system are covered in the section <a href="../../server/6.0/learn/security/authorization-overview.html" class="page">Authorization</a>.
 Specifically, for information on:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Adding <em>Users</em> and assigning <em>roles</em>, by means of the Couchbase Web Console, see <a href="#">6.0@server:security:security-rbac-for-admins-and-apps.adoc</a>.</p>
+<p>Adding <em>Users</em> and assigning <em>roles</em>, by means of the Couchbase Web Console, see <a href="../../server/6.0/manage/manage-security/manage-users-and-roles.html" class="page">Manage Users and Roles</a>.</p>
 </li>
 <li>
-<p><em>Roles</em> required for resource-access, and the privileges they entail, see <a href="#">6.0@server:security:security-roles.adoc</a>.</p>
+<p><em>Roles</em> required for resource-access, and the privileges they entail, see <a href="../../server/6.0/learn/security/roles.html" class="page">Roles</a>.</p>
 </li>
 <li>
-<p><em>Resources</em> controlled by Couchbase RBAC, see <a href="#">6.0@server:security:security-resources-under-access-control.adoc</a>.</p>
+<p><em>Resources</em> controlled by Couchbase RBAC, see <a href="../../server/6.0/learn/security/resources-under-access-control.html" class="page">Resources Under Access Control</a>.</p>
 </li>
 </ul>
 </div>
@@ -515,7 +515,7 @@ Specifically, for information on:</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Couchbase Server supports the use of X.509 certificates to authenticate clients (only available in the Enterprise Edition, not the Community Edition).
-This allows authenticated users to access specific resources by means of the data service (no other service is currently available to clients through this form of authentication).</p>
+This allows authenticated users to access specific resources by means of the data service, in Couchbase Server 5.1 and up, and all other services in more recent releases of Couchbase Data Platform.</p>
 </div>
 <div class="paragraph">
 <p>The process relies on a certificate authority, for the issuing of certificates that validate identities.
@@ -529,11 +529,11 @@ If the assigned roles are appropriate for the level of access requested to the s
 (See <a href="start-using-sdk.html" class="page">Start Using the SDK</a> for an example of such standard authentication.)</p>
 </div>
 <div class="paragraph">
-<p>For a more detailed conceptual description of using certificates, see <a href="#">6.0@server:security:security-certs-auth.adoc</a>.</p>
+<p>For a more detailed conceptual description of using certificates, see <a href="../../server/6.0/learn/security/certificates.html" class="page">Certificates</a>.</p>
 </div>
 <div class="paragraph">
-<p>For sample procedures whereby certificates can be generated and deployed, see <a href="#">6.0@server:security:security-x509certsintro.adoc</a>.
-Note that this page includes the steps whereby a Java keystore is created, to enable certificate-based authentication by a Java client; for Windows there are a couple of more steps: you’ll need to generate a Personal Information Exchange (.PFX) file and store that in the Windows cert store.</p>
+<p>For sample procedures whereby certificates can be generated and deployed, see <a href="../../server/6.0/manage/manage-security/manage-certificates.html" class="page">Manage Certificates</a>.
+Note that this section includes the steps whereby a Java keystore is created, to enable certificate-based authentication by a Java client; for Windows there are a couple of more steps: you’ll need to generate a Personal Information Exchange (.PFX) file and store that in the Windows cert store.</p>
 </div>
 </div>
 </div>
@@ -541,7 +541,7 @@ Note that this page includes the steps whereby a Java keystore is created, to en
 <h2 id="authenticating-a-net-client-by-certificate"><a class="anchor" href="#authenticating-a-net-client-by-certificate"></a>Authenticating a .NET Client by Certificate</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To authenticate with Couchbase Server by means of a client certificate, you will need a key - although the key can be generated following the instructions  on the <a href="#">6.0@server:security:security-x509certsintro.adoc</a>, you do not need a Java Key Store.</p>
+<p>To authenticate with Couchbase Server by means of a client certificate, you will need a key - which can be generated according to the <a href="../../server/6.0/learn/security/certificates.html#x509-certificate-requirements" class="page">X.509 certificate requirements</a>.</p>
 </div>
 <div class="paragraph">
 <p>Once you have generated the <code>.pem</code> file, for windows you&#8217;ll need to use it to create a <code>.pfx</code>:</p>

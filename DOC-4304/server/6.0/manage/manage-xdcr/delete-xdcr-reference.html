@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3553,8 +3474,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Deleting an XDCR <em>reference</em> ensures that the previously specified remote
-cluster and bucket are no longer available to receive replicated data.
+Deleting an XDCR <em>reference</em> ensures that the previously specified remote cluster and bucket are no longer available to receive replicated data.
 </blockquote>
 </div>
 </div>
@@ -3563,18 +3483,8 @@ cluster and bucket are no longer available to receive replicated data.
 <h2 id="examples-on-this-page-delete-xdcr-reference"><a class="anchor" href="#examples-on-this-page-delete-xdcr-reference"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show how to delete a
-replication; using the
-<a href="#delete-an-xdcr-reference-with-the-ui">UI</a>,
-the
-<a href="#delete-an-xdcr-reference-with-the-cli">CLI</a>,
-and the
-<a href="#delete-an-xdcr-reference-with-the-rest-api">REST
-API</a>
-respectively. As their starting-point, the
-examples assume the scenario that concluded the page
-<a href="delete-xdcr-replication.html" class="page">Delete a
-Replication</a>.</p>
+<p>The examples in the subsections below show how to delete a replication; using the <a href="#delete-an-xdcr-reference-with-the-ui">UI</a>, the <a href="#delete-an-xdcr-reference-with-the-cli">CLI</a>, and the <a href="#delete-an-xdcr-reference-with-the-rest-api">REST API</a> respectively.
+As their starting-point, the examples assume the scenario that concluded the page <a href="delete-xdcr-replication.html" class="page">Delete a Replication</a>.</p>
 </div>
 </div>
 </div>
@@ -3587,16 +3497,16 @@ Replication</a>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Access Couchbase Web Console. Left-click on the <strong>XDCR</strong> tab, in the
-right-hand navigation menu.</p>
+<p>Access Couchbase Web Console.
+Left-click on the <strong>XDCR</strong> tab, in the right-hand navigation menu.</p>
 <div id="left_click_on_xdcr_tab" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/left-click-on-xdcr-tab.png" alt="left click on xdcr tab" width="100">
 </div>
 </div>
 <div class="paragraph">
-<p>This brings up the <strong>XDCR Replications</strong> screen. The upper panel, <strong>Remote
-Clusters</strong>, features a single reference, as follows:</p>
+<p>This brings up the <strong>XDCR Replications</strong> screen.
+The upper panel, <strong>Remote Clusters</strong>, features a single reference, as follows:</p>
 </div>
 <div id="xdcr-replications-screen-with-reference" class="imageblock" style="text-align: middle">
 <div class="content">
@@ -3605,8 +3515,7 @@ Clusters</strong>, features a single reference, as follows:</p>
 </div>
 </li>
 <li>
-<p>To delete the reference, left-click on the <code>Delete</code> tab, which appears to the
-right of its row:</p>
+<p>To delete the reference, left-click on the <code>Delete</code> tab, which appears to the right of its row:</p>
 <div id="left-click-on-delete-reference-tab" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/left-click-on-delete-reference-tab.png" alt="left click on delete reference tab" width="120">
@@ -3622,8 +3531,8 @@ right of its row:</p>
 </div>
 </li>
 <li>
-<p>Left-click on <strong>Delete Reference</strong>, to confirm. The <strong>Remote Clusters</strong> panel now
-reappears, showing no replications:</p>
+<p>Left-click on <strong>Delete Reference</strong>, to confirm.
+The <strong>Remote Clusters</strong> panel now reappears, showing no replications:</p>
 <div id="xdcr-remote-clusters-panel-no-references" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/xdcr-remote-clusters-panel-no-references.png" alt="xdcr remote clusters panel no references" width="800">
@@ -3641,10 +3550,7 @@ reappears, showing no replications:</p>
 <h2 id="delete-an-xdcr-reference-with-the-cli"><a class="anchor" href="#delete-an-xdcr-reference-with-the-cli"></a>Delete an XDCR Reference with the CLI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>From the starting-point defined above, in
-<a href="#examples-on-this-page-delete-xdcr-reference">Examples on This Page</a>,
-use the <code>xdcr-setup</code> command to delete an XDCR reference, specifying the
-<code>--delete</code> and <code>--xdcr-cluster-name</code> flags, as follows:</p>
+<p>From the starting-point defined above, in <a href="#examples-on-this-page-delete-xdcr-reference">Examples on This Page</a>, use the <code>xdcr-setup</code> command to delete an XDCR reference, specifying the <code>--delete</code> and <code>--xdcr-cluster-name</code> flags, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3672,9 +3578,7 @@ use the <code>xdcr-setup</code> command to delete an XDCR reference, specifying 
 <h2 id="delete-an-xdcr-reference-with-the-rest-api"><a class="anchor" href="#delete-an-xdcr-reference-with-the-rest-api"></a>Delete an XDCR Reference with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>From the starting-point defined above, in
-<a href="#examples-on-this-page-delete-xdcr-reference">Examples on This Page</a>,
-use the REST API to delete an XDCR reference as follows:</p>
+<p>From the starting-point defined above, in <a href="#examples-on-this-page-delete-xdcr-reference">Examples on This Page</a>, use the REST API to delete an XDCR reference as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3691,9 +3595,8 @@ http://10.142.180.101:8091/pools/default/remoteClusters/10.142.180.102</pre>
 <h2 id="next-xdcr-steps-after-delete-reference"><a class="anchor" href="#next-xdcr-steps-after-delete-reference"></a>Next Steps</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A replication can be configured securely. See
-<a href="secure-xdcr-replication.html" class="page">Secure a
-Reference</a>.</p>
+<p>A replication can be configured securely.
+See <a href="secure-xdcr-replication.html" class="page">Secure a Reference</a>.</p>
 </div>
 </div>
 </div>

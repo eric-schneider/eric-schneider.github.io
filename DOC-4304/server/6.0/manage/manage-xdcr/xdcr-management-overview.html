@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3552,8 +3473,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Cross Datacenter Replication (XDCR) provides an easy way to replicate data
-from one cluster to another.
+Cross Datacenter Replication (XDCR) provides an easy way to replicate data from one cluster to another.
 </blockquote>
 </div>
 </div>
@@ -3562,26 +3482,16 @@ from one cluster to another.
 <h2 id="xdcr-summary"><a class="anchor" href="#xdcr-summary"></a>What is XDCR?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Cross Data Center Replication (XDCR) replicates data between clusters: this
-provides protection against data center failure, and also provides
-high-performance data-access for globally distributed, mission-critical
-applications.</p>
+<p>Cross Data Center Replication (XDCR) replicates data between clusters: this provides protection against data center failure, and also provides high-performance data-access for globally distributed, mission-critical applications.</p>
 </div>
 <div class="paragraph">
-<p>XDCR replicates data from a specific bucket on the source cluster to a
-specific bucket on the target cluster. Data from the source bucket is pushed
-to the target bucket by means of an XDCR agent, running on the source cluster,
-using the Database Change Protocol. Any bucket (Couchbase or Ephemeral) on any
-cluster can be specified as a source or a target for one or more
-XDCR definitions.</p>
+<p>XDCR replicates data from a specific bucket on the source cluster to a specific bucket on the target cluster.
+Data from the source bucket is pushed to the target bucket by means of an XDCR agent, running on the source cluster, using the Database Change Protocol.
+Any bucket (Couchbase or Ephemeral) on any cluster can be specified as a source or a target for one or more XDCR definitions.</p>
 </div>
 <div class="paragraph">
-<p>A complete architectural description of XDCR is provided in
-<a href="../../learn/clusters-and-availability/xdcr-overview.html" class="page">Cross
-Data Center
-Replication (XDCR)</a>. You may wish to familiarize yourself with
-the information provided
-there, before performing the routines provided in this section.</p>
+<p>A complete architectural description of XDCR is provided in <a href="../../learn/clusters-and-availability/xdcr-overview.html" class="page">Cross Data Center Replication (XDCR)</a>.
+You may wish to familiarize yourself with the information provided there, before performing the routines provided in this section.</p>
 </div>
 </div>
 </div>
@@ -3594,60 +3504,35 @@ there, before performing the routines provided in this section.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><em>Preparation</em>: Make sure that you have appropriate permissions for
-managing XDCR. Check platform sizes, configurations, and ports. Details
-are provided in
-<a href="prepare-for-xdcr.html" class="page">Prepare for XDCR</a>.</p>
+<p><em>Preparation</em>: Make sure that you have appropriate permissions for managing XDCR.
+Check platform sizes, configurations, and ports.
+Details are provided in <a href="prepare-for-xdcr.html" class="page">Prepare for XDCR</a>.</p>
 </li>
 <li>
-<p><em>Reference</em> management: Remote clusters must be registered as targets for
-XDCR. This requires appropriate administration credentials for the remote
-cluster, and the existence on that cluster of one or more buckets that can
-be specified as recipients of replicated data. Information on establishing
-references is provided in
-<a href="create-xdcr-reference.html" class="page">Create a
-Reference</a>; and
-information on deleting them in
-<a href="delete-xdcr-reference.html" class="page">Delete a
-Reference</a>.</p>
+<p><em>Reference</em> management: Remote clusters must be registered as targets for XDCR.
+This requires appropriate administration credentials for the remote cluster, and the existence on that cluster of one or more buckets that can be specified as recipients of replicated data.
+Information on establishing references is provided in <a href="create-xdcr-reference.html" class="page">Create a Reference</a>; and information on deleting them in <a href="delete-xdcr-reference.html" class="page">Delete a Reference</a>.</p>
 </li>
 <li>
-<p><em>Replication</em> management: Once a reference has been registered on the
-local cluster, it can be specified as the target for a <em>replication</em>. This
-requires that an existing source and an existing target bucket also be
-specified. Optionally, filters can be established, so that only
-documents with a matching key are replication. Additionally, advanced
-settings can be configured, to ensure optimal performance. Information on
-establishing replications is provided in
-<a href="create-xdcr-replication.html" class="page">Create a
-Replication</a>; and
-information on deleting them in
-<a href="delete-xdcr-replication.html" class="page">Delete a
-Replication</a>.</p>
+<p><em>Replication</em> management: Once a reference has been registered on the local cluster, it can be specified as the target for a <em>replication</em>.
+This requires that an existing source and an existing target bucket also be specified.
+Optionally, filters can be established, so that only documents with a matching key are replication.
+Additionally, advanced settings can be configured, to ensure optimal performance.
+Information on establishing replications is provided in <a href="create-xdcr-replication.html" class="page">Create a Replication</a>; and information on deleting them in <a href="delete-xdcr-replication.html" class="page">Delete a Replication</a>.</p>
 </li>
 <li>
-<p><em>Pausing</em> and <em>Resuming</em> replications: Once started, a replication is
-continuous; mutations on the source being constantly transmitted to the
-target. Occasionally, for purposes of system maintenance, it may be
-desirable manually to pause a replication, and then resume it. Information is
-provided in
-<a href="pause-xdcr-replication.html" class="page">Pause a
-Replication</a>; and
-<a href="resume-xdcr-replication.html" class="page">Resume a
-Replication</a>.</p>
+<p><em>Pausing</em> and <em>Resuming</em> replications: Once started, a replication is continuous; mutations on the source being constantly transmitted to the target.
+Occasionally, for purposes of system maintenance, it may be desirable manually to pause a replication, and then resume it.
+Information is provided in <a href="pause-xdcr-replication.html" class="page">Pause a Replication</a>; and <a href="resume-xdcr-replication.html" class="page">Resume a Replication</a>.</p>
 </li>
 <li>
-<p><em>Monitoring</em>: The rate and quantity of mutations transmitted by XDCR can
-be observed, by means of the Couchbase Web Console, the CLI, and the
-REST API. This is described in
-<a href="../../learn/clusters-and-availability/xdcr-monitor-timestamp-conflict-resolution.html" class="page">Monitoring XDCR</a>.</p>
+<p><em>Monitoring</em>: The rate and quantity of mutations transmitted by XDCR can be observed, by means of the Couchbase Web Console, the CLI, and the REST API.
+This is described in <a href="../../learn/clusters-and-availability/xdcr-monitor-timestamp-conflict-resolution.html" class="page">Monitoring XDCR</a>.</p>
 </li>
 <li>
-<p><em>Recovering Data</em>: In the event of data-loss, the <strong>cbrecovery</strong> tool can be
-used to restore data. The tool accesses remotely replicated buckets,
-previously created with XDCR, and copies appropriate subsets of their data
-back onto the original source-cluster. Information is provided in
-<a href="recover-data-with-xdcr.html" class="page">Recover Data with XDCR</a>.</p>
+<p><em>Recovering Data</em>: In the event of data-loss, the <strong>cbrecovery</strong> tool can be used to restore data.
+The tool accesses remotely replicated buckets, previously created with XDCR, and copies appropriate subsets of their data back onto the original source-cluster.
+Information is provided in <a href="recover-data-with-xdcr.html" class="page">Recover Data with XDCR</a>.</p>
 </li>
 </ul>
 </div>
@@ -3657,14 +3542,9 @@ back onto the original source-cluster. Information is provided in
 <h2 id="how-to-use-xdcr-management-section"><a class="anchor" href="#how-to-use-xdcr-management-section"></a>How to Use This Section</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section is divided into multiple subsections, each of which presents
-step-by-step examples of how to perform a particular XDCR management task.
-In most subsections, three examples are provided, showing how to perform the
-same task with Couchbase Web Console, CLI, and REST API respectively. The
-subsections are arranged in a sequence, to make it easy to start from the
-first example,
-<a href="prepare-for-xdcr.html" class="page">Prepare for XDCR</a>,
-and proceed to the last.</p>
+<p>This section is divided into multiple subsections, each of which presents step-by-step examples of how to perform a particular XDCR management task.
+In most subsections, three examples are provided, showing how to perform the same task with Couchbase Web Console, CLI, and REST API respectively.
+The subsections are arranged in a sequence, to make it easy to start from the first example, <a href="prepare-for-xdcr.html" class="page">Prepare for XDCR</a>, and proceed to the last.</p>
 </div>
 </div>
 </div>

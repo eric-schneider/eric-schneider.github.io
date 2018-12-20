@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3553,9 +3474,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Securing a replication means that either the administrator password that is
-sent to the remote cluster, or both the password and the data itself, is
-transmitted securely.
+Securing a replication means that either the administrator password that is sent to the remote cluster, or both the password and the data itself, is transmitted securely.
 </blockquote>
 </div>
 </div>
@@ -3564,30 +3483,17 @@ transmitted securely.
 <h2 id="xcdr_security_overview"><a class="anchor" href="#xcdr_security_overview"></a>Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default, for inter-cluster communications, XDCR transmits both password and
-data in non-secure form.
-Optionally, a secure connection can be enabled between clusters, in order to
-secure either password alone, or both password and data.</p>
+<p>By default, for inter-cluster communications, XDCR transmits both password and data in non-secure form.
+Optionally, a secure connection can be enabled between clusters, in order to secure either password alone, or both password and data.</p>
 </div>
 <div class="paragraph">
-<p>Note that if the password received by the destination cluster requires
-authentication by an LDAP server, the destination cluster communicates with
-the LDAP server in plain text, using <code>saslauthd</code>.
-This is described in
-<a href="../manage-security/configure-saslauthd.html" class="page">Configure
-saslauthd</a>.</p>
+<p>Note that if the password received by the destination cluster requires authentication by an LDAP server, the destination cluster communicates with the LDAP server in plain text, using <code>saslauthd</code>.
+This is described in <a href="../manage-security/configure-saslauthd.html" class="page">Configure saslauthd</a>.</p>
 </div>
 <div class="paragraph">
-<p>A secure XDCR connection is enabled either by SCRAM-SHA or by TLS — depending
-on the administrator-specified connection-type, and the server-version of the
-destination cluster.
-Use of TLS involves certificate management: for an overview of
-certificates, see
-<a href="../../learn/security/certificates.html" class="page">Certificates</a>. For
-specific details on how to prepare and handle certificates for servers and
-clients, see
-<a href="../manage-security/manage-certificates.html" class="page">Manage
-Certificates</a>.</p>
+<p>A secure XDCR connection is enabled either by SCRAM-SHA or by TLS — depending on the administrator-specified connection-type, and the server-version of the destination cluster.
+Use of TLS involves certificate management: for an overview of certificates, see <a href="../../learn/security/certificates.html" class="page">Certificates</a>.
+For specific details on how to prepare and handle certificates for servers and clients, see <a href="../manage-security/manage-certificates.html" class="page">Manage Certificates</a>.</p>
 </div>
 <div class="paragraph">
 <p>The following security-levels are supported:</p>
@@ -3605,28 +3511,20 @@ The password is secured:</p>
 <li>
 <p>By TLS encryption, when the destination cluster is running a pre-5.5 Couchbase Enterprise Server.</p>
 <div class="paragraph">
-<p>The root certificate of the destination cluster must be provided, for a
-successful TLS connection to be achieved.
-If this certificate is provided and a SCRAM-SHA connection is achieved,
-the certificate is ignored.
-The root certificate can be obtained by accessing the <strong>Root Certificate</strong> tab,
-on the <strong>Security</strong> screen for the remote cluster: copy the certificate from the
-interactive panel in which it appears.</p>
+<p>The root certificate of the destination cluster must be provided, for a successful TLS connection to be achieved.
+If this certificate is provided and a SCRAM-SHA connection is achieved, the certificate is ignored.
+The root certificate can be obtained by accessing the <strong>Root Certificate</strong> tab, on the <strong>Security</strong> screen for the remote cluster: copy the certificate from the interactive panel in which it appears.</p>
 </div>
 <div class="paragraph">
-<p>For step-by-step instructions, see
-<a href="enable-half-secure-replication.html" class="page">Enable
-Half-Secure Replications</a>.</p>
+<p>For step-by-step instructions, see <a href="enable-half-secure-replication.html" class="page">Enable Half-Secure Replications</a>.</p>
 </div>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><em>Fully</em> secure: Handles both authentication and data-transfer via TLS. For
-step-by-step instructions, see
-<a href="enable-full-secure-replication.html" class="page">Enable
-Fully Secure Replications</a>.</p>
+<p><em>Fully</em> secure: Handles both authentication and data-transfer via TLS.
+For step-by-step instructions, see <a href="enable-full-secure-replication.html" class="page">Enable Fully Secure Replications</a>.</p>
 </li>
 </ul>
 </div>

@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3553,9 +3474,8 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Before setting up a replication, make sure you have the appropriate
-administrative roles. The, make sure your cluster is appropriately
-configured and provisioned.
+Before setting up a replication, make sure you have the appropriate administrative roles.
+Then, make sure your cluster is appropriately configured and provisioned.
 </blockquote>
 </div>
 </div>
@@ -3564,17 +3484,13 @@ configured and provisioned.
 <h2 id="establish-roles-for-xdcr"><a class="anchor" href="#establish-roles-for-xdcr"></a>Establish Roles for XDCR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Couchbase Server enforces <em>Role-Based Access Control</em>. This means that
-to access specific system-resources, corresponding <em>privileges</em> are
-required. Privileges have a fixed association with <em>roles</em>, which are
-assigned to <em>users</em>.</p>
+<p>Couchbase Server enforces <em>Role-Based Access Control</em>.
+This means that to access specific system-resources, corresponding <em>privileges</em> are required.
+Privileges have a fixed association with <em>roles</em>, which are assigned to <em>users</em>.</p>
 </div>
 <div class="paragraph">
-<p>Full information on Role-Based Access Control is
-provided in
-<a href="../../learn/security/authorization-overview.html" class="page">Authorization</a>.
-If you possess the role of <em>Full</em>, <em>Cluster</em>, or <em>XDCR Administrator</em>, you
-can create, edit, and delete cluster references and replications.</p>
+<p>Full information on Role-Based Access Control is provided in <a href="../../learn/security/authorization-overview.html" class="page">Authorization</a>.
+If you possess the role of <em>Full</em>, <em>Cluster</em>, or <em>XDCR Administrator</em>, you can create, edit, and delete cluster references and replications.</p>
 </div>
 </div>
 </div>
@@ -3587,30 +3503,20 @@ can create, edit, and delete cluster references and replications.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Configure all nodes within the source cluster so that they can
-individually communicate
-over the network to all nodes within the target cluster.</p>
+<p>Configure all nodes within the source cluster so that they can individually communicate over the network to all nodes within the target cluster.</p>
 </li>
 <li>
 <p>Ensure that all Couchbase Server platforms match.
-For instance, if you want to replicate from a Linux-based cluster, you need to
-do so with another Linux-based cluster.</p>
+For instance, if you want to replicate from a Linux-based cluster, you need to do so with another Linux-based cluster.</p>
 </li>
 <li>
-<p>Confirm that your cluster is properly sized, and is able to handle new XDCR
-streams.
-For example, XDCR needs 1-2 additional CPU cores per stream; and in some
-cases, will require additional RAM and network resources as well.
-If a cluster is not sized to handle <em>both</em> the existing workload <em>and</em> the
-new XDCR streams, the performance of both XDCR and the cluster overall may
-be negatively impacted.</p>
+<p>Confirm that your cluster is properly sized, and is able to handle new XDCR streams.
+For example, XDCR needs 1-2 additional CPU cores per stream; and in some cases, will require additional RAM and network resources as well.
+If a cluster is not sized to handle <em>both</em> the existing workload <em>and</em> the new XDCR streams, the performance of both XDCR and the cluster overall may be negatively impacted.</p>
 </li>
 <li>
-<p>Couchbase Server uses TCP/IP port <code>8091</code> to exchange cluster configuration
-information.
-If you are communicating with a destination cluster over a dedicated connection,
-or over the Internet, ensure that all nodes in the destination and source
-clusters can communicate with each other over ports <code>8091</code> and <code>8092</code>.</p>
+<p>Couchbase Server uses TCP/IP port <code>8091</code> to exchange cluster configuration information.
+If you are communicating with a destination cluster over a dedicated connection, or over the Internet, ensure that all nodes in the destination and source clusters can communicate with each other over ports <code>8091</code> and <code>8092</code>.</p>
 </li>
 </ul>
 </div>
@@ -3620,10 +3526,7 @@ clusters can communicate with each other over ports <code>8091</code> and <code>
 <h2 id="next-xdcr-steps-after-preparation"><a class="anchor" href="#next-xdcr-steps-after-preparation"></a>Next Steps</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Once your source and target clusters have been prepared, to start
-XDCR management,
-<a href="create-xdcr-reference.html" class="page">Create a
-Reference</a>.</p>
+<p>Once your source and target clusters have been prepared, to start XDCR management, <a href="create-xdcr-reference.html" class="page">Create a Reference</a>.</p>
 </div>
 </div>
 </div>

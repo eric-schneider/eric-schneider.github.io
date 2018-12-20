@@ -577,60 +577,39 @@ Assuming an average key size of 5 and an average value size of 50:</p>
 <h2 id="batching-operations-using-sdk"><a class="anchor" href="#batching-operations-using-sdk"></a>Batching operations using SDK</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following example is written in Python, and demonstrates properly splitting operations for batch sizes.
-It uses a 256K batch size and handles errors:</p>
+<p>The following code generates a number of fake documents and inserts them in one batch. It does this by building up a list of <code>BulkOps</code> which are then executed using the <code>Do</code> command on the bucket. Take note of the <code>op.Err</code> field which is populated if there was an error during <code>Do</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">#!/usr/bin/env python
-from couchbase.bucket import Bucket
-from couchbase.exceptions import CouchbaseTransientError
+<pre class="highlightjs highlight"><code class="language-golang hljs" data-lang="golang">// Generate a number of bulk upsert ops
+type simpleDoc struct {
+    counter int
+    name    string
+}
+numDocs := 100
+var ops []gocb.BulkOp
+for i := 0; i &lt; numDocs; i++ {
+    doc := simpleDoc{
+        counter: i,
+        name:    "Foo Bar",
+    }
+    op := gocb.UpsertOp{
+        Key:   fmt.Sprintf("%d", i),
+        Value: doc,
+    }
+    ops = append(ops, &amp;op)
+}
 
-cb = Bucket('couchbase://10.0.0.31/default')
+// Execute the bulk ops
+err = bucket.Do(ops)
+if err != nil {
+    panic(err)
+}
 
-BYTES_PER_BATCH = 1024 * 256 # 256K
-
-# Generate our data:
-all_data = {}
-for x in xrange(100000):
-    key = "Key_" + str(x)
-    value = { 'value': x }
-    all_data[key] = value
-
-
-batches = []
-cur_batch = {}
-cur_size = 0
-batches.append(cur_batch)
-
-for key, value in all_data.items():
-    cur_batch[key] = value
-    cur_size += len(key) + len(value) + 24
-    if cur_size &gt; BYTES_PER_BATCH:
-        cur_batch = {}
-        batches.append(cur_batch)
-        cur_size = 0
-
-print "Have {} batches".format(len(batches))
-num_completed = 0
-while batches:
-    batch = batches[-1]
-    try:
-        cb.upsert_multi(batch)
-        num_completed += len(batch)
-        batches.pop()
-    except CouchbaseTransientError as e:
-        print e
-        ok, fail = e.split_results()
-        new_batch = {}
-        for key in fail:
-            new_batch[key] = all_data[key]
-        batches.pop()
-        batches.append(new_batch)
-        num_completed += len(ok)
-        print "Retrying {}/{} items".format(len(new_batch), len(ok))
-
-    print "Completed {}/{} items".format(num_completed, len(all_data))</code></pre>
+for i := 0; i &lt; len(ops); i++ {
+    op := ops[i].(*gocb.UpsertOp)
+    fmt.Println(op.Key, op.Value, op.Err)
+}</code></pre>
 </div>
 </div>
 </div>

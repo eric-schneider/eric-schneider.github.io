@@ -441,12 +441,17 @@ To create a cluster, construct it using a <em>connection string</em>, specifying
 <p>From Couchbase Go SDK 1.4.0, <code class="api">AlternateAddress</code> is implemented, for connecting to nodes in a NATed environment, such as Docker containers using portmapping. It is on by default, if the server provides a topology that includes a multi-network configuration. Whichever network is selected at bootstrap will be logged.</p>
 </div>
 <div class="paragraph">
-<p>Note that any SSL/TLS certificates must be set up at the point where the connections are being made.  The Couchbase SDKs will honor any valid SSL/TLS certificates.
- ====</p>
+<p>Note that any SSL/TLS certificates must be set up at the point where the connections are being made.  The Couchbase SDKs will honor any valid SSL/TLS certificates.</p>
 </div>
-<div class="paragraph">
-<p>== Authenticating</p>
+</td>
+</tr>
+</table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="authenticating"><a class="anchor" href="#authenticating"></a>Authenticating</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>From Couchbase Server 5.0, you will need to authenticate the user, rather than against the bucket, as part of <a href="../../server/6.0/learn/security/authorization-overview.html" class="page">Role-Based Access Control</a>.
 You will need to use <code>PasswordAuthenticator</code>:</p>
@@ -459,9 +464,11 @@ You will need to use <code>PasswordAuthenticator</code>:</p>
  })</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>== Opening a Bucket</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="opening-a-bucket"><a class="anchor" href="#opening-a-bucket"></a>Opening a Bucket</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Once the <code class="api">Cluster</code> object has been created, you may open one or more <code class="api">Bucket</code> objects using <code class="api">Cluster.OpenBucket</code>.
 The first argument is the bucket name to use, and the second is the bucket password - which should be provided if the bucket is password protected, or supplied as <code>nil</code> otherwise.</p>
@@ -482,15 +489,19 @@ Buckets are thread-safe and need not be locked or otherwise protected to be used
 <div class="paragraph">
 <p>You should only need to open one <code class="api">Bucket</code> object for each Couchbase Bucket in your application, and you should attempt to keep the <code class="api">Bucket</code> object available and open for as long as you plan to access Couchbase within your application.</p>
 </div>
-<div class="paragraph">
-<p>== Closing a Bucket</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="closing-a-bucket"><a class="anchor" href="#closing-a-bucket"></a>Closing a Bucket</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>When your application is done talking to Couchbase, you can issue the <code class="api">Bucket.Close()</code> call on the bucket, which will disconnect your application from the given bucket.</p>
 </div>
-<div id="ssl" class="paragraph">
-<p>== Configuring SSL</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="ssl"><a class="anchor" href="#ssl"></a>Configuring SSL</h2>
+<div class="sectionbody">
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -513,9 +524,11 @@ Otherwise SSL connections are subject to <a href="https://en.wikipedia.org/wiki/
 myBucket, _ := myCluster.OpenBucket("default", "")</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>== Using DNS SRV records</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="using-dns-srv-records"><a class="anchor" href="#using-dns-srv-records"></a>Using DNS SRV records</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>As an alternative to specifying multiple hosts in your program, you can get the actual bootstrap node list from a DNS SRV record.
 The following steps are necessary to make it work:</p>
@@ -565,10 +578,6 @@ _couchbases._tcp.example.com.  3600  IN  SRV  0  0  0  node3.example.com.</pre>
 <div class="paragraph">
 <p>To use DNS SRV in the Go SDK, simply pass the single bootstrap node (in this case <code>couchbase://example.com</code>).
 DNS SRV lookup will not be performed if there is more than a single node in the bootstrap list.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>

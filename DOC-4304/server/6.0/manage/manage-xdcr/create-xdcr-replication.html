@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3553,9 +3474,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-An XDCR replication allows
-data to be replicated continuously from a specified bucket on the source
-cluster to a specified bucket on the target.
+An XDCR replication allows data to be replicated continuously from a specified bucket on the source cluster to a specified bucket on the target.
 </blockquote>
 </div>
 </div>
@@ -3564,11 +3483,10 @@ cluster to a specified bucket on the target.
 <h2 id="understanding-replications"><a class="anchor" href="#understanding-replications"></a>Understanding Replications</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An XDCR replication is created on the cluster that is to be the source of
-the data-replication. Each replication uses a single <em>reference</em>, which has
-already been created. (See
-<a href="create-xdcr-reference.html" class="page">Create a
-Reference</a>.) To create the replication, you specify:</p>
+<p>An XDCR replication is created on the cluster that is to be the source of the data-replication.
+Each replication uses a single <em>reference</em>, which has already been created.
+(See <a href="create-xdcr-reference.html" class="page">Create a Reference</a>.)
+To create the replication, you specify:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3576,8 +3494,8 @@ Reference</a>.) To create the replication, you specify:</p>
 <p>The local, source bucket from which data is to be replicated.</p>
 </li>
 <li>
-<p>The remote cluster to which data is to be replicated. This cluster must
-already be registered on the local cluster as a <em>reference</em>.</p>
+<p>The remote cluster to which data is to be replicated.
+This cluster must already be registered on the local cluster as a <em>reference</em>.</p>
 </li>
 <li>
 <p>The bucket on the remote cluster to which data is to be replicated.</p>
@@ -3586,19 +3504,15 @@ already be registered on the local cluster as a <em>reference</em>.</p>
 <p>The XDCR protocol to be used.</p>
 </li>
 <li>
-<p>Whether <em>filtering</em> should be used in replication, and if so, according to
-what regular expression.</p>
+<p>Whether <em>filtering</em> should be used in replication, and if so, according to what regular expression.</p>
 </li>
 <li>
-<p>Other <em>Advanced Settings</em>, which can be used to optimize
-replication-performance.</p>
+<p>Other <em>Advanced Settings</em>, which can be used to optimize replication-performance.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Note that multiple <em>replications</em> (each using a different source-target
-bucket combination) can be created using a single <em>reference</em> (which
-refers to a target cluster, but not to any specific bucket on it).</p>
+<p>Note that multiple <em>replications</em> (each using a different source-target bucket combination) can be created using a single <em>reference</em> (which refers to a target cluster, but not to any specific bucket on it).</p>
 </div>
 </div>
 </div>
@@ -3606,37 +3520,24 @@ refers to a target cluster, but not to any specific bucket on it).</p>
 <h2 id="examples-on-this-page-create-replication"><a class="anchor" href="#examples-on-this-page-create-replication"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show how to create the same
-replication; using the
-<a href="#create-an-xdcr-replication-with-the-ui">UI</a>,
-the
-<a href="#create-an-xdcr-replication-with-the-cli">CLI</a>,
-and the
-<a href="#create-an-xdcr-replication-with-the-rest-api">REST
-API</a> respectively.
-As their starting-point, the
-examples assume the scenario that concluded the page
-<a href="create-xdcr-reference.html" class="page">Create a
-Reference</a>, this being:</p>
+<p>The examples in the subsections below show how to create the same replication; using the <a href="#create-an-xdcr-replication-with-the-ui">UI</a>, the <a href="#create-an-xdcr-replication-with-the-cli">CLI</a>,
+and the <a href="#create-an-xdcr-replication-with-the-rest-api">REST API</a> respectively.
+As their starting-point, the examples assume the scenario that concluded the page <a href="create-xdcr-reference.html" class="page">Create a Reference</a>, this being:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Two clusters already exist; each containing a single node. These are
-named after their IP addresses: <code>10.142.180.101</code> and <code>10.142.180.102</code>.</p>
+<p>Two clusters already exist; each containing a single node.
+These are named after their IP addresses: <code>10.142.180.101</code> and <code>10.142.180.102</code>.</p>
 </li>
 <li>
-<p>Each cluster contains a single bucket, which is the <code>travel-sample</code>
-bucket.</p>
+<p>Each cluster contains a single bucket, which is the <code>travel-sample</code> bucket.</p>
 </li>
 <li>
-<p>Each cluster has the Full Administrator username of
-<code>Administrator</code>, and password of <code>password</code>.</p>
+<p>Each cluster has the Full Administrator username of <code>Administrator</code>, and password of <code>password</code>.</p>
 </li>
 <li>
-<p>Cluster <code>10.142.180.101</code> now has a reference that specifies its own
-<code>travel-sample</code> bucket as a source, and the <code>travel-sample</code> bucket on
-<code>10.142.180.102</code> as a target.</p>
+<p>Cluster <code>10.142.180.101</code> now has a reference that specifies its own <code>travel-sample</code> bucket as a source, and the <code>travel-sample</code> bucket on <code>10.142.180.102</code> as a target.</p>
 </li>
 </ul>
 </div>
@@ -3651,16 +3552,15 @@ bucket.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Access Couchbase Web Console. Left-click on the <strong>XDCR</strong> tab, in the
-right-hand navigation menu.</p>
+<p>Access Couchbase Web Console.
+Left-click on the <strong>XDCR</strong> tab, in the right-hand navigation menu.</p>
 <div id="left_click_on_xdcr_tab" class="imageblock" style="text-align: left">
 <div class="content">
 <img src="../_images/manage-xdcr/left-click-on-xdcr-tab.png" alt="left click on xdcr tab" width="100">
 </div>
 </div>
 <div class="paragraph">
-<p>This displays the <strong>XDCR Replications</strong> screen, the lower part of the main panel
-of which is entitled <strong>Ongoing Replications</strong>:</p>
+<p>This displays the <strong>XDCR Replications</strong> screen, the lower part of the main panel of which is entitled <strong>Ongoing Replications</strong>:</p>
 </div>
 <div id="xdcr-screen-ongoing-replications-initial" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3668,10 +3568,7 @@ of which is entitled <strong>Ongoing Replications</strong>:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The list,
-which is designed to show the name and IP address or hostname of each
-existing replication, is currently empty, and so bears the
-notification <code>There are no replications currently in progress</code>.</p>
+<p>The list, which is designed to show the name and IP address or hostname of each existing replication, is currently empty, and so bears the notification <code>There are no replications currently in progress</code>.</p>
 </div>
 </li>
 <li>
@@ -3692,11 +3589,10 @@ notification <code>There are no replications currently in progress</code>.</p>
 </div>
 </li>
 <li>
-<p>Enter appropriate information into the fields of the <strong>Add
-Replication</strong> dialog. Specify <code>10.142.180.102</code> as the target cluster, and
-<code>travel-sample</code> as both source and target bucket. Leave the <strong>XDCR Protocol</strong> as
-<code>Version 2</code>. At this stage, do not check the <code>Enable advanced filtering</code> checkbox,
-and do not elect to <strong>Show Advanced Settings</strong>.</p>
+<p>Enter appropriate information into the fields of the <strong>Add Replication</strong> dialog.
+Specify <code>10.142.180.102</code> as the target cluster, and <code>travel-sample</code> as both source and target bucket.
+Leave the <strong>XDCR Protocol</strong> as <code>Version 2</code>.
+At this stage, do not check the <code>Enable advanced filtering</code> checkbox, and do not elect to <strong>Show Advanced Settings</strong>.</p>
 <div class="paragraph">
 <p>The completed dialog now appears as follows.</p>
 </div>
@@ -3706,9 +3602,8 @@ and do not elect to <strong>Show Advanced Settings</strong>.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Left-click on the <strong>Save</strong> button. The <strong>XDCR Replications</strong> screen is now
-redisplayed, with the appearance of the <strong>Ongoing Replications</strong> panel as
-follows:</p>
+<p>Left-click on the <strong>Save</strong> button.
+The <strong>XDCR Replications</strong> screen is now redisplayed, with the appearance of the <strong>Ongoing Replications</strong> panel as follows:</p>
 </div>
 <div id="ongoing-replications-with-replication" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3716,8 +3611,7 @@ follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This indicates that a replication is now in progress: from <code>travel-sample</code> on
-<code>this cluster</code> to <code>bucket "travel-sample" on cluster "10.142.180.102"</code>.</p>
+<p>This indicates that a replication is now in progress: from <code>travel-sample</code> on <code>this cluster</code> to <code>bucket "travel-sample" on cluster "10.142.180.102"</code>.</p>
 </div>
 </li>
 </ol>
@@ -3728,8 +3622,8 @@ follows:</p>
 <div class="sect2">
 <h3 id="xdcr-advanced-filtering-pointer"><a class="anchor" href="#xdcr-advanced-filtering-pointer"></a>Advanced Filtering with the UI</h3>
 <div class="paragraph">
-<p><strong>Advanced Filtering</strong> can be enabled by checking the <code>Enabled advanced
-filtering</code> checkbox. The UI expands to reveal the following field:&#8230;&#8203;</p>
+<p><strong>Advanced Filtering</strong> can be enabled by checking the <code>Enabled advanced filtering</code> checkbox.
+The UI expands to reveal the following field:</p>
 </div>
 <div id="xdcr-advanced-filtering-initial" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3737,17 +3631,15 @@ filtering</code> checkbox. The UI expands to reveal the following field:&#8230;&
 </div>
 </div>
 <div class="paragraph">
-<p>One or more regular expressions, to be used as filters, can be entered into
-the <strong>Filter Expression</strong> field. The expression is matched against document
-keys within the source bucket. (Note that no match is attempted with
-document values.) If a match is successful, that document is replicated.
+<p>One or more regular expressions, to be used as filters, can be entered into the <strong>Filter Expression</strong> field.
+The expression is matched against document keys within the source bucket.
+(Note that no match is attempted with document values.)
+If a match is successful, that document is replicated.
 Documents whose keys do not provide a match are not replicated.</p>
 </div>
 <div class="paragraph">
-<p>Optionally, document keys can be entered into a <strong>Test Key</strong> field: hitting
-return produces successive fields, so any number of keys can be tested. If
-a match is successful, the orange <strong>No Match</strong> button is displayed in green,
-and signifies that a <strong>Match</strong> has been made:</p>
+<p>Optionally, document keys can be entered into a <strong>Test Key</strong> field: hitting return produces successive fields, so any number of keys can be tested.
+If a match is successful, the orange <strong>No Match</strong> button is displayed in green, and signifies that a <strong>Match</strong> has been made:</p>
 </div>
 <div id="xdcr-advanced-filtering-complete" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3755,17 +3647,14 @@ and signifies that a <strong>Match</strong> has been made:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Complete information on XDCR filtering is provided in
-<a href="../../learn/clusters-and-availability/xdcr-filtering.html" class="page">XDCR
-Filtering</a>.</p>
+<p>Complete information on XDCR filtering is provided in <a href="../../learn/clusters-and-availability/xdcr-filtering.html" class="page">XDCR Filtering</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="xdcr-advanced-settings-pointer"><a class="anchor" href="#xdcr-advanced-settings-pointer"></a>Advanced Settings with the UI</h3>
 <div class="paragraph">
-<p><strong>Advanced Settings</strong> can be established by left-clicking on the <strong>Show
-Advanced Settings</strong> control, on the <strong>Add Replication</strong> dialog. The UI
-expands vertically, to reveal the following:</p>
+<p><strong>Advanced Settings</strong> can be established by left-clicking on the <strong>Show Advanced Settings</strong> control, on the <strong>Add Replication</strong> dialog.
+The UI expands vertically, to reveal the following:</p>
 </div>
 <div id="xdcr-advanced-settings-menu" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3773,12 +3662,8 @@ expands vertically, to reveal the following:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The values displayed in the fields are defaults, which can be modified
-interactively, and saved: this may help in achieving optimal
-replication-performance. For details on the significance of each field,
-See
-<a href="../../learn/clusters-and-availability/xdcr-advanced-settings.html" class="page">XDCR
-Advanced Settings</a>.</p>
+<p>The values displayed in the fields are defaults, which can be modified interactively, and saved: this may help in achieving optimal replication-performance.
+For details on the significance of each field, see <a href="../../learn/clusters-and-availability/xdcr-advanced-settings.html" class="page">XDCR Advanced Settings</a>.</p>
 </div>
 </div>
 </div>
@@ -3787,9 +3672,7 @@ Advanced Settings</a>.</p>
 <h2 id="create-an-xdcr-replication-with-the-cli"><a class="anchor" href="#create-an-xdcr-replication-with-the-cli"></a>Create an XDCR Replication with the CLI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Staring from the scenario defined above, in
-<a href="#examples-on-this-page-create-replication">Examples on This Page</a>,
-use the CLI <code>xdcr-replicate</code> command to create an XDCR replication, as follows:</p>
+<p>Staring from the scenario defined above, in <a href="#examples-on-this-page-create-replication">Examples on This Page</a>, use the CLI <code>xdcr-replicate</code> command to create an XDCR replication, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3812,11 +3695,8 @@ use the CLI <code>xdcr-replicate</code> command to create an XDCR replication, a
 </div>
 </div>
 <div class="paragraph">
-<p>For more information, see the complete reference for the
-<a href="../../cli/cbcli/couchbase-cli-xdcr-replicate.html" class="page">xdcr-replicate</a> command.
-Note that this includes descriptions of all flags that support the
-<a href="#xdcr-advanced-settings-pointer">Advanced
-Settings</a>, described above.</p>
+<p>For more information, see the complete reference for the <a href="../../cli/cbcli/couchbase-cli-xdcr-replicate.html" class="page">xdcr-replicate</a> command.
+Note that this includes descriptions of all flags that support the <a href="#xdcr-advanced-settings-pointer">Advanced Settings</a>, described above.</p>
 </div>
 </div>
 </div>
@@ -3824,11 +3704,7 @@ Settings</a>, described above.</p>
 <h2 id="create-an-xdcr-replication-with-the-rest-api"><a class="anchor" href="#create-an-xdcr-replication-with-the-rest-api"></a>Create an XDCR Replication with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Staring from the scenario defined above, in
-<a href="#examples-on-this-page-create-replication">Examples on This Page</a>,
-using the REST API&#8217;s
-<code>POST /controller/createReplication</code> HTTP method and URI, create an XDCR
-reference as follows:</p>
+<p>Staring from the scenario defined above, in <a href="#examples-on-this-page-create-replication">Examples on This Page</a>, using the REST API&#8217;s <code>POST /controller/createReplication</code> HTTP method and URI, create an XDCR reference as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3850,12 +3726,8 @@ reference as follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>For more information, see
-<a href="../../rest-api/rest-xdcr-create-replication.html" class="page">Creating XDCR Replications</a>.
-For information on REST-driven configuration of the
-<a href="#xdcr-advanced-settings-pointer">Advanced
-Settings</a> described above, see
-<a href="../../rest-api/rest-xdcr-adv-settings.html" class="page">Managing Advanced XDCR Settings</a>.</p>
+<p>For more information, see <a href="../../rest-api/rest-xdcr-create-replication.html" class="page">Creating XDCR Replications</a>.
+For information on REST-driven configuration of the <a href="#xdcr-advanced-settings-pointer">Advanced Settings</a> described above, see <a href="../../rest-api/rest-xdcr-adv-settings.html" class="page">Managing Advanced XDCR Settings</a>.</p>
 </div>
 </div>
 </div>
@@ -3863,10 +3735,8 @@ Settings</a> described above, see
 <h2 id="next-xdcr-steps-after-create-replication"><a class="anchor" href="#next-xdcr-steps-after-create-replication"></a>Next Steps</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Once a replication has been defined and is therefore running, you can opt
-to <em>pause</em> it, in order to perform system maintenance. See
-<a href="pause-xdcr-replication.html" class="page">Pause a
-Replication</a>.</p>
+<p>Once a replication has been defined and is therefore running, you can opt to <em>pause</em> it, in order to perform system maintenance.
+See <a href="pause-xdcr-replication.html" class="page">Pause a Replication</a>.</p>
 </div>
 </div>
 </div>

@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3562,18 +3483,12 @@ Statistical information on an XDCR <em>replication</em> can be gathered in real 
 <h2 id="examples-on-this-page-monitor-replication"><a class="anchor" href="#examples-on-this-page-monitor-replication"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples on this page show how to <em>fully</em> secure a
-replication; using the
-<a href="enable-full-secure-replication.html#enable-fully-secure-replications-with-the-ui" class="page">UI</a>.
-Examples of monitoring XDCR with the REST API are provided in
-<a href="../../rest-api/rest-xdcr-statistics.html" class="page">Getting XDCR Stats</a>.
+<p>The examples on this page show how to monitor a replication; using the <a href="#monitor-an-xdcr-replication-with-the-ui">UI</a>.
+Examples of monitoring XDCR with the REST API are provided in <a href="../../rest-api/rest-xdcr-statistics.html" class="page">Getting XDCR Stats</a>.
 No CLI command is available for general XDCR monitoring.</p>
 </div>
 <div class="paragraph">
-<p>As their starting-point, the
-examples for the UI the scenario that concluded the page
-<a href="resume-xdcr-replication.html" class="page">Resume a
-Replication</a>.</p>
+<p>As their starting-point, the examples for the UI the scenario that concluded the page <a href="resume-xdcr-replication.html" class="page">Resume a Replication</a>.</p>
 </div>
 </div>
 </div>
@@ -3581,9 +3496,8 @@ Replication</a>.</p>
 <h2 id="monitor-an-xdcr-replication-with-the-ui"><a class="anchor" href="#monitor-an-xdcr-replication-with-the-ui"></a>Monitor an XDCR Replication with the UI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Information on current XDCR replications is provided by Couchbase
-Web Console <em>per bucket</em>. Therefore, to check status, access the
-<strong>Buckets</strong> screen (rather than the <strong>XDCR</strong> screen).</p>
+<p>Information on current XDCR replications is provided by Couchbase Web Console <em>per bucket</em>.
+Therefore, to check status, access the <strong>Buckets</strong> screen (rather than the <strong>XDCR</strong> screen).</p>
 </div>
 <div class="sect2">
 <h3 id="access-buckets-statistics-source"><a class="anchor" href="#access-buckets-statistics-source"></a>Access Statistics for the Source Bucket</h3>
@@ -3596,16 +3510,15 @@ Web Console <em>per bucket</em>. Therefore, to check status, access the
 <p>Ascertain the name of the XDCR source bucket to be examined.</p>
 </li>
 <li>
-<p>In the left-hand navigation panel for the source cluster, left-click on
-the <strong>Buckets</strong> tab:</p>
+<p>In the left-hand navigation panel for the source cluster, left-click on the <strong>Buckets</strong> tab:</p>
 <div id="left_click_on_buckets_tab" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/left-click-on-buckets-tab.png" alt="left click on buckets tab" width="100">
 </div>
 </div>
 <div class="paragraph">
-<p>This displays the <strong>Buckets</strong> screen. A single bucket is displayed,
-<code>travel-sample</code> which is the source for replication.</p>
+<p>This displays the <strong>Buckets</strong> screen.
+A single bucket is displayed, <code>travel-sample</code> which is the source for replication.</p>
 </div>
 <div id="xdcr-buckets-row-with-bucket" class="imageblock" style="text-align: middle">
 <div class="content">
@@ -3614,8 +3527,7 @@ the <strong>Buckets</strong> tab:</p>
 </div>
 </li>
 <li>
-<p>Left-click on the <code>Statistics</code> tab, which is located at the right-hand side
-of the row for the bucket:</p>
+<p>Left-click on the <code>Statistics</code> tab, which is located at the right-hand side of the row for the bucket:</p>
 <div id="xdcr-bucket-statistics-tab" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/xdcr-bucket-statistics-tab.png" alt="xdcr bucket statistics tab" width="180">
@@ -3639,78 +3551,55 @@ of the row for the bucket:</p>
 </div>
 </li>
 <li>
-<p>Left-click on the arrow for <strong>Outbound XDCR</strong> operations. The following
-graphical display is provided:</p>
+<p>Left-click on the arrow for <strong>Outbound XDCR</strong> operations.
+The following graphical display is provided:</p>
 <div id="xdcr-outbound-operations-ui-statistics" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/xdcr-outbound-operations-ui-statistics.png" alt="xdcr outbound operations ui statistics" width="600">
 </div>
 </div>
 <div class="paragraph">
-<p>Each of the twelve graphs provides statistical information on the ongoing
-replication from the source bucket. Each graph is based on a particular
-Couchbase Server statistic. These are:</p>
+<p>Each of the twelve graphs provides statistical information on the ongoing replication from the source bucket.
+Each graph is based on a particular Couchbase Server statistic.
+These are:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><em>n</em> <strong>mutations</strong>: The number of mutations to be
-replicated to other clusters (measured from the per-replication
-statistic <code>changes-left</code>).</p>
+<p><em>n</em> <strong>mutations</strong>: The number of mutations to be replicated to other clusters (measured from the per-replication statistic <code>changes-left</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>percent completed</strong>: The percentage of checked items
-out of all checked and to-be-replicated items (measured from the
-per-replication statistic <code>percent_completeness</code>).</p>
+<p><em>n</em> <strong>percent completed</strong>: The percentage of checked items out of all checked and to-be-replicated items (measured from the per-replication statistic <code>percent_completeness</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>mutations replicated</strong>: The number of mutations that have been
-replicated to other clusters (measured from the per-replication statistic
-<code>docs_written</code>).</p>
+<p><em>n</em> <strong>mutations replicated</strong>: The number of mutations that have been replicated to other clusters (measured from the per-replication statistic <code>docs_written</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>mutations filtered per sec</strong>: The number of mutations per
-second that have been filtered out, and therefore not
-replicated to other clusters (measured from the per-replication statistic
-<code>docs_filtered</code>).</p>
+<p><em>n</em> <strong>mutations filtered per sec</strong>: The number of mutations per second that have been filtered out, and therefore not replicated to other clusters (measured from the per-replication statistic <code>docs_filtered</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>mutations skipped by resolution</strong>: The number of mutations that
-failed conflict resolution on the source side, and therefore have not been
-replicated to other clusters (measured from the per-replication statistic
-<code>docs_failed_cr_source</code>).</p>
+<p><em>n</em> <strong>mutations skipped by resolution</strong>: The number of mutations that failed conflict resolution on the source side, and therefore have not been replicated to other clusters (measured from the per-replication statistic <code>docs_failed_cr_source</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>mutation replication rate</strong>: The rate of replication, in terms of
-the number of replicated mutations per second (measured from the
-per-replication statistic <code>rate_replicated</code>).</p>
+<p><em>n</em> <strong>mutation replication rate</strong>: The rate of replication, in terms of the number of replicated mutations per second (measured from the per-replication statistic <code>rate_replicated</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>B data replication rate</strong>: The rate of replication in terms of bytes
-replicated per second (measured from the per-replication statistic
-<code>bandwidth_usage</code>).</p>
+<p><em>n</em> <strong>B data replication rate</strong>: The rate of replication in terms of bytes replicated per second (measured from the per-replication statistic <code>bandwidth_usage</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>opt. replication rate</strong>: The rate optimistic replications
-in terms of the number of replicated mutations per second.</p>
+<p><em>n</em> <strong>opt. replication rate</strong>: The rate optimistic replications in terms of the number of replicated mutations per second.</p>
 </li>
 <li>
 <p><em>n</em> <strong>docs checks rate</strong>: The rate of document checks per second.</p>
 </li>
 <li>
-<p><em>n</em> <strong>ms meta batch latency</strong>: The weighted average latency is milliseconds
-of sending getMeta and waiting for a conflict solution result from the
-remote cluster (measured from the per-replication statistic
-<code>wtavg_meta_latency</code>).</p>
+<p><em>n</em> <strong>ms meta batch latency</strong>: The weighted average latency is milliseconds of sending getMeta and waiting for a conflict solution result from the remote cluster (measured from the per-replication statistic <code>wtavg_meta_latency</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>ms doc batch latency</strong>: The weighted average latency in milliseconds
-of sending replicated mutations to the remote cluster (measured from
-the per-replication statistic <code>wtavg_docs_latency</code>).</p>
+<p><em>n</em> <strong>ms doc batch latency</strong>: The weighted average latency in milliseconds of sending replicated mutations to the remote cluster (measured from the per-replication statistic <code>wtavg_docs_latency</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>doc reception rate</strong>: The rate of mutations received from DCP in
-terms of the number of mutations per second.</p>
+<p><em>n</em> <strong>doc reception rate</strong>: The rate of mutations received from DCP in terms of the number of mutations per second.</p>
 </li>
 </ul>
 </div>
@@ -3729,45 +3618,32 @@ terms of the number of mutations per second.</p>
 <p>Ascertain the name of the XDCR target bucket to be examined.</p>
 </li>
 <li>
-<p>In the left-hand navigation panel for the remote cluster, left-click on
-the <strong>Buckets</strong> tab, and access the statistics for the bucket according to
-the steps provided above, in
-<a href="#access-buckets-statistics-source">Access
-Statistics for the Source Bucket</a>.</p>
+<p>In the left-hand navigation panel for the remote cluster, left-click on the <strong>Buckets</strong> tab, and access the statistics for the bucket according to the steps provided above, in <a href="#access-buckets-statistics-source">Access Statistics for the Source Bucket</a>.</p>
 </li>
 <li>
-<p>Open the <strong>Incoming XDCR Operations</strong> panel. The following
-graphical display is provided:</p>
+<p>Open the <strong>Incoming XDCR Operations</strong> panel.
+The following graphical display is provided:</p>
 <div id="xdcr-incoming-operations-graphs" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/xdcr-incoming-operations-graphs.png" alt="xdcr incoming operations graphs" width="600">
 </div>
 </div>
 <div class="paragraph">
-<p>Each of the four graphs provides statistical information on an incoming
-replication from the source bucket:</p>
+<p>Each of the four graphs provides statistical information on an incoming replication from the source bucket:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><em>n</em> <strong>metadata reads per sec.</strong>: The number of metadata read operations
-per second for this bucket as the target for XDCR (measured from the
-statistic <code>ep_num_ops_get_meta</code>).</p>
+<p><em>n</em> <strong>metadata reads per sec.</strong>: The number of metadata read operations per second for this bucket as the target for XDCR (measured from the statistic <code>ep_num_ops_get_meta</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>sets per second</strong>: The number of set operations per second for this
-buckets as the target for XDCR (measured from the statistic
-<code>ep_num_ops_set_meta</code>).</p>
+<p><em>n</em> <strong>sets per second</strong>: The number of set operations per second for this buckets as the target for XDCR (measured from the statistic <code>ep_num_ops_set_meta</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>deletes per second</strong>: The number of delte operations per second for
-this bucket as the target for XDCR (measured from the statistic
-<code>ep_num_ops_del_meta</code>).</p>
+<p><em>n</em> <strong>deletes per second</strong>: The number of delte operations per second for this bucket as the target for XDCR (measured from the statistic <code>ep_num_ops_del_meta</code>).</p>
 </li>
 <li>
-<p><em>n</em> <strong>total ops per sec</strong>: Total XDCR operations per second for this bucket
-(measured from the sum of the statistics <code>ep_num_ops_delmeta</code>,
-<code>ep_num_ops_get_meta</code>, and <code>ep_num_ops_set_meta</code>).</p>
+<p><em>n</em> <strong>total ops per sec</strong>: Total XDCR operations per second for this bucket (measured from the sum of the statistics <code>ep_num_ops_delmeta</code>, <code>ep_num_ops_get_meta</code>, and <code>ep_num_ops_set_meta</code>).</p>
 </li>
 </ul>
 </div>
@@ -3781,11 +3657,8 @@ this bucket as the target for XDCR (measured from the statistic
 <h2 id="pointer-to-monitoring-xdcr-timestamp-conflict-resolution"><a class="anchor" href="#pointer-to-monitoring-xdcr-timestamp-conflict-resolution"></a>Monitoring Conflict Resolution</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="../../learn/clusters-and-availability/xdcr-conflict-resolution.html" class="page">XDCR Conflict Resolution</a>
-can be monitored by means of the
-<a href="../../cli/cbstats-intro.html" class="page">cbstats</a> CLI. See
-<a href="../../learn/clusters-and-availability/xdcr-monitor-timestamp-conflict-resolution.html" class="page">Monitoring
-XDCR Timestamp-based Conflict Resolution</a>, for details.</p>
+<p><a href="../../learn/clusters-and-availability/xdcr-conflict-resolution.html" class="page">XDCR Conflict Resolution</a> can be monitored by means of the <a href="../../cli/cbstats-intro.html" class="page">cbstats</a> CLI.
+See <a href="../../learn/clusters-and-availability/xdcr-monitor-timestamp-conflict-resolution.html" class="page">Monitoring XDCR Timestamp-based Conflict Resolution</a>, for details.</p>
 </div>
 </div>
 </div>

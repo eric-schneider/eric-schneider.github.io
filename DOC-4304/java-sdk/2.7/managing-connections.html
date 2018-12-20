@@ -535,6 +535,19 @@ impact on performance and stability. Reuse environments!</pre>
 <div class="paragraph">
 <p>In general, this is an indication of misconfiguration, the only exception being unit and integration tests where multiple paths are executed at once and cannot share the <code>ClusterEnvironment</code> for whatever reason.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+You are strongly recommended against using Round Robin DNS, which can return a different address at each connection, as Java uses $host from the Cluster Map&#8201;&#8212;&#8201;which can cause connection issues.
+Use of a <a href="#using-dns-srv-records">Service record (SRV record)</a>, to provide real hostnames (A records) in the bootstrap list, will ensure consistent connections.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">

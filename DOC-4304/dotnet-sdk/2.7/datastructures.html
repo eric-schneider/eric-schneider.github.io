@@ -666,7 +666,7 @@ Currently, you can only store primitive values in sets, such as strings, ints, a
 An exception is not thrown if the item does not exist.
 You can determine if an item existed or not by the return value.
 If the item did not exist beforehand, <code>None</code> is returned.
-This operation uses <a href="#">6.0@server:developer-guide:cas-concurrency.adoc</a> to ensure the correct item is removed.</p>
+This operation uses <a href="concurrent-mutations-cluster.html" class="page">CAS</a> to ensure the correct item is removed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -704,7 +704,7 @@ You can retrieve items from the middle of the queue by using <code class="api">L
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code class="api">QueuePop</code></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Remove an item from the end of the queue and return it.
-This operation uses <a href="#">6.0@server:developer-guide:cas-concurrency.adoc</a> to ensure no two processs can retrieve the same item.</p>
+This operation uses <a href="concurrent-mutations-cluster.html" class="page">CAS</a> to ensure no two processs can retrieve the same item.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1116,7 +1116,7 @@ It offers the following operations:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code class="api">Dequeue()</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Removes and returns the object at the beginning of the queue.
-This operation uses <a href="#">6.0@server:developer-guide:cas-concurrency.adoc</a> to ensure no two calls gets the same item.</p></td>
+This operation uses <a href="concurrent-mutations-cluster.html" class="page">CAS</a> to ensure no two calls gets the same item.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code class="api">Enqueue(T item)</code></p></td>
@@ -1148,7 +1148,7 @@ Console.WriteLine(item);</code></pre>
 <h2 id="concurrency"><a class="anchor" href="#concurrency"></a>Concurrency</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Where appropriate, all of operations on the <code class="api">IBucket</code> level and the implementations in <code class="api">Couchbase.Collections</code> utilise the <a href="#">6.0@server:developer-guide:cas-concurrency.adoc</a> (Compare and Swap) value when manipulating data to ensure that two different processes do not manipulate the same data at the same time.
+<p>Where appropriate, all of operations on the <code class="api">IBucket</code> level and the implementations in <code class="api">Couchbase.Collections</code> utilise the <a href="concurrent-mutations-cluster.html" class="page">CAS</a> (Compare and Swap) value when manipulating data to ensure that two different processes do not manipulate the same data at the same time.
 For example: when using <code class="api">QueuePop</code>, two threads could not receive the same item.</p>
 </div>
 </div>

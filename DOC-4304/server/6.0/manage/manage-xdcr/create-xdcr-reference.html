@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3553,9 +3474,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-To perform Cross Datacenter Replication (XDCR), you start by
-creating a <em>reference</em> to the remote
-cluster and bucket that will receive the replicated data.
+To perform Cross Datacenter Replication (XDCR), you start by creating a <em>reference</em> to the remote cluster and bucket that will receive the replicated data.
 </blockquote>
 </div>
 </div>
@@ -3564,9 +3483,8 @@ cluster and bucket that will receive the replicated data.
 <h2 id="understanding-references"><a class="anchor" href="#understanding-references"></a>Understanding References</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A <em>reference</em> is the registration, on the local cluster, of details
-that identify a remote cluster as a suitable target for XDCR
-replication. The registration must contain the following details:</p>
+<p>A <em>reference</em> is the registration, on the local cluster, of details that identify a remote cluster as a suitable target for XDCR replication.
+The registration must contain the following details:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3577,24 +3495,19 @@ replication. The registration must contain the following details:</p>
 <p>The IP address or hostname of a node within the remote cluster.</p>
 </li>
 <li>
-<p>A username and password, associated on the remote cluster with a
-role that provides XDCR management-privileges. The possible roles are
-<em>Full</em>, <em>Cluster</em>, and <em>XDCR</em> Administrator. Note that the administrator
-setting up XDCR must also have one of these roles on the local cluster.</p>
+<p>A username and password, associated on the remote cluster with a role that provides XDCR management-privileges.
+The possible roles are <em>Full</em>, <em>Cluster</em>, and <em>XDCR</em> Administrator.
+Note that the administrator setting up XDCR must also have one of these roles on the local cluster.</p>
 </li>
 <li>
-<p>Whether the the connection between source and
-target clusters will be managed securely, and if so, by what
-secure methodology. Corresponding TLS certificates may need to be provided.
-Securing a connection is described in detail in
-<a href="secure-xdcr-replication.html" class="page">Secure a
-Replication</a>.</p>
+<p>Whether the the connection between source and target clusters will be managed securely, and if so, by what secure methodology.
+Corresponding TLS certificates may need to be provided.
+Securing a connection is described in detail in <a href="secure-xdcr-replication.html" class="page">Secure a Replication</a>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Once the reference has been saved, it can be used to specify
-a target cluster, when an XDCR replication is created.</p>
+<p>Once the reference has been saved, it can be used to specify a target cluster, when an XDCR replication is created.</p>
 </div>
 </div>
 </div>
@@ -3602,38 +3515,28 @@ a target cluster, when an XDCR replication is created.</p>
 <h2 id="examples-on-this-page-create-reference"><a class="anchor" href="#examples-on-this-page-create-reference"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show how to create the same
-reference; using the
-<a href="#create-an-xdcr-reference-with-the-ui">UI</a>,
-the
-<a href="#create-an-xdcr-reference-with-the-cli">CLI</a>,
-and the
-<a href="#create-an-xdcr-reference-with-the-rest-api">REST
-API</a> respectively. The examples assume:</p>
+<p>The examples in the subsections below show how to create the same reference; using the <a href="#create-an-xdcr-reference-with-the-ui">UI</a>, the <a href="#create-an-xdcr-reference-with-the-cli">CLI</a>, and the <a href="#create-an-xdcr-reference-with-the-rest-api">REST API</a> respectively.
+The examples assume:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Two clusters already exist; each containing a single node. These are
-named after their IP addresses: <code>10.142.180.101</code> and <code>10.142.180.102</code>.</p>
+<p>Two clusters already exist; each containing a single node.
+These are named after their IP addresses: <code>10.142.180.101</code> and <code>10.142.180.102</code>.</p>
 </li>
 <li>
-<p>Each cluster contains a single bucket, which is the <code>travel-sample</code>
-bucket. To access and install this, see
-<a href="../manage-settings/install-sample-buckets.html" class="page">Sample Buckets</a>.</p>
+<p>Each cluster contains a single bucket, which is the <code>travel-sample</code> bucket.
+To access and install this, see <a href="../manage-settings/install-sample-buckets.html" class="page">Sample Buckets</a>.</p>
 </li>
 <li>
-<p>Each cluster has the Full Administrator username of
-<code>Administrator</code>, and password of <code>password</code>.</p>
+<p>Each cluster has the Full Administrator username of <code>Administrator</code>, and password of <code>password</code>.</p>
 </li>
 </ul>
 </div>
 <div class="sect2">
 <h3 id="choosing-a-target-bucket"><a class="anchor" href="#choosing-a-target-bucket"></a>Choosing a Target Bucket</h3>
 <div class="paragraph">
-<p>Since XDCR requires specification of a bucket on the target cluster, to
-which data is to be replicated, prior to creating a reference to a target
-cluster, you must know either:</p>
+<p>Since XDCR requires specification of a bucket on the target cluster, to which data is to be replicated, prior to creating a reference to a target cluster, you must know either:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3641,17 +3544,13 @@ cluster, you must know either:</p>
 <p>The name of the existing target bucket to which data will be replicated</p>
 </li>
 <li>
-<p>That you have the ability to create a target bucket to which data will
-be replicated.</p>
+<p>That you have the ability to create a target bucket to which data will be replicated.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The examples on this page use the <code>travel-sample</code> bucket, whose installation
-is described in
-<a href="../manage-settings/install-sample-buckets.html" class="page">Sample Buckets</a>.
-For information on listing and creating additional buckets, see
-<a href="../manage-buckets/bucket-management-overview.html" class="page">Manage Buckets</a>.</p>
+<p>The examples on this page use the <code>travel-sample</code> bucket, whose installation is described in <a href="../manage-settings/install-sample-buckets.html" class="page">Sample Buckets</a>.
+For information on listing and creating additional buckets, see <a href="../manage-buckets/bucket-management-overview.html" class="page">Manage Buckets</a>.</p>
 </div>
 </div>
 </div>
@@ -3665,8 +3564,8 @@ For information on listing and creating additional buckets, see
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Access Couchbase Web Console. Left-click on the <strong>XDCR</strong> tab, in the
-right-hand navigation menu.</p>
+<p>Access Couchbase Web Console.
+Left-click on the <strong>XDCR</strong> tab, in the right-hand navigation menu.</p>
 <div id="left_click_on_xdcr_tab" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/left-click-on-xdcr-tab.png" alt="left click on xdcr tab" width="100">
@@ -3681,15 +3580,12 @@ right-hand navigation menu.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The lower part of the main panel is entitled <strong>Remote Clusters</strong>. The list,
-which is designed to show the name and IP address or hostname of each
-registered remote cluster, is currently empty, and so bears the
-notification <code>No cluster references defined</code>.</p>
+<p>The lower part of the main panel is entitled <strong>Remote Clusters</strong>.
+The list, which is designed to show the name and IP address or hostname of each registered remote cluster, is currently empty, and so bears the notification <code>No cluster references defined</code>.</p>
 </div>
 </li>
 <li>
-<p>Define a reference, by left-clicking on the <strong>Add Remote Cluster</strong>
-button, at the upper right.</p>
+<p>Define a reference, by left-clicking on the <strong>Add Remote Cluster</strong> button, at the upper right.</p>
 <div id="xdcr-add-remote-cluster-button" class="imageblock" style="text-align: middle">
 <div class="content">
 <img src="../_images/manage-xdcr/xdcr-add-remote-cluster-button.png" alt="xdcr add remote cluster button" width="200">
@@ -3704,17 +3600,14 @@ button, at the upper right.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The fields in this dialog are explained above, in
-<a href="#understanding-references">Understanding
-References</a>.</p>
+<p>The fields in this dialog are explained above, in <a href="#understanding-references">Understanding References</a>.</p>
 </div>
 </li>
 <li>
-<p>For <strong>Cluster Name</strong> and <strong>IP/Hostname</strong>, specify the IP address
-of the second cluster, which is <code>10.142.180.102</code>. For <strong>Username</strong>
-and <strong>Password</strong>, specify those stated above. Do not, for the
-current example, check the <code>Enable Secure Connection</code> checkbox. The
-complete dialog appears as follows:</p>
+<p>For <strong>Cluster Name</strong> and <strong>IP/Hostname</strong>, specify the IP address of the second cluster, which is <code>10.142.180.102</code>.
+For <strong>Username</strong> and <strong>Password</strong>, specify those stated above.
+Do not, for the current example, check the <code>Enable Secure Connection</code> checkbox.
+The complete dialog appears as follows:</p>
 <div id="xdcr-add-remote-cluster-dialog-complete" class="imageblock" style="text-align: left">
 <div class="content">
 <img src="../_images/manage-xdcr/xdcr-add-remote-cluster-dialog-complete.png" alt="xdcr add remote cluster dialog complete" width="400">
@@ -3724,8 +3617,8 @@ complete dialog appears as follows:</p>
 <p>When you have entered the data, left-click on the <strong>Save</strong> button.</p>
 </div>
 <div class="paragraph">
-<p>The XDCR Replications screen is again displayed. The <strong>Remote Clusters</strong> panel
-now contains the reference you have defined.</p>
+<p>The XDCR Replications screen is again displayed.
+The <strong>Remote Clusters</strong> panel now contains the reference you have defined.</p>
 </div>
 <div id="xdcr-replications-screen-with-reference" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3744,15 +3637,9 @@ now contains the reference you have defined.</p>
 <h2 id="editing-and-deleting-references-with-the-ui"><a class="anchor" href="#editing-and-deleting-references-with-the-ui"></a>Editing and Deleting References with the UI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By left-clicking on the <code>Edit</code> and <code>Delete</code> options, provided on the row for
-each defined reference, you can respectively edit (by means of the <strong>Edit
-Remote Cluster</strong> dialog, which is identical to the <strong>Add Remote Cluster</strong> dialog)
-and delete defined references. Note that if a reference is
-already associated with a replication, you cannot delete the
-reference; nor can you
-modify its target IP address. However, you <em>can</em> change the registered name of
-the target cluster, and you can change the security settings for
-the replication.</p>
+<p>By left-clicking on the <code>Edit</code> and <code>Delete</code> options, provided on the row for each defined reference, you can respectively edit (by means of the <strong>Edit Remote Cluster</strong> dialog, which is identical to the <strong>Add Remote Cluster</strong> dialog) and delete defined references.
+Note that if a reference is already associated with a replication, you cannot delete the reference; nor can you modify its target IP address.
+However, you <em>can</em> change the registered name of the target cluster, and you can change the security settings for the replication.</p>
 </div>
 </div>
 </div>
@@ -3760,9 +3647,7 @@ the replication.</p>
 <h2 id="create-an-xdcr-reference-with-the-cli"><a class="anchor" href="#create-an-xdcr-reference-with-the-cli"></a>Create an XDCR Reference with the CLI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Starting from the scenario defined above, in
-<a href="#examples-on-this-page-create-reference">Examples on This Page</a>,
-use the CLI <code>xdcr-setup</code> command to create an XDCR reference, as follows:</p>
+<p>Starting from the scenario defined above, in <a href="#examples-on-this-page-create-reference">Examples on This Page</a>, use the CLI <code>xdcr-setup</code> command to create an XDCR reference, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3784,8 +3669,7 @@ use the CLI <code>xdcr-setup</code> command to create an XDCR reference, as foll
 </div>
 </div>
 <div class="paragraph">
-<p>Note that a complete list of references established for a cluster can be
-retrieved with the <code>xdcr-setup</code> command, used with the <code>list</code> option:</p>
+<p>Note that a complete list of references established for a cluster can be retrieved with the <code>xdcr-setup</code> command, used with the <code>list</code> option:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3794,9 +3678,8 @@ retrieved with the <code>xdcr-setup</code> command, used with the <code>list</co
 </div>
 </div>
 <div class="paragraph">
-<p>The following is returned. Note the <code>uuid</code> associated with the reference,
-which
-will be used later in the current section.</p>
+<p>The following is returned.
+Note the <code>uuid</code> associated with the reference, which will be used later in the current section.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3818,11 +3701,7 @@ includes details on how to edit an existing reference.</p>
 <h2 id="create-an-xdcr-reference-with-the-rest-api"><a class="anchor" href="#create-an-xdcr-reference-with-the-rest-api"></a>Create an XDCR Reference with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Starting from the scenario defined above, in
-<a href="#examples-on-this-page-create-reference">Examples on This Page</a>,
-using the REST API&#8217;s
-<code>POST /pools/default/remoteClusters</code> HTTP method and URI, create an XDCR
-reference as follows:</p>
+<p>Starting from the scenario defined above, in <a href="#examples-on-this-page-create-reference">Examples on This Page</a>, using the REST API&#8217;s <code>POST /pools/default/remoteClusters</code> HTTP method and URI, create an XDCR reference as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3853,8 +3732,7 @@ reference as follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>To return a list of the cluster&#8217;s current references, use the method as
-follows:</p>
+<p>To return a list of the cluster&#8217;s current references, use the method as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3880,10 +3758,7 @@ http://10.142.180.101:8091/pools/default/remoteClusters</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For more information on
-the REST APIs <code>remoteClusters</code> method, see the detailed reference pages on
-<a href="../../rest-api/rest-xdcr-create-ref.html" class="page">setting</a> and
-<a href="../../rest-api/rest-xdcr-get-ref.html" class="page">getting</a> references.</p>
+<p>For more information on the REST APIs <code>remoteClusters</code> method, see the detailed reference pages on <a href="../../rest-api/rest-xdcr-create-ref.html" class="page">setting</a> and <a href="../../rest-api/rest-xdcr-get-ref.html" class="page">getting</a> references.</p>
 </div>
 </div>
 </div>
@@ -3891,9 +3766,7 @@ the REST APIs <code>remoteClusters</code> method, see the detailed reference pag
 <h2 id="next-xdcr-steps-after-create-reference"><a class="anchor" href="#next-xdcr-steps-after-create-reference"></a>Next Steps</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Once a reference to a target cluster has been defined, you can
-<a href="create-xdcr-replication.html" class="page">Create a
-Replication</a>.</p>
+<p>Once a reference to a target cluster has been defined, you can <a href="create-xdcr-replication.html" class="page">Create a Replication</a>.</p>
 </div>
 </div>
 </div>

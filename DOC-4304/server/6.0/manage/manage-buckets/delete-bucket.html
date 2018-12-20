@@ -464,80 +464,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-writing-views.html">Writing Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-writing-views-keys.html">Keys in Spatial View Functions</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-query-parameters.html">Querying Spatial Views</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-open-range.html">Open Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-closed-range.html">Closed Range Queries</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-queries-bbox.html">Bounding Box Queries</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <button class="nav-toggle"></button>
-    <a class="nav-link" href="../../learn/views/sv-example1.html">Playing with GeoJSON Polygons</a>
-    </span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-create.html">Creating a Spatial View Function</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-all.html">Querying All Data</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-east.html">Querying on the East</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-area.html">Querying on the Area</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-ex1-query-nonintersect.html">Querying on Non-intersect</a>
-    </span>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
-    <a class="nav-link" href="../../learn/views/sv-example2.html">Playing with Non-geographic Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../learn/views/view-indexes-for-n1ql.html">View Indexes for N1QL</a>
     </span>
   </li>
@@ -3115,11 +3041,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../../rest-api/rest-compact-spatialviews.html">Compacting Spatial Views</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <span class="nav-line">
     <a class="nav-link" href="../../rest-api/rest-autocompact-get.html">Getting Auto-Compaction Settings</a>
     </span>
   </li>
@@ -3564,7 +3485,7 @@ Full and Cluster Administrators can delete a bucket.</p>
 <p>Bucket-deletion may be appropriate either when an existing bucket is no longer needed; or when all items within an existing bucket need to be replaced — and bucket-deletion (followed by bucket-recreation) is determined to constitute a faster process than the deletion of each individual item.</p>
 </div>
 <div class="paragraph">
-<p>To delete a bucket using the Couchbase Web Console: access the console, and left-click on the <strong class="ui">Buckets</strong> tab, in the vertical navigation-bar at the left-hand side.</p>
+<p>To delete a bucket using Couchbase Web Console: access the console, and left-click on the <strong class="ui">Buckets</strong> tab, in the vertical navigation-bar at the left-hand side.</p>
 </div>
 <div id="access_bucket_tab" class="imageblock" style="text-align: left">
 <div class="content">
@@ -3596,7 +3517,7 @@ Full and Cluster Administrators can delete a bucket.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If you elect to proceed, by left-clicking on the <b class="button">Delete Bucket</b> button, the bucket and all its data are deleted from the system; and the bucket is no longer represented within the <strong class="ui">Buckets</strong> screen of the Couchbase Web Console.</p>
+<p>If you elect to proceed, by left-clicking on the <b class="button">Delete Bucket</b> button, the bucket and all its data are deleted from the system; and the bucket is no longer represented within the <strong class="ui">Buckets</strong> screen of Couchbase Web Console.</p>
 </div>
 </div>
 </div>
@@ -3613,8 +3534,7 @@ Full and Cluster Administrators can delete a bucket.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>User-access to buckets is controlled by <em>Role-Based Access Control</em> (RBAC).
-See
-<a href="../../learn/security/authorization-overview.html" class="page">Authorization</a> for details.</p>
+See <a href="../../learn/security/authorization-overview.html" class="page">Authorization</a> for details.</p>
 </div>
 <div class="paragraph">
 <p>Note that roles assigned to users may contain privileges for accessing specfic buckets by name.

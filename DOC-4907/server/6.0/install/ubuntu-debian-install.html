@@ -3129,7 +3129,7 @@ This method involves downloading and installing a small meta package from Couchb
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo dpkg -i couchbase-release-1.0-6-amd64.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo dpkg -i ./couchbase-release-1.0-6-amd64.deb</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3165,7 +3165,7 @@ This method involves downloading and installing a small meta package from Couchb
 <dd>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install ./couchbase-server.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server</code></pre>
 </div>
 </div>
 </dd>
@@ -3176,7 +3176,7 @@ This method involves downloading and installing a small meta package from Couchb
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install ./couchbase-server-&lt;version&gt;.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-&lt;version&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3195,7 +3195,7 @@ For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install ./couchbase-server-community-6.0.0-beta.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community-6.0.0-beta</code></pre>
 </div>
 </div>
 </td>
@@ -3213,7 +3213,7 @@ For example:</p>
 <dd>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install ./couchbase-server-community.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community</code></pre>
 </div>
 </div>
 </dd>
@@ -3224,7 +3224,7 @@ For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install ./couchbase-server-community-&lt;version&gt;.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community-&lt;version&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3243,7 +3243,7 @@ For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install ./couchbase-server-6.0.0-beta.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-6.0.0-beta</code></pre>
 </div>
 </div>
 </td>
@@ -3258,18 +3258,6 @@ For example:</p>
 </div>
 <div class="paragraph">
 <p>The <code>apt-get</code> command automatically downloads and installs the latest version of Couchbase Server, along with all of its dependencies.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The <code>./</code> is necessary because when you use <code>apt</code> this way, it will download any dependencies that aren&#8217;t currently installed locally.
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>Once installation is complete, Couchbase Server will start automatically (and will continue to start automatically at run levels 2, 3, 4, and 5, and explicitly shut down at run levels 0, 1, and 6).
@@ -3320,7 +3308,7 @@ sent invalidate(passwd) request, exiting</code></pre>
 <p>Install Couchbase Server.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">dpkg -i couchbase-server-*.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo dpkg -i ./couchbase-server-*.deb</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3376,7 +3364,7 @@ sent invalidate(passwd) request, exiting</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Although you can install and run Couchbase Server as non-root, you will likely need to <a href="#ulimit-settings">configure ulimits</a> on the host system for Couchbase to run properly.
+Although you can install and run Couchbase Server as non-root, you will likely need to <a href="#ulimit-settings">configure ulimits</a> on the host system in order for Couchbase to run properly.
 </td>
 </tr>
 </table>
@@ -3404,7 +3392,7 @@ Although you can install and run Couchbase Server as non-root, you will likely n
 <p>Go to the following subdirectory:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd opt/couchbase</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">cd opt/couchbase</code></pre>
 </div>
 </div>
 </li>
@@ -3412,7 +3400,7 @@ Although you can install and run Couchbase Server as non-root, you will likely n
 <p>Run the following script to relocate the Couchbase Server installation to the present working directory:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./bin/install/reloc.sh `pwd`</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">./bin/install/reloc.sh `pwd`</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3423,7 +3411,7 @@ Although you can install and run Couchbase Server as non-root, you will likely n
 <p>To run Couchbase Server:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./bin/couchbase-server -- -noinput -detached</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">./bin/couchbase-server -- -noinput -detached</code></pre>
 </div>
 </div>
 </li>
@@ -3431,7 +3419,7 @@ Although you can install and run Couchbase Server as non-root, you will likely n
 <p>To stop Couchbase Server:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./bin/couchbase-server -k</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">./bin/couchbase-server -k</code></pre>
 </div>
 </div>
 </li>
@@ -3464,10 +3452,10 @@ These are also the recommended settings for non-root installations.</p>
 <table id="table-ulimit-settings" class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Recommended <code>ulimit</code> Settings</caption>
 <colgroup>
-<col style="width: 40%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
 </colgroup>
 <thead>
 <tr>
@@ -3499,7 +3487,7 @@ These are also the recommended settings for non-root installations.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>To set the <code>ulimit</code> settings, create a <code>.conf</code> file in the <code>/etc/security/limits.d</code> directory (such as <code>91-couchbase.conf</code>), and add the following values:</p>
+<p>To configure the <code>ulimit</code> settings, create a <code>.conf</code> file in the <code>/etc/security/limits.d</code> directory (such as <code>91-couchbase.conf</code>), and add the following values:</p>
 </div>
 <div class="listingblock">
 <div class="content">

@@ -3193,14 +3193,14 @@ This method involves downloading and installing a small meta package from Couchb
 <p>Specify a release to install it.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-&lt;version&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server=&lt;version-string&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;where <code>&lt;version&gt;</code> is the full version string of the release.</p>
+<p>&#8230;&#8203;where <code>&lt;version-string&gt;</code> is the full version string of the release.</p>
 </div>
 <div class="paragraph">
-<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server-6.0.0-1693-1</code></p>
+<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server=6.0.0-1693-1</code></p>
 </div>
 </li>
 </ol>
@@ -3239,14 +3239,14 @@ This method involves downloading and installing a small meta package from Couchb
 <p>Specify a release to install it.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community-&lt;version&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community=&lt;version-string&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;where <code>&lt;version&gt;</code> is the full version string of the release.</p>
+<p>&#8230;&#8203;where <code>&lt;version-string&gt;</code> is the full version string of the release.</p>
 </div>
 <div class="paragraph">
-<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server-community-6.0.0-1693-1</code></p>
+<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server-community=6.0.0-1693-1</code></p>
 </div>
 </li>
 </ol>
@@ -3296,14 +3296,22 @@ sent invalidate(passwd) request, exiting</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="install-using-dpkg"><a class="anchor" href="#install-using-dpkg"></a>Install using <code>dpkg</code></h3>
+<h3 id="install-using-deb-package"><a class="anchor" href="#install-using-deb-package"></a>Install Using <code>.deb</code> Package</h3>
 <div class="paragraph">
-<p>Install Couchbase Server on Ubuntu and Debian using the <code>dpkg</code> command-line tool with the <code>.deb</code> package that you downloaded from Couchbase.</p>
+<p>Install Couchbase Server on Ubuntu and Debian using the <code>dpkg</code> command-line tool with the full <code>.deb</code> package that you downloaded from Couchbase.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p>Download the appropriate package for your operating system from the Couchbase <a href="https://www.couchbase.com/downloads" target="_blank" rel="noopener">downloads page</a>.</p>
+</li>
+<li>
+<p>Reload the local package database.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get update</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Install Couchbase Server.</p>
@@ -3314,6 +3322,14 @@ sent invalidate(passwd) request, exiting</code></pre>
 </div>
 <div class="paragraph">
 <p>&#8230;&#8203;where <code>*</code> is the edition and version of the downloaded package.</p>
+</div>
+<div class="paragraph">
+<p>If <code>dpkg</code> reports any errors about missing dependencies, issue the following command to download and install those dependencies from the internet:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get -f install</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Once installation is complete, Couchbase Server will start automatically (and will continue to start automatically at run levels 2, 3, 4, and 5, and explicitly shut down at run levels 0, 1, and 6).

@@ -2757,6 +2757,11 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../n1ql/n1ql-rest-api/admin.html">Admin REST API</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
@@ -3171,36 +3176,34 @@ This method involves downloading and installing a small meta package from Couchb
 </dd>
 <dt class="hdlist1">Install a specific release of Couchbase Server Enterprise</dt>
 <dd>
-<div class="paragraph">
-<p>To install a specific release, you must specify the version number.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>List the available releases.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">apt list -a couchbase-server</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>An example listing might be: <code>couchbase-server/xenial <strong>6.0.0-1693-1</strong> amd64</code>.</p>
+</div>
+</li>
+<li>
+<p>Specify a release to install it.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-&lt;version&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;where <code>&lt;version&gt;</code> is the three-digit version number (x.x.x) of the release you want to install.</p>
+<p>&#8230;&#8203;where <code>&lt;version&gt;</code> is the full version string of the release.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
 <div class="paragraph">
-<p>For beta releases, simply append <code>-beta</code> to the version number.
-For example:</p>
+<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server-6.0.0-1693-1</code></p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community-6.0.0-beta</code></pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
+</li>
+</ol>
 </div>
 </dd>
 </dl>
@@ -3219,36 +3222,34 @@ For example:</p>
 </dd>
 <dt class="hdlist1">Install a specific release of Couchbase Server Community</dt>
 <dd>
-<div class="paragraph">
-<p>To install a specific release, you must specify the version number.</p>
-</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>List the available releases.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community-&lt;version&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">apt list -a couchbase-server</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;where <code>&lt;version&gt;</code> is the three-digit version number (x.x.x) of the release you want to install.</p>
+<p>An example listing might be: <code>couchbase-server/xenial <strong>6.0.0-1693-1</strong> amd64</code>.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>For beta releases, simply append <code>-beta</code> to the version number.
-For example:</p>
-</div>
+</li>
+<li>
+<p>Specify a release to install it.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-6.0.0-beta</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-&lt;version&gt;</code></pre>
 </div>
 </div>
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>&#8230;&#8203;where <code>&lt;version&gt;</code> is the full version string of the release.</p>
+</div>
+<div class="paragraph">
+<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server-6.0.0-1693-1</code></p>
+</div>
+</li>
+</ol>
 </div>
 </dd>
 </dl>
@@ -3352,10 +3353,10 @@ sent invalidate(passwd) request, exiting</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="deb-nonroot-nonsudo"><a class="anchor" href="#deb-nonroot-nonsudo"></a>Installing as Non-root, Non-sudo</h2>
+<h2 id="deb-nonroot-nonsudo"><a class="anchor" href="#deb-nonroot-nonsudo"></a>Installing as non-root, non-sudo</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A non-root, non-sudo installation will still run Couchbase Server and all Couchbase Server command-line tools.</p>
+<p>A non-root, non-sudo installation will run Couchbase Server and all Couchbase Server command-line tools.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3364,7 +3365,7 @@ sent invalidate(passwd) request, exiting</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Although you can install and run Couchbase Server as non-root, you will likely need to <a href="#ulimit-settings">configure ulimits</a> on the host system in order for Couchbase to run properly.
+Only 64 bit systems are supported.
 </td>
 </tr>
 </table>
@@ -3372,35 +3373,29 @@ Although you can install and run Couchbase Server as non-root, you will likely n
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Download the appropriate package for your operating system from the Couchbase <a href="https://www.couchbase.com/downloads" target="_blank" rel="noopener">downloads page</a>.</p>
-</li>
-<li>
-<p>Go to the directory where the package is located and extract it.</p>
+<p>After downloading the Couchbase Server DEB package, go to the directory where it is located and extract it:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">dpkg-deb -x couchbase-server-*.deb $HOME</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">dpkg-deb -x couchbase-server-version.deb $HOME</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;where <code>*</code> is the edition and version of the downloaded package.</p>
-</div>
-<div class="paragraph">
-<p>In the directory where you extracted the package, you will find the <code>/opt</code> and <code>/etc</code> subdirectories.</p>
+<p>In the directory where you extracted the files, you will see <em class="path">/opt</em> and <em class="path">/etc</em> subdirectories.</p>
 </div>
 </li>
 <li>
-<p>Go to the following subdirectory:</p>
+<p>After you extract the Couchbase Server installation files, go to the subdirectory:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">cd opt/couchbase</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd opt/couchbase</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Run the following script to relocate the Couchbase Server installation to the present working directory:</p>
+<p>Run the following script to relocate the Couchbase Server installation to the present working directory (PWD):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">./bin/install/reloc.sh `pwd`</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./bin/install/reloc.sh `pwd`</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3408,119 +3403,22 @@ Although you can install and run Couchbase Server as non-root, you will likely n
 </div>
 </li>
 <li>
-<p>To run Couchbase Server:</p>
+<p>To run the server use</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">./bin/couchbase-server -- -noinput -detached</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./bin/couchbase-server -- -noinput -detached</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>To stop Couchbase Server:</p>
+<p>To stop the server use</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">./bin/couchbase-server -k</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./bin/couchbase-server -k</code></pre>
 </div>
 </div>
 </li>
 </ol>
-</div>
-<div class="sect2">
-<h3 id="ulimit-settings"><a class="anchor" href="#ulimit-settings"></a>Configuring <code>ulimit</code> Settings</h3>
-<div class="paragraph">
-<p>When you install and run Couchbase Server as non-root, you need to pay particular attention to the <code>ulimit</code> settings for the user that runs Couchbase.
-Normally, the Couchbase Server installer modifies the <code>ulimit</code> settings to levels that Couchbase will not exceed.
-However, since the non-root installation bypasses the traditional installer, you will need to assess the <code>ulimit</code> needs of your deployment, and set them appropriately for the user that will run Couchbase Server.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Configuring hard <code>ulimit</code> settings requires superuser permissions.
-Have your administrator configure these settings on the host before you install Couchbase Server as a non-root user.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The following table lists the <code>ulimit</code> settings that are normally configured by the Couchbase Server installer.
-These are also the recommended settings for non-root installations.</p>
-</div>
-<table id="table-ulimit-settings" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Recommended <code>ulimit</code> Settings</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Limit</th>
-<th class="tableblock halign-left valign-top">Soft Limit</th>
-<th class="tableblock halign-left valign-top">Hard Limit</th>
-<th class="tableblock halign-left valign-top">Units</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Max processes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4096</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">16384</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">processes</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Max open files</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">70000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">70000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">files</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Max locked memory</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">unlimited</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">unlimited</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">bytes</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>To configure the <code>ulimit</code> settings, create a <code>.conf</code> file in the <code>/etc/security/limits.d</code> directory (such as <code>91-couchbase.conf</code>), and add the following values:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">couchbase soft nproc 4096
-couchbase hard nproc 16384
-couchbase soft nofile 70000
-couchbase hard nofile 70000
-couchbase soft memlock unlimited
-couchbase hard memlock unlimited</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;where <code>couchbase</code> is the name of the user that will run Couchbase Server.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="next-steps"><a class="anchor" href="#next-steps"></a>Next Steps</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>If this is the first node where you&#8217;ve installed Couchbase Server, the next step is to <a href="#">init-seup.adoc</a>.</p>
-</div>
-<div class="paragraph">
-<p>You can also <a href="#">manage:manage-nodes:add-node-and-rebalance.adoc</a> to an existing cluster.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="more-information"><a class="anchor" href="#more-information"></a>More Information</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>For other types of deployments, such as cloud and container deployment, refer to <a href="get-started.html" class="page">Couchbase Server Deployment Options</a>.</p>
 </div>
 </div>
 </div>

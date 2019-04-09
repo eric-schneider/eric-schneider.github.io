@@ -2757,6 +2757,11 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../n1ql-rest-api/admin.html">Admin REST API</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
@@ -3058,35 +3063,118 @@
 <h1 class="page">EXECUTE</h1>
 <div id="preamble">
 <div class="sectionbody">
+<div class="quoteblock abstract">
+<blockquote>
+The EXECUTE statement executes a prepared statement.
+</blockquote>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="syntax"><a class="anchor" href="#syntax"></a>Syntax</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>execute ::= EXECUTE <em>name</em></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/n1ql-language-reference/execute.png" alt="execute ::= 'EXECUTE' name">
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">name</dt>
+<dd>
+<p>The name of the prepared statement.
+This may be a UUID that was assigned automatically, or a name that was user-specified when the statement was created.</p>
 <div class="paragraph">
-<p>The EXECUTE statement executes a prepared statement.
-When specified, the name should identify a prepared statement.
-An error is returned if the name does not identify a prepared statement.
-When specified, the <code class="param">encoded_plan</code> should be the result of a prepared statement.
-An error is returned if the <code class="param">encoded_plan</code> cannot be converted to a prepared statement.</p>
+<p>An error is returned if the name does not identify a prepared statement.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If the name of the prepared statement contains hyphens, wrap the entire name in backticks (<code>`</code>) or double quotation marks (<code>"</code>).
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can execute a prepared statement in three ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Using the EXECUTE statement in the Query Workbench.</p>
+</li>
+<li>
+<p>Using the EXECUTE statement in the the <a href="../../tools/cbq-shell.html" class="page">cbq</a> command line shell.</p>
+</li>
+<li>
+<p>Using the <a href="../n1ql-rest-api/index.html" class="page">Query REST API</a> (<code>/query/service</code> endpoint).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All of these methods require you to specify the name of the prepared statement.
+With the last method, you can also include the encoded plan.</p>
+</div>
+<div class="paragraph">
+<p>If the name of the prepared statement is unrecognized, the query engine will decode and execute the prepared statement given by the encoded plan.
+The decoded prepared statement will be saved by the query engine so the next request that uses its name will succeed.</p>
+</div>
+<div class="paragraph">
+<p>When specified, the encoded plan should be the result of a prepared statement.
+An error is returned if the encoded plan cannot be converted to a valid plan.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
 <div class="sectionbody">
+<div class="exampleblock">
+<div class="title">Example 1. Executing a prepared statement in N1QL</div>
+<div class="content">
 <div class="paragraph">
-<p><strong>Prepared statement without a name</strong></p>
+<p>The following example shows how to execute a prepared statement in N1QL.</p>
 </div>
+<div class="listingblock">
+<div class="title">Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-N1QL hljs" data-lang="N1QL">EXECUTE `[127.0.0.1:8091]24734829-c793-4b90-b8bd-74ff788be493`;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 2. Executing a prepared statement without a name using the REST API</div>
+<div class="content">
 <div class="paragraph">
 <p>The following example shows how to prepare the statement without specifying a name.</p>
 </div>
-<div class="literalblock">
-<div class="title">Request:</div>
+<div class="listingblock">
+<div class="title">Request</div>
 <div class="content">
-<pre>$ curl -v http://localhost:8093/query/service \
--d 'statement=PREPARE SELECT text FROM tweets WHERE rating &gt; $r AND created_at &gt; $date'</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ curl -v http://localhost:8093/query/service -d 'statement=PREPARE SELECT text FROM tweets WHERE rating &gt; $r AND created_at &gt; $date'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Response</div>
 <div class="content">
-<pre>&lt; HTTP/1.1 200 OK
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">&lt; HTTP/1.1 200 OK
 {
   "requestID": "a339a496-7ed5-4625-9c64-0d7bf584a1bd",
   "signature": "json",
@@ -3112,22 +3200,22 @@ An error is returned if the <code class="param">encoded_plan</code> cannot be co
   "resultCount": 1,
   "resultSize": 2261
  }
-}</pre>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The following example uses the server-generated name of the prepared statement to execute the statement.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="title">Request:</div>
 <div class="content">
-<pre>$ curl -v http://localhost:8093/query/service -d 'prepared="a1355198-2576-4e3d-af04-5acc77d8a681"&amp;$r=9.5&amp;$date="1-1-2014"'</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ curl -v http://localhost:8093/query/service -d 'prepared="a1355198-2576-4e3d-af04-5acc77d8a681"&amp;$r=9.5&amp;$date="1-1-2014"'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Response:</div>
 <div class="content">
-<pre>&lt; HTTP/1.1 200 OK
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">&lt; HTTP/1.1 200 OK
 {
  "requestID": "1bd9956b-bc8e-478a-bd84-3955fe2db047",
  "signature": {
@@ -3145,27 +3233,27 @@ An error is returned if the <code class="param">encoded_plan</code> cannot be co
  "resultCount": 0,
  "resultSize": 0
  }
-}
-$</pre>
+}</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Specifying a name for the prepared statement</strong></p>
 </div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 3. Executing a prepared statement with a name using the REST API</div>
+<div class="content">
 <div class="paragraph">
 <p>The following example specifies a <code class="param">name</code> for the prepared statement.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="title">Request:</div>
 <div class="content">
-<pre>$ curl -v http://localhost:8093/query/service \
--d 'statement=PREPARE fave_tweets FROM SELECT text FROM tweets WHERE rating &gt;= $r'</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ curl -v http://localhost:8093/query/service -d 'statement=PREPARE fave_tweets FROM SELECT text FROM tweets WHERE rating &gt;= $r'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Response:</div>
 <div class="content">
-<pre>&lt; HTTP/1.1 200 OK
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">&lt; HTTP/1.1 200 OK
  {
         "requestID": "a339a496-7ed5-4625-9c64-0d7bf584a1bd",
         "signature": "json",
@@ -3174,22 +3262,22 @@ $</pre>
         "name": "fave_tweets",
         "operator": {
         // and so on
-        ...</pre>
+        ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The following example uses the <code class="param">name</code> specified in the example above to run the prepared statement.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="title">Request:</div>
 <div class="content">
-<pre>$ curl -v http://localhost:8093/query/service -d 'prepared="fave_tweets"&amp;$r=9.5'</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ curl -v http://localhost:8093/query/service -d 'prepared="fave_tweets"&amp;$r=9.5'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Response</div>
 <div class="content">
-<pre>&lt; HTTP/1.1 200 OK
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">&lt; HTTP/1.1 200 OK
 {
  "requestID": "1bd9956b-bc8e-478a-bd84-3955fe2db047",
  "signature": {
@@ -3207,27 +3295,27 @@ $</pre>
  "resultCount": 0,
  "resultSize": 0
  }
- }
-$</pre>
+ }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Specifying the name and the encoded_plan</strong></p>
 </div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 4. Executing a prepared statement with the encoded plan using the REST API</div>
+<div class="content">
 <div class="paragraph">
 <p>The following example specifies a <code class="param">name</code> for the prepared statement and the response includes an <code class="param">encoded_plan</code>.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="title">Request:</div>
 <div class="content">
-<pre>$ curl -v http://localhost:8093/query/service \
--d 'statement=PREPARE fave_tweets FROM SELECT text FROM tweets WHERE rating &gt;= $r'</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ curl -v http://localhost:8093/query/service -d 'statement=PREPARE fave_tweets FROM SELECT text FROM tweets WHERE rating &gt;= $r'</code></pre>
 </div>
 </div>
 <div class="listingblock">
-<div class="title">Response:</div>
+<div class="title">Response</div>
 <div class="content">
-<pre>&lt; HTTP/1.1 200 OK
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">&lt; HTTP/1.1 200 OK
 {
   "requestID": "a339a496-7ed5-4625-9c64-0d7bf584a1bd",
   "signature": "json",
@@ -3236,23 +3324,22 @@ $</pre>
         "name": "fave_tweets",
         "operator": {
         // and so on
-        ...</pre>
+        ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The following example uses the <code class="param">name</code> and <code class="param">encoded_plan</code> from the example above to run the prepared statement.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="title">Request</div>
 <div class="content">
-<pre>$ curl -v http://localhost:8093/query/service -H "Content-Type: application/json" -d  \
-'{ "prepared":"fave_tweets", "encoded_plan":"H4sIAAAJbogA/5yRQU/6QBDFvwpZ/gdIIAAA==", "$r":9.5 }'</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ curl -v http://localhost:8093/query/service -H "Content-Type: application/json" -d '{ "prepared":"fave_tweets", "encoded_plan":"H4sIAAAJbogA/5yRQU/6QBDFvwpZ/gdIIAAA==", "$r":9.5 }'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Response</div>
 <div class="content">
-<pre>&lt; HTTP/1.1 200 OK
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">&lt; HTTP/1.1 200 OK
 {
  "requestID": "1bd9956b-bc8e-478a-bd84-3955fe2db047",
  "signature": {
@@ -3270,9 +3357,22 @@ $</pre>
   "resultCount": 0,
   "resultSize": 0
    }
- }
-$</pre>
+ }</code></pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="related"><a class="anchor" href="#related"></a>Related</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>For information on preparing a statement for execution, refer to <a href="prepare.html" class="page">PREPARE</a>.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

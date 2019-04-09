@@ -2757,6 +2757,11 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../n1ql-rest-api/admin.html">Admin REST API</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
@@ -3056,42 +3061,107 @@
   </div>
 <article class="doc">
 <h1 class="page">PREPARE</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<blockquote>
+The PREPARE statement prepares a query for repeated execution.
+</blockquote>
+</div>
+</div>
+</div>
 <div class="sect1">
-<h2 id="prepare-statement"><a class="anchor" href="#prepare-statement"></a>PREPARE statement</h2>
+<h2 id="purpose"><a class="anchor" href="#purpose"></a>Purpose</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em>prepare:</em></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre> PREPARE [ name ( FROM | AS ) ] statement</pre>
-</div>
+<p>Building plans for N1QL requests may be expensive, in particular where a cluster has many indexes.
+Sometimes planning may take more time than actually executing a request.</p>
 </div>
 <div class="paragraph">
-<p>The PREPARE statement prepares a query.
-A name can optionally be specified.
-A JSON array is returned that contains one result that has the properties:</p>
+<p>If you know that a statement text will be executed repeatedly, you can request the N1QL service to prepare the execution plan beforehand, and then request to execute the prepared plan as many times as needed, thereby avoiding the cost of repeated planning.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="syntax"><a class="anchor" href="#syntax"></a>Syntax</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>prepare ::= PREPARE [ <em>name</em> ( FROM | AS ) ] <em>statement</em></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/n1ql-language-reference/prepare.png" alt="'PREPARE' ( name ( 'FROM' | 'AS' ) )? statement">
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">name</dt>
+<dd>
+<p>[Optional] A name for the prepared statement.
+If you do not specify an name for the prepared statement, the query engine generates a UUID as a name.</p>
+</dd>
+<dt class="hdlist1">statement</dt>
+<dd>
+<p>The full text of the N1QL statement to prepare.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="result"><a class="anchor" href="#result"></a>Result</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A JSON array is returned that contains the following properties:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">name</dt>
+<dd>
+<p>The name of the prepared statement.
+This may be a UUID that was assigned automatically, or the name that you specified when the statement was created.</p>
+</dd>
+<dt class="hdlist1">operator</dt>
+<dd>
+<p>The execution plan of the statement being prepared.</p>
+</dd>
+<dt class="hdlist1">signature</dt>
+<dd>
+<p>The signature of the statement being prepared.</p>
+</dd>
+<dt class="hdlist1">text</dt>
+<dd>
+<p>The full PREPARE statement text.</p>
+</dd>
+<dt class="hdlist1">encoded_plan</dt>
+<dd>
+<p>The full prepared statement in encoded format.
+The encoded plan can be included in addition to the prepared parameter in a request to execute a prepared statement.
+If the name given by the prepared parameter is unrecognized, the query engine will decode and execute the prepared statement given by the encoded plan.
+The decoded prepared statement will be saved by the query engine so the next request that uses its name will succeed.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can prepare a statement in three ways:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code class="param">name</code>: If present, this will be the name given to the PREPARE statement.
-If not, a name is generated.</p>
+<p>Using the PREPARE statement in the Query Workbench.</p>
 </li>
 <li>
-<p><code class="param">operator</code>: the execution plan of the statement being prepared.</p>
+<p>Using the PREPARE statement in the the <a href="../../tools/cbq-shell.html" class="page">cbq</a> command line shell.</p>
 </li>
 <li>
-<p><code class="param">signature</code>: the signature of the statement being prepared.</p>
-</li>
-<li>
-<p><code class="param">text</code>: the full PREPARE statement text.</p>
-</li>
-<li>
-<p><code class="param">encoded_plan</code>: the full prepared statement in encoded format.
-The encoded plan can be included in addition to the prepared parameter in a request to execute a prepared statement.
-If the name given by the prepared parameter is unrecognized, the query engine will decode and execute the prepared statement given by the <code class="param">encoded_plan</code> parameter.
-The decoded prepared statement will be saved by the query engine so the next request that uses its name will succeed.</p>
+<p>Using the <a href="../n1ql-rest-api/index.html" class="page">Query REST API</a> (<code>/query/service</code> endpoint).</p>
 </li>
 </ul>
 </div>
@@ -3106,11 +3176,13 @@ After restarting the server, you must prepare the statements again before you ca
 <div class="paragraph">
 <p>For information on how to use prepared statements with various SDKs, refer to <a href="#">java-sdk::n1ql-query.adoc#prepare-stmts</a> and <a href="#">nodejs-sdk::n1ql-queries-with-sdk.adoc</a>.</p>
 </div>
-<div class="paragraph">
-<p><strong>RBAC Privileges</strong></p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="authorization"><a class="anchor" href="#authorization"></a>Authorization</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>User executing the PREPARE statement must have the privileges of the statement being prepared.
+<p>The user executing the PREPARE statement must have the RBAC privileges of the statement being prepared.
 For more details about user roles, see
 <a href="../../learn/security/authorization-overview.html" class="page">Authorization</a>.</p>
 </div>
@@ -3120,29 +3192,149 @@ For more details about user roles, see
 <div class="paragraph">
 <p>To execute the following statement, user must have the <em>Query Select</em> privilege on both keyspaces <code>`travel-sample`</code> and <code>`beer-sample`</code>.</p>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="listingblock">
 <div class="content">
-<pre>PREPARE SELECT * FROM `travel-sample`
-WHERE city = (SELECT RAW city FROM `beer-sample`)</pre>
+<pre class="highlightjs highlight"><code class="language-N1QL hljs" data-lang="N1QL">PREPARE SELECT * FROM `travel-sample`
+WHERE city = (SELECT RAW city FROM `beer-sample`)</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
 <p>To execute the following statement, user must have the <em>Query Update</em> and <em>Query Select</em> privileges on <code>`travel-sample`</code>.</p>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="listingblock">
 <div class="content">
-<pre>PREPARE UPDATE `travel-sample`
+<pre class="highlightjs highlight"><code class="language-N1QL hljs" data-lang="N1QL">PREPARE UPDATE `travel-sample`
 SET city = "San Francisco" WHERE lower(city) = "sanfrancisco"
-RETURNING *</pre>
+RETURNING *</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="execute-statement"><a class="anchor" href="#execute-statement"></a>EXECUTE statement</h2>
+<h2 id="example"><a class="anchor" href="#example"></a>Example</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>For details, see <a href="execute.html" class="page">EXECUTE</a>.</p>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="title">Query</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-N1QL hljs" data-lang="N1QL">PREPARE SELECT * FROM `travel-sample`
+WHERE type = "route"
+AND airline = "FL";</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Result</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-JSON hljs" data-lang="JSON">{
+  "encoded_plan": "H4sIAAAAAAAA/6STUW/aPhTFv0p0/i+lMn91wBTwtAfUgVap2xBU28NAcEkuwatxMtvpyqrss08OhQ66l21SXmKfXJ/zO/ED2CR5yum80GQgAYEVky8tX+bG21w7yAsBZVK+7xfqI1uncgPZFjC0YUi0OnG70231mkncazc7y95Fc9ldps24s1rF3e6SO702BPKCLfncQj7gv6cXTPhrySZhCPxI1kqnlg3k52NRv/Tr3KrvQVVYdac0Z+zCqGvlfC2/IZuxh0TKKyq1l97SHeumo02hw3cjq+4g42pW7U/6KytXgcQkIRNC1Vh2Z879tuD90lylkOhS3KIXL3sxLXvdVYsOu4XNv3Dia5APIdCG7HZ+y1tIb0uuBG556wpKAt/THAH7fu8xKwRcQcbVZvmeEr8bJGDJZFwvr1W2hsQUNi89T1GbSXR5qFPn3472q1k1EyidMhkkMqdQiWMUQ/bJGn9s9nTMiCxpzRr/1MtQac8WAkluUrVji7Ozs8WRpcX/i9DTohG9jg5RGxGZNPqNlJTVyuzVw+spGo1n9q+M8or0aNcpBCy7Uvu5Z7vZN1IEoWO9Ck15so89z54RVeZpUjWrwnMimXjLtEH9GzuVmfquBmLnkDhHJeD5PtyD0Xgw6o8H0WRwPbi8ic6j4fjDu+gk49R8ejsYD6IA5VckU9N//yZ6zH9I/wrVzwAAAP//7/sWYTEEAAA=",
+  "featureControls": 0,
+  "indexApiVersion": 3,
+  "name": "[127.0.0.1:8091]24734829-c793-4b90-b8bd-74ff788be493",
+  "operator": {
+    "#operator": "Sequence",
+    "~children": [
+      {
+        "#operator": "Authorize",
+        "privileges": {
+          "List": [
+            {
+              "Priv": 7,
+              "Target": "default:travel-sample"
+            }
+          ]
+        },
+        "~child": {
+          "#operator": "Sequence",
+          "~children": [
+            {
+              "#operator": "IndexScan3",
+              "index": "def_type",
+              "index_id": "8a72a1597ab98f2a",
+              "index_projection": {
+                "primary_key": true
+              },
+              "keyspace": "travel-sample",
+              "namespace": "default",
+              "spans": [
+                {
+                  "exact": true,
+                  "range": [
+                    {
+                      "high": "\"route\"",
+                      "inclusion": 3,
+                      "low": "\"route\""
+                    }
+                  ]
+                }
+              ],
+              "using": "gsi"
+            },
+            {
+              "#operator": "Fetch",
+              "keyspace": "travel-sample",
+              "namespace": "default"
+            },
+            {
+              "#operator": "Parallel",
+              "~child": {
+                "#operator": "Sequence",
+                "~children": [
+                  {
+                    "#operator": "Filter",
+                    "condition": "(((`travel-sample`.`type`) = \"route\") and ((`travel-sample`.`airline`) = \"FL\"))"
+                  },
+                  {
+                    "#operator": "InitialProject",
+                    "result_terms": [
+                      {
+                        "expr": "self",
+                        "star": true
+                      }
+                    ]
+                  },
+                  {
+                    "#operator": "FinalProject"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "#operator": "Stream"
+      }
+    ]
+  },
+  "signature": {
+    "*": "*"
+  },
+  "text": "PREPARE SELECT * FROM `travel-sample`\nWHERE type = \"route\"\nAND airline = \"FL\";"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="related"><a class="anchor" href="#related"></a>Related</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>For information on executing the prepared statement, refer to <a href="execute.html" class="page">EXECUTE</a>.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

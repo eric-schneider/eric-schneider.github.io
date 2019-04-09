@@ -3118,7 +3118,7 @@ However, you should review the following material before installing, especially 
 <p>You must be logged in as root (superuser) or use <code>sudo</code> to run the installation commands.</p>
 </div>
 <div class="sect2">
-<h3 id="install-using-apt-recommended"><a class="anchor" href="#install-using-apt-recommended"></a>Install Using <code>apt</code> (Recommended)</h3>
+<h3 id="install-using-apt"><a class="anchor" href="#install-using-apt"></a>Install Using <code>apt</code></h3>
 <div class="paragraph">
 <p>The Advanced Package Tool (<code>apt</code>) provides the simplest and most comprehensive way to install Couchbase on Ubuntu and Debian platforms.
 This method involves downloading and installing a small meta package from Couchbase, which <code>apt</code> can then use to automatically download and install Couchbase Server and all of its dependencies.</p>
@@ -3228,25 +3228,25 @@ This method involves downloading and installing a small meta package from Couchb
 <p>List the available releases.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">apt list -a couchbase-server</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">apt list -a couchbase-server-community</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>An example listing might be: <code>couchbase-server/xenial <strong>6.0.0-1693-1</strong> amd64</code>.</p>
+<p>An example listing might be: <code>couchbase-server-community/xenial <strong>6.0.0-1693-1</strong> amd64</code>.</p>
 </div>
 </li>
 <li>
 <p>Specify a release to install it.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-&lt;version&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community-&lt;version&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>&#8230;&#8203;where <code>&lt;version&gt;</code> is the full version string of the release.</p>
 </div>
 <div class="paragraph">
-<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server-6.0.0-1693-1</code></p>
+<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server-community-6.0.0-1693-1</code></p>
 </div>
 </li>
 </ol>

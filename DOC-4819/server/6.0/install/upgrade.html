@@ -2757,6 +2757,11 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../n1ql/n1ql-rest-api/admin.html">Admin REST API</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
@@ -3073,7 +3078,7 @@ For each release, read the <a href="../release-notes/relnotes.html" class="page"
 </div>
 </div>
 <div class="sect1">
-<h2 id="supported-upgrade-paths"><a class="anchor" href="#supported-upgrade-paths"></a>When to do an Upgrade</h2>
+<h2 id="supported-upgrade-paths"><a class="anchor" href="#supported-upgrade-paths"></a>When to Do an Upgrade</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you can, it is best to upgrade during off hours.
@@ -3180,7 +3185,7 @@ Both 'swap rebalance' and 'remove and reblance' methods are supported.
 This means you can&#8217;t upgrade to a newer version of Couchbase Server while also upgrading to Enterprise Edition during the same rolling upgrade.</p>
 </div>
 <div class="paragraph">
-<p>If you want to upgrade from an older version of Community Edition to a newer version of Enterprise Edition, you need to perform two separate upgrade procedures:</p>
+<p>If you want to upgrade from an older version of <em>Community Edition</em> to a newer version of <em>Enterprise Edition</em>, you need to perform two separate upgrade procedures:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -3193,30 +3198,16 @@ This means you can&#8217;t upgrade to a newer version of Couchbase Server while 
 </ol>
 </div>
 <div class="paragraph">
-<p>For example, if you wanted to upgrade from Couchbase Server 5.0.1 Community Edition to Couchbase Server 6.0.1 Enterprise Edition, the process would look like this:</p>
+<p>For example, if you wanted to upgrade from Couchbase Server 5.0.1 Community Edition to Couchbase Server 6.0.1 Enterprise Edition, the process would look like the following:</p>
 </div>
-<div class="literalblock">
-<div class="title">Example Upgrade Path from Community to Enterprise</div>
+<div class="imageblock">
 <div class="content">
-<pre>              /-----------------\           /-----------------\
-              |     Step 1:     |           |     Step 2:     |
-              : Upgrade Edition |           : Upgrade Version |
-              \--------+--------/           \--------+--------/
-                       |                             |
-                       |                             |
-+-----------------+    :     +-----------------+     :      +-----------------+
-|cBLU             | ---+---&gt; |cRED             | ----+----&gt; |cRED             |
-|Cluster 1        | Rolling  |Cluster 1        |    Any     |Cluster 1        |
-|Version: 5.0.1   | Online   |Version: 5.0.1   | Supported  |Version: 6.0.1   |
-|Edition: CE      | Upgrade  |Edition: EE      |  Upgrade   |Edition: EE      |
-|              {s}|          |              {s}|   Type     |              {s}|
-+-----------------+          +-----------------+            +-----------------+</pre>
+<img src="_images/upgrade-ce-to-ee.png" alt="upgrade ce to ee">
 </div>
-</div>
-<div class="paragraph">
-<p>Other notes about upgrading from Community to Enterprise:</p>
+<div class="title">Figure 1. Example Upgrade Path from Community to Enterprise</div>
 </div>
 <div class="ulist">
+<div class="title">Additional Notes about Upgrading from Community to Enterprise</div>
 <ul>
 <li>
 <p>Couchbase Server clusters must be run either entirely on Enterprise Edition nodes, or entirely on Community Edition nodes.</p>

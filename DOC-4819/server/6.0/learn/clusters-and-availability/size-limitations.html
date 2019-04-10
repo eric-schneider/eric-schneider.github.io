@@ -2757,6 +2757,11 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../n1ql/n1ql-rest-api/admin.html">Admin REST API</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
@@ -3120,6 +3125,11 @@ As a result, when the size of a document exceeded the limit, the view engine (in
 <td class="tableblock halign-left valign-top"><p class="tableblock">The maximum byte size allowed to be emitted for a single document and per view.
 This value is the sum of the sizes of all emitted keys and values.</p>
 <p class="tableblock">If a document emits a key-value pair that exceeds the specified maximum key-value size per document, an error is logged and that document is not indexed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max concurrent key-value connections</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each Couchbase Data node allows up to 30,000 concurrent key-value connections by default.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Function timeout</p></td>

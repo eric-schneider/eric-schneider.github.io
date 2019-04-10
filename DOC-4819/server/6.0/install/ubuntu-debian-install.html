@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Ubuntu/Debian Installation | Couchbase Docs</title>
+    <title>Installing Couchbase Server on Ubuntu and Debian | Couchbase Docs</title>
     <link rel="canonical" href="eric-schneider.github.io/DOC-4819/server/6.0/install/ubuntu-debian-install.html">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
@@ -2757,6 +2757,11 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../n1ql/n1ql-rest-api/admin.html">Admin REST API</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
@@ -3055,106 +3060,211 @@
 </div>
   </div>
 <article class="doc">
-<h1 class="page">Ubuntu/Debian Installation</h1>
+<h1 class="page">Installing Couchbase Server on Ubuntu and Debian</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-This installation information applies both to Ubuntu and Debian platforms.
+Install Couchbase Server on Ubuntu and Debian Linux.
+Root and non-root installations are supported.
 </blockquote>
 </div>
 <div class="paragraph">
-<p>Only 64 bit systems are supported.</p>
+<p>Use the instructions on this page to install Couchbase Server on Ubuntu and Debian platforms using the officially-supported <code>.deb</code> packages provided by Couchbase.
+The instructions support both Enterprise and Community editions.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The installation procedures assume that you&#8217;re working from a clean system and that you&#8217;ve <a href="install-uninstalling.html" class="page">uninstalled</a> any previous installations of Couchbase Server.</p>
 </div>
 <div class="paragraph">
-<p>You need to be logged in as root (superuser) to complete the installation.</p>
+<p>If you&#8217;re upgrading an existing installation of Couchbase Server, refer to <a href="upgrade.html" class="page">Upgrading Couchbase Server</a>.</p>
 </div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="before-you-install"><a class="anchor" href="#before-you-install"></a>Before You Install</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>On modern versions of Debian (Debian 8+) and Ubuntu (Ubuntu 14.04+), the "apt" command simplifies the installation greatly.</p>
+<p>Couchbase Server works out-of-the-box on most Ubuntu and Debian configurations.
+However, you should review the following material before installing, especially if you&#8217;re deploying Couchbase into production:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure that you&#8217;ve met the <a href="plan-for-production.html" class="page">minimum system requirements</a> and that your operating system version is <a href="install-platforms.html" class="page">supported</a>.</p>
+</li>
+<li>
+<p>Follow the <a href="install-production-deployment.html" class="page">deployment guidelines</a> to ensure that your systems and environment are properly sized and configured.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="basic-installation"><a class="anchor" href="#basic-installation"></a>Basic Installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You must be logged in as root (superuser) or use <code>sudo</code> to run the installation commands.</p>
+</div>
+<div class="sect2">
+<h3 id="install-using-apt"><a class="anchor" href="#install-using-apt"></a>Install Using <code>apt</code></h3>
+<div class="paragraph">
+<p>The Advanced Package Tool (<code>apt</code>) provides the simplest and most comprehensive way to install Couchbase on Ubuntu and Debian platforms.
+This method involves downloading and installing a small meta package from Couchbase, which <code>apt</code> can then use to automatically download and install Couchbase Server and all of its dependencies.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Download and install the appropriate meta package from the <a href="https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb" target="_blank" rel="noopener">package download location</a>.
-This will install the package source and the Couchbase public keys:</p>
+<p>Download and install the <code>.deb</code> meta package.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb
-sudo dpkg -i couchbase-release-1.0-4-amd64.deb</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-amd64.deb</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo dpkg -i ./couchbase-release-1.0-6-amd64.deb</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The meta package installs the necessary information for <code>apt</code> to retrieve all of the necessary packages, and also imports the necessary Couchbase public signing keys.</p>
+</div>
+</li>
+<li>
+<p>Reload the local package database.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get update</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Run the following commands to automatically download and install Couchbase along with the appropriate <code>libssl</code> and Python dependencies.</p>
+<p>Install Couchbase Server.</p>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_enterprise"></a>Enterprise</p>
+</li>
+<li>
+<p><a id="tabset1_community"></a>Community</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset1_enterprise">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Install the latest release of Couchbase Server Enterprise</dt>
+<dd>
 <div class="listingblock">
 <div class="content">
-<pre>apt-get update
-apt install ./couchbase-server.deb</pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The "./" in the command is necessary as the command expects a path.
-Otherwise the apt command handles it like a package name.
-</td>
-</tr>
-</table>
+</dd>
+<dt class="hdlist1">Install a specific release of Couchbase Server Enterprise</dt>
+<dd>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>List the available releases.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">apt list -a couchbase-server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An example listing might be: <code>couchbase-server/xenial <strong>6.0.0-1693-1</strong> amd64</code>.</p>
 </div>
 </li>
 <li>
-<p>On earlier versions of Debian, run the following commands to install Couchbase Server:</p>
+<p>Specify a release to install it.</p>
 <div class="listingblock">
 <div class="content">
-<pre>apt-get update
-dpkg -i ./couchbase-server.deb
-apt-get -f install</pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server=&lt;version-string&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Couchbase Server starts automatically and is configured to automatically start during boot under the 2, 3, 4, and 5 run levels.</p>
+<p>&#8230;&#8203;where <code>&lt;version-string&gt;</code> is the full version string of the release.</p>
 </div>
 <div class="paragraph">
-<p>Refer to the Ubuntu documentation for more information about installing packages using the Debian package manager.</p>
-</div>
-<div class="paragraph">
-<p>After installation is completed, the installation process displays a message similar to the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Selecting previously deselected package couchbase-server.
-(Reading database … 73755 files and directories currently installed.)
-Unpacking couchbase-server (from couchbase-server_x86_64_2.1.0-xxx-rel.deb) …
-libssl0.9.8 is installed. Continue installing
-Minimum RAM required : 4 GB
-System RAM configured : 4058708 kilobytes
-
-
-Minimum number of processors required : 4 cores
-Number of processors on the system : 4 cores
-Setting up couchbase-server  …
-
-Starting couchbase-server[  OK  ]
-
-You have successfully installed Couchbase Server.
-Browse to http://cen-1733:8091/ to configure your server.
-Refer to http://couchbase.com for additional resources.
-
-Update your firewall configuration to
-allow connections to the following ports: 11211, 11210, 11209, 4369,
-8091, 8092, 18091, 18092, 11214, 11215 and from 21100 to 21299.
-
-By using this software you agree to the End User License Agreement.
-See /opt/couchbase/LICENSE.txt.</pre>
-</div>
+<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server=6.0.0-1693-1</code></p>
 </div>
 </li>
 </ol>
 </div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_community">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Install the latest release of Couchbase Server Community</dt>
+<dd>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Install a specific release of Couchbase Server Community</dt>
+<dd>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>List the available releases.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">apt list -a couchbase-server-community</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An example listing might be: <code>couchbase-server-community/xenial <strong>6.0.0-1693-1</strong> amd64</code>.</p>
+</div>
+</li>
+<li>
+<p>Specify a release to install it.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get install couchbase-server-community=&lt;version-string&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;where <code>&lt;version-string&gt;</code> is the full version string of the release.</p>
+</div>
+<div class="paragraph">
+<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo apt-get install couchbase-server-community=6.0.0-1693-1</code></p>
+</div>
+</li>
+</ol>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>apt-get</code> command automatically downloads and installs the latest version of Couchbase Server, along with all of its dependencies.</p>
+</div>
+<div class="paragraph">
+<p>Once installation is complete, Couchbase Server will start automatically (and will continue to start automatically at run levels 2, 3, 4, and 5, and explicitly shut down at run levels 0, 1, and 6).
+You can use the <code>systemctl</code> command (<code>service</code> on older operating systems) to start and stop the Couchbase Server service, as well as check the current status.
+Refer to <a href="startup-shutdown.html" class="page">Couchbase Server Startup and Shutdown</a> for more information.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -3162,11 +3272,69 @@ See /opt/couchbase/LICENSE.txt.</pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-After successful installation, use the <code class="cmd">service</code> command to manage the Couchbase Server service, including checking the current status.
-Refer to the Ubuntu documentation for instructions.
+<div class="paragraph">
+<p>Microsoft Azure Ubuntu 14.04 images from Canonical may throw the following warning messages during installation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sent invalidate(group) request, exiting
+sent invalidate(passwd) request, exiting</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The installation completes without a problem and it is safe to ignore these messages.</p>
+</div>
 </td>
 </tr>
 </table>
+</div>
+</li>
+<li>
+<p>Open a web browser and access the Couchbase Server Web Console to <a href="testing.html" class="page">verify</a> that the installation was successful and the node is available.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="install-using-deb-package"><a class="anchor" href="#install-using-deb-package"></a>Install Using <code>.deb</code> Package</h3>
+<div class="paragraph">
+<p>Install Couchbase Server on Ubuntu and Debian using the <code>dpkg</code> command-line tool with the full <code>.deb</code> package that you downloaded from Couchbase.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download the appropriate package for your operating system from the Couchbase <a href="https://www.couchbase.com/downloads" target="_blank" rel="noopener">downloads page</a>.</p>
+</li>
+<li>
+<p>Reload the local package database.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get update</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install Couchbase Server.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo dpkg -i ./couchbase-server-*.deb</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;where <code>*</code> is the edition and version of the downloaded package.</p>
+</div>
+<div class="paragraph">
+<p>If <code>dpkg</code> reports any errors about missing dependencies, issue the following command to download and install those dependencies from the internet:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo apt-get -f install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once installation is complete, Couchbase Server will start automatically (and will continue to start automatically at run levels 2, 3, 4, and 5, and explicitly shut down at run levels 0, 1, and 6).
+You can use the <code>systemctl</code> command (<code>service</code> on older operating systems) to start and stop the Couchbase Server service, as well as check the current status.
+Refer to <a href="startup-shutdown.html" class="page">Couchbase Server Startup and Shutdown</a> for more information.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3176,21 +3344,27 @@ Refer to the Ubuntu documentation for instructions.
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Microsoft Azure Ubuntu version 12 and Ubuntu version 14 images from Canonical may throw the following warning messages during installation.
-The installation completes without a problem and it is safe to ignore these messages.</p>
+<p>Microsoft Azure Ubuntu 14.04 images from Canonical may throw the following warning messages during installation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sent invalidate(group) request, exiting
+sent invalidate(passwd) request, exiting</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>sent invalidate(group) request, exiting</code></p>
-</div>
-<div class="paragraph">
-<p><code>sent invalidate(passwd) request, exiting</code></p>
+<p>The installation completes without a problem and it is safe to ignore these messages.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Open a web browser and access the Couchbase Web Console to set up Couchbase Server.</p>
+</li>
+<li>
+<p>Open a web browser and access the Couchbase Server Web Console to <a href="testing.html" class="page">verify</a> that the installation was successful and the node is available.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>

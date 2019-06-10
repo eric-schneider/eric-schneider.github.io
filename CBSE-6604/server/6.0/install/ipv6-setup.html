@@ -3086,66 +3086,66 @@ You can set up IPv6 on new clusters, or upgrade existing clusters from IPv4 to I
 <h2 id="ipv6-overview"><a class="anchor" href="#ipv6-overview"></a>Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default, new installations of Couchbase Server start up in IPv4 mode.
+<p>By default, Couchbase Server starts up in IPv4 mode.
 This means that to set up a cluster to use IPv6, you need to enable IPv6 on each node before adding them to the cluster.
 IPv6 is enabled for a cluster only when IPv6 is enabled on all of its nodes.</p>
 </div>
 <div class="paragraph">
-<p>There are two different ways to enable IPv6:</p>
+<p>IPv6 support was first introduced in Couchbase Server 5.5.
+At the time, the only supported method to configure IPv6 was to edit the <code>static_config</code> file.
+However, due to a known issue, this method of enabling IPv6 did not preserve the IPv6 configuration after upgrading Couchbase Server to a newer version.
+(The <code>static_config</code> file gets overwritten and nodes start up in IPv4 mode.)
+This issue was resolved in 5.5.3 and 6.0.1 with a new method of enabling IPv6.</p>
 </div>
 <div class="ulist">
+<div class="title">How to Enable IPv6</div>
 <ul>
 <li>
-<p>Using <a href="#ipv6-setup-dist-cfg"><code>dist_cfg</code> (recommended)</a></p>
+<p>For new clusters, see <a href="#ipv6-setup-dist-cfg">IPv6 Setup</a>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Requires Couchbase Server 5.5.3+ or 6.0.1+</p>
+<p>Requires Couchbase Server 5.5.3+ and 6.0.1+</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Using <a href="#ipv6-setup-static-config"><code>static_config</code> (legacy)</a></p>
+<p>For existing IPv4-based clusters, see <a href="#upgrade-from-ipv4">Upgrading from IPv4 to IPv6</a>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Requires Couchbase Server 5.5.0+</p>
+<p>Requires Couchbase Server 5.5.3+ and 6.0.1+</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>Does not persist through upgrade</p>
+<p>For existing clusters that already have IPv6 enabled using <code>static_config</code>, see <a href="#ipv6-setup-static-config">Legacy IPv6 Setup</a>.</p>
 </li>
 </ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>IPv6 support was introduced in Couchbase Server 5.5.
-At the time, the only supported method to configure IPv6 was to edit the <code>static_config</code> file.</p>
-</div>
-<div class="paragraph">
-<p>However, the mechanism for IPv6 support changed in 5.5.3 and 6.0.1.
-For information regarding IPv6 support in 5.5.0, 5.5.1, 5.5.2, and 6.0.0, refer to <a href="#legacy-ipv6-config">Legacy IPv6 Setup</a>.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ipv6-setup-dist-cfg"><a class="anchor" href="#ipv6-setup-dist-cfg"></a>IPv6 Setup (<code>dist_cfg</code>)</h2>
+<h2 id="ipv6-setup-dist-cfg"><a class="anchor" href="#ipv6-setup-dist-cfg"></a>IPv6 Setup</h2>
 <div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>When you set up a new cluster to use IPv6, you should make sure to convert the first node to IPv6 before you initialize the cluster.</p>
+<p>This setup requires Couchbase Server 5.5.3+ or 6.0.1+.</p>
+</div>
+<div class="paragraph">
+<p>If your cluster is running Couchbase Server 5.5.0, 5.5.1, 5.5.2, or 6.0.0 <strong>and</strong> already has IPv6 enabled using the older <code>static_config</code> method, see <a href="#ipv6-setup-static-config">Legacy IPv6 Setup</a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
@@ -3174,32 +3174,24 @@ Refer to <a href="install-linux.html" class="page">Installing on Linux</a> for m
 </li>
 <li>
 <p>Enable IPv6 mode.</p>
-<div class="paragraph">
-<p>Execute the following REST API on the node to configure it to run in IPv6 mode:</p>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the host is configured to have a loopback interface with 127.0.0.1 assigned, then you can issue the following REST API to enable IPv6 mode:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">curl -X POST -u &lt;username&gt;:&lt;password&gt; -d ‘afamily=ipv6’ http://localhost:8091/node/controller/setupNetConfig</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;where <code>&lt;username&gt;:&lt;password&gt;</code> is the username and password of a Full Administrator.</p>
+<p>&#8230;&#8203;where <code>&lt;username&gt;:&lt;password&gt;</code> is the username and password of a Full Administrator.
+Couchbase Server must be running for this command to succeed.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>To successfully execute the REST API, the system on which you&#8217;ve installed Couchbase Server needs to have a loopback interface with the 127.0.0.1 address assigned.</p>
-</div>
-<div class="paragraph">
-<p>If you don&#8217;t have a loopback interface configured, you can enable IPv6 manually with the following procedure:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
+<li>
+<p>If the host is <strong>not</strong> configured to have a loopback interface with 127.0.0.1 assigned, then you&#8217;ll need to enable IPv6 manually by doing the following:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
 <p>Stop Couchbase Server.</p>
 <div class="listingblock">
@@ -3209,18 +3201,20 @@ Refer to <a href="install-linux.html" class="page">Installing on Linux</a> for m
 </div>
 </li>
 <li>
-<p>Add the following entry to <code>/opt/couchbase/var/lib/couchbase/config/dist_cfg</code>:</p>
+<p>Open <code>/opt/couchbase/var/lib/couchbase/config/dist_cfg</code> in a text editor and add the following entry:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">{dist_type, inet6_tcp}</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">{dist_type, inet6_tcp}.</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Save the file and exit your text editor.</p>
 </div>
 </li>
 </ol>
 </div>
-</td>
-</tr>
-</table>
+</li>
+</ul>
 </div>
 </li>
 <li>
@@ -3230,6 +3224,9 @@ Refer to <a href="install-linux.html" class="page">Installing on Linux</a> for m
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo systemctl restart couchbase-server</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p>Repeat the previous steps on each additional node before adding them to the cluster.</p>
 </li>
 </ol>
 </div>
@@ -3248,9 +3245,10 @@ Refer to <a href="install-linux.html" class="page">Installing on Linux</a> for m
 </li>
 <li>
 <p>Enable IPv6 mode.</p>
-<div class="paragraph">
-<p>Execute the following REST API to configure the node to run in IPv6 mode:</p>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the host is configured to have a loopback interface with 127.0.0.1 assigned, then you can issue the following REST API to enable IPv6 mode:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">curl -X POST -u &lt;username&gt;:&lt;password&gt; -d ‘afamily=ipv6’ http://localhost:8091/node/controller/setupNetConfig</code></pre>
@@ -3260,19 +3258,11 @@ Refer to <a href="install-linux.html" class="page">Installing on Linux</a> for m
 <p>&#8230;&#8203;where <code>&lt;username&gt;:&lt;password&gt;</code> is the username and password of a Full Administrator.
 Couchbase Server must be running for this command to succeed.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If the system on which you&#8217;ve installed Couchbase Server doesn&#8217;t have a loopback interface with the 127.0.0.1 address assigned, then you won&#8217;t be able to execute the above REST API because the web server won&#8217;t be available.
-If this is the case, you&#8217;ll need to do the following instead:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
+<li>
+<p>If the host is <strong>not</strong> configured to have a loopback interface with 127.0.0.1 assigned, then you&#8217;ll need to enable IPv6 manually by doing the following:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
 <p>Stop Couchbase Server.</p>
 <div class="listingblock">
@@ -3282,18 +3272,20 @@ If this is the case, you&#8217;ll need to do the following instead:</p>
 </div>
 </li>
 <li>
-<p>Add the following entry to <code>/Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/var/lib/couchbase/config/dist_cfg</code>:</p>
+<p>Open <code>/Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/var/lib/couchbase/config/dist_cfg</code> in a text editor and add the following entry:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">{dist_type, inet6_tcp}</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">{dist_type, inet6_tcp}.</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Save the file and exit your text editor.</p>
 </div>
 </li>
 </ol>
 </div>
-</td>
-</tr>
-</table>
+</li>
+</ul>
 </div>
 </li>
 <li>
@@ -3303,6 +3295,9 @@ If this is the case, you&#8217;ll need to do the following instead:</p>
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo systemctl restart couchbase-server</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p>Repeat the previous steps on each additional node before adding them to the cluster.</p>
 </li>
 </ol>
 </div>
@@ -3324,181 +3319,7 @@ The Couchbase Server Web Console login screen should display.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ipv6-setup-static-config"><a class="anchor" href="#ipv6-setup-static-config"></a>Legacy IPv6 Setup (<code>static_config</code>)</h2>
-<div class="sectionbody">
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The procedures in this section only apply to Couchbase Server 5.5.0, 5.5.1, 5.5.2, and 6.0.0.
-Due to a known issue, this method of enabling IPv6 does not preserve the IPv6 configuration after upgrading Couchbase Server to a newer version.
-(The <code>static_config</code> file gets overwritten and nodes start up in IPv4 mode.)</p>
-</div>
-<div class="paragraph">
-<p>A new mechanism for IPv6 support was introduced in 5.5.3 and 6.0.1 that addresses this issue and properly supports upgrades to any supported release.
-If you haven&#8217;t yet enabled IPv6, it&#8217;s recommended that you upgrade to 5.5.3+ or 6.0.1+ first, and then use the <a href="#ipv6-setup-dist-cfg">new IPv6 procedure</a>.</p>
-</div>
-<div class="paragraph">
-<p>If you&#8217;ve already enabled IPv6 using the legacy method, you&#8217;ll need to follow some <a href="#upgrade-from-legacy">extra steps</a> when you upgrade to a new release in order to keep IPv6 enabled on your cluster using the new mechanism in 5.5.3+ or 6.0.1+.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>By default, new installations of Couchbase Server start up using IPv4.
-This means that when you set up a cluster to use IPv6, you need to convert each node from IPv4 to IPv6 before adding them to the cluster.
-IPv6 is enabled for a cluster only when IPv6 is enabled on all of its nodes.</p>
-</div>
-<div class="tabset is-loading">
-<div class="ulist tabs">
-<ul>
-<li>
-<p><a id="tabset2_linux"></a>Linux</p>
-</li>
-<li>
-<p><a id="tabset2_macos"></a>macOS</p>
-</li>
-<li>
-<p><a id="tabset2_windows"></a>Windows</p>
-</li>
-</ul>
-</div>
-<div class="content">
-<div class="tab-pane" aria-labelledby="tabset2_linux">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Install Couchbase Server.</p>
-<div class="paragraph">
-<p>By default, Couchbase Server will start up in IPv4 mode.</p>
-</div>
-<div class="paragraph">
-<p>Refer to <a href="install-linux.html" class="page">Installing on Linux</a> for more information about installing Couchbase Server on Linux systems.</p>
-</div>
-</li>
-<li>
-<p>Stop Couchbase Server.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo systemctl stop couchbase-server</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Open <code>/opt/couchbase/etc/couchbase/static_config</code> in a text editor and set <code>ipv6</code> to <code>true</code>.</p>
-<div class="paragraph">
-<p>Save the file and exit your text editor.</p>
-</div>
-</li>
-<li>
-<p>Delete <code>/opt/couchbase/var/lib/couchbase/config/config.dat</code>.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">rm -rf /opt/couchbase/var/lib/couchbase/config/config.dat</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Restart Couchbase Server.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo systemctl restart couchbase-server</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="tab-pane" aria-labelledby="tabset2_macos">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Install Couchbase Server.</p>
-<div class="paragraph">
-<p>By default, Couchbase Server will start up in IPv4 mode.</p>
-</div>
-<div class="paragraph">
-<p>Refer to <a href="macos-install.html" class="page">Installing on macOS</a> for more information about installing Couchbase Server on macOS systems.</p>
-</div>
-</li>
-<li>
-<p>Stop Couchbase Server.
-(Quit the Couchbase Server application if it is running.)</p>
-</li>
-<li>
-<p>Enable IPv6 mode.</p>
-<div class="paragraph">
-<p>Open <code>/Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/etc/couchbase/static_config.in</code> in a text editor and set <code>ipv6</code> to <code>true</code>.</p>
-</div>
-<div class="paragraph">
-<p>Save the file and exit your text editor.</p>
-</div>
-</li>
-<li>
-<p>Delete <code>/Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/var/lib/couchbase/config/config.dat</code>.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">rm -rf /Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/var/lib/couchbase/config/config.dat</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Start Couchbase Server.
-(Open the Couchbase Server application.)</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="tab-pane" aria-labelledby="tabset2_windows">
-<div class="paragraph">
-<p>The IPv6 setup requirements are incorporated into the InstallShield wizard itself.
-During installation of the Couchbase package, a check box is available to enable IPv6 mode.
-(Note that after installation, any subsequent mode change requires reinstallation.)</p>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Couchbase should now be running in IPv6 mode.
-To confirm, point a supported web browser to <code>http://[::1]:8091</code>, which is the IPv6 address and port number on which Couchbase Server should be running.
-The Couchbase Server Web Console login screen should display.</p>
-</div>
-<div class="sect2">
-<h3 id="ipv6-upgrade-from-legacy"><a class="anchor" href="#ipv6-upgrade-from-legacy"></a>Upgrading a Couchbase Server Cluster That Is Using the Legacy <code>static_config</code> IPv6 Setup</h3>
-<div class="paragraph">
-<p>Due to a known issue, if you&#8217;ve already enabled IPv6 on your Couchbase cluster using the <a href="#ipv6-setup-static-config">legacy <code>static_config</code> method</a>, you&#8217;ll need to perform some extra steps when upgrading Couchbase Server to a newer version in order to preserve your IPv6 configuration.</p>
-</div>
-<div class="paragraph">
-<p>Once you perform these steps and your entire cluster is upgraded to a new version of Couchbase Server, you won&#8217;t need to perform them again for future upgrades since your cluster will be using the new IPv6 mechanism that can persist after upgrades.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Start performing and online or offline upgrade as you normally would.</p>
-<div class="paragraph">
-<p>After removing and upgrading a node, Couchbase Server will start up in IPv4 mode.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>After installing the 5.5.3 release, Couchbase Server would start in IPv4 mode as the static_config file gets overwritten.
-If the host has 127.0.0.1 address assigned, then the web-server would have initialized. The user can now issue the REST API to set the address family to IPv6 mode.
-If the host doesn't have 127.0.0.1 address assigned, then the user will have to stop the Couchbase Server and manually add "{dist_type, inet6_tcp}." (including the period at the end excluding the quotes) to the /opt/couchbase/var/lib/couchbase/config/dist_cfg file.
-Then restart Couchbase Server on this node.After the restart, Couchbase Server should now be operating in IPv6 mode and now it can be used for online upgrade.</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="upgrading-from-ipv4-to-ipv6"><a class="anchor" href="#upgrading-from-ipv4-to-ipv6"></a>Upgrading from IPv4 to IPv6</h2>
+<h2 id="upgrade-from-ipv4"><a class="anchor" href="#upgrade-from-ipv4"></a>Upgrading from IPv4 to IPv6</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The simplest method for upgrading a Couchbase deployment from IPv4 to IPv6 is to create new clusters with IPv6 already enabled, and then migrate your data to them using Cross Data Center Replication (XDCR).</p>
@@ -3512,7 +3333,7 @@ Then restart Couchbase Server on this node.After the restart, Couchbase Server s
 <p>The source cluster must have dual stack support at the OS level.</p>
 </li>
 <li>
-<p>The source and destination clusters must be running Couchbase Server 5.5 or later.</p>
+<p>The source and destination clusters must be running Couchbase Server 5.5.3+ or 6.0.1+.</p>
 </li>
 </ul>
 </div>
@@ -3551,6 +3372,151 @@ For bi-directional replication, both clusters need to be using the same protocol
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ipv6-setup-static-config"><a class="anchor" href="#ipv6-setup-static-config"></a>Legacy IPv6 Setup (<code>static_config</code>)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>IPv6 support was first introduced in Couchbase Server 5.5.
+At the time, the only supported method to configure IPv6 was to edit the <code>static_config</code> file.
+However, due to a known issue, this method of enabling IPv6 did not preserve the IPv6 configuration after upgrading Couchbase Server to a newer version.
+(The <code>static_config</code> file gets overwritten and nodes start up in IPv4 mode.)</p>
+</div>
+<div class="paragraph">
+<p>A new method for IPv6 support was introduced in 5.5.3 and 6.0.1 that addresses this issue and properly supports upgrades to any supported release.
+If you haven&#8217;t yet enabled IPv6, it&#8217;s recommended that you upgrade to 5.5.3+ or 6.0.1+ first, and then use the <a href="#ipv6-setup-dist-cfg">new IPv6 procedure</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;ve already enabled IPv6 using the legacy mechanism, you&#8217;ll need to switch over to the new mechanism when you upgrade to 5.5.3+ or 6.0.1+.
+(The legacy mechanism is not supported in these later releases.)
+This upgrade will require some extra steps, but once completed, you&#8217;ll no longer need to re-enable IPv6 after future upgrades.</p>
+</div>
+<div class="sect2">
+<h3 id="ipv6-upgrade-from-legacy"><a class="anchor" href="#ipv6-upgrade-from-legacy"></a>Upgrading a Couchbase Server Cluster That Is Already Using the Legacy IPv6 Setup</h3>
+<div class="paragraph">
+<p>Due to a known issue, if you&#8217;ve already enabled IPv6 on your Couchbase Server cluster using the <a href="#ipv6-setup-static-config">legacy static_config method</a>, you&#8217;ll need to perform some extra steps when upgrading Couchbase Server to a newer version in order to preserve your IPv6 configuration.</p>
+</div>
+<div class="paragraph">
+<p>Once you perform these steps and your entire cluster is upgraded to a new version of Couchbase Server, you won&#8217;t need to perform them again for future upgrades since your cluster will be using the new IPv6 mechanism that can persist after upgrades.</p>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset2_linux"></a>Linux</p>
+</li>
+<li>
+<p><a id="tabset2_macos"></a>macOS</p>
+</li>
+<li>
+<p><a id="tabset2_windows"></a>Windows</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset2_linux">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start upgrading Couchbase Server to version 5.5.3+ or 6.0.1+ as you normally would (<a href="upgrade-strategies.html" class="page">online or offline</a>).</p>
+<div class="paragraph">
+<p>After removing a node from the cluster and upgrading it, the <code>static_config</code> file will have been overwritten and one of the following will happen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the host was configured with an FQDN that resolves to both IPv4 and IPv6 addresses, then Couchbase Server will start in IPv4 mode.</p>
+</li>
+<li>
+<p>If the host was configured with an FQDN that resolves only to an IPv6 address, then Couchbase Server will fail to start since it can&#8217;t resolve the FQDN during the init sequence.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enable IPv6 mode.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the host was configured with an FQDN that resolves to both IPv4 and IPv6 addresses, then Couchbase Server will be up and running and you can issue the following REST API to enable IPv6 mode:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">curl -X POST -u &lt;username&gt;:&lt;password&gt; -d ‘afamily=ipv6’ http://localhost:8091/node/controller/setupNetConfig</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;where <code>&lt;username&gt;:&lt;password&gt;</code> is the username and password of a Full Administrator.
+Couchbase Server must be running for this command to succeed.</p>
+</div>
+</li>
+<li>
+<p>If the host was configured with an FQDN that resolves only to an IPv6 address, then Couchbase Server will fail to start and you&#8217;ll need to enable IPv6 manually by doing the following:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Stop Couchbase Server.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo systemctl stop couchbase-server</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open <code>/opt/couchbase/var/lib/couchbase/config/dist_cfg</code> in a text editor and add the following entry:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">{dist_type, inet6_tcp}.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Save the file and exit your text editor.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Restart Couchbase Server.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo systemctl restart couchbase-server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Couchbase Server should now be running in IPv6 mode.
+To confirm, point a supported web browser to <code>http://[::1]:8091</code>, which is the IPv6 address and port number on which Couchbase Server should be running.
+The Couchbase Server Web Console login screen should display.</p>
+</div>
+</li>
+<li>
+<p>Add the node back into the cluster.</p>
+<div class="paragraph">
+<p>If you&#8217;re performing an online upgrade, you can now add the node back into the cluster and perform a rebalance.</p>
+</div>
+</li>
+<li>
+<p>Repeat the previous steps until all nodes in the cluster have been upgraded and have IPv6 enabled.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset2_macos">
+<div class="paragraph">
+<p>???</p>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset2_windows">
+<div class="paragraph">
+<p>???</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

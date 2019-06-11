@@ -3105,7 +3105,7 @@ This issue was resolved in 5.5.3 and 6.0.1 with a new method of enabling IPv6.</
 <div class="ulist">
 <ul>
 <li>
-<p>Requires Couchbase Server 5.5.3+ and 6.0.1+</p>
+<p>Requires Couchbase Server 5.5.3+ or 6.0.1+</p>
 </li>
 </ul>
 </div>
@@ -3115,13 +3115,20 @@ This issue was resolved in 5.5.3 and 6.0.1 with a new method of enabling IPv6.</
 <div class="ulist">
 <ul>
 <li>
-<p>Requires Couchbase Server 5.5.3+ and 6.0.1+</p>
+<p>Requires Couchbase Server 5.5.3+ or 6.0.1+</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
 <p>For existing clusters that already have IPv6 enabled using <code>static_config</code>, see <a href="#ipv6-setup-static-config">Legacy IPv6 Setup</a>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Only for clusters running Couchbase Server 5.0.0, 5.0.1, 5.0.2, or 6.0.0</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -3130,22 +3137,11 @@ This issue was resolved in 5.5.3 and 6.0.1 with a new method of enabling IPv6.</
 <div class="sect1">
 <h2 id="ipv6-setup-dist-cfg"><a class="anchor" href="#ipv6-setup-dist-cfg"></a>IPv6 Setup</h2>
 <div class="sectionbody">
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
 <div class="paragraph">
 <p>This setup requires Couchbase Server 5.5.3+ or 6.0.1+.</p>
 </div>
 <div class="paragraph">
 <p>If your cluster is running Couchbase Server 5.5.0, 5.5.1, 5.5.2, or 6.0.0 <strong>and</strong> already has IPv6 enabled using the older <code>static_config</code> method, see <a href="#ipv6-setup-static-config">Legacy IPv6 Setup</a>.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">

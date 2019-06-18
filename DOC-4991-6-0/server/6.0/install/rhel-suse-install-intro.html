@@ -3165,24 +3165,16 @@ This method involves downloading and installing a small meta package from Couchb
 <p>Download and install the <code>.rpm</code> meta package.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-amd64.rpm</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo rpm -i ./couchbase-release-1.0-6-amd64.rpm</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo rpm -i ./couchbase-release-1.0-6-x86_64.rpm</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The meta package installs the necessary information for <code>yum</code> to retrieve all of the necessary packages, and also imports the necessary Couchbase public signing keys.</p>
-</div>
-</li>
-<li>
-<p>Reload the local package database.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum update</code></pre>
-</div>
+<p>The meta package installs the necessary information for <code>yum</code> to retrieve all of the necessary packages.</p>
 </div>
 </li>
 <li>
@@ -3209,6 +3201,10 @@ This method involves downloading and installing a small meta package from Couchb
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>You&#8217;ll be prompted to start the download of Couchbase Server and any dependencies, as well as import several GPG keys.
+For each of these prompts, type <code>y</code> to accept and continue.</p>
+</div>
 </dd>
 <dt class="hdlist1">Install a specific release of Couchbase Server Enterprise</dt>
 <dd>
@@ -3218,25 +3214,27 @@ This method involves downloading and installing a small meta package from Couchb
 <p>List the available releases.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">yum list -a couchbase-server</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">yum list --showduplicates couchbase-server</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>An example listing might be: <code>couchbase-server/xenial <strong>6.0.0-1693-1</strong> amd64</code>.</p>
+<p>An example listing might be: <code>couchbase-server.x86_64   <strong>6.0.0-1693</strong></code>.</p>
 </div>
 </li>
 <li>
 <p>Specify a release to install it.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server=&lt;version-string&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server-&lt;version-string&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;where <code>&lt;version-string&gt;</code> is the full version string of the release.</p>
+<p>&#8230;&#8203;where <code>&lt;version-string&gt;</code> is the full version string of the release.
+Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693</strong></code>, and thus the installation command would be: <code>sudo yum install couchbase-server-6.0.0-1693</code></p>
 </div>
 <div class="paragraph">
-<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo yum install couchbase-server=6.0.0-1693-1</code></p>
+<p>You&#8217;ll be prompted to start the download of Couchbase Server and any dependencies, as well as import several GPG keys.
+For each of these prompts, type <code>y</code> to accept and continue.</p>
 </div>
 </li>
 </ol>
@@ -3255,6 +3253,10 @@ This method involves downloading and installing a small meta package from Couchb
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server-community</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>You&#8217;ll be prompted to start the download of Couchbase Server and any dependencies, as well as import several GPG keys.
+For each of these prompts, type <code>y</code> to accept and continue.</p>
+</div>
 </dd>
 <dt class="hdlist1">Install a specific release of Couchbase Server Community</dt>
 <dd>
@@ -3264,25 +3266,27 @@ This method involves downloading and installing a small meta package from Couchb
 <p>List the available releases.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">yum list -a couchbase-server-community</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">yum list --showduplicates couchbase-server-community</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>An example listing might be: <code>couchbase-server-community/xenial <strong>6.0.0-1693-1</strong> amd64</code>.</p>
+<p>An example listing might be: <code>couchbase-server-community.x86_64 <strong>6.0.0-1693</strong></code>.</p>
 </div>
 </li>
 <li>
 <p>Specify a release to install it.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server-community=&lt;version-string&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server-community-&lt;version-string&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;where <code>&lt;version-string&gt;</code> is the full version string of the release.</p>
+<p>&#8230;&#8203;where <code>&lt;version-string&gt;</code> is the full version string of the release.
+Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693</strong></code>, and thus the installation command would be: <code>sudo yum install couchbase-server-community-6.0.0-1693</code></p>
 </div>
 <div class="paragraph">
-<p>Using the example listing from the previous step, the version string would be <code><strong>6.0.0-1693-1</strong></code>, and thus the installation command would be: <code>sudo yum install couchbase-server-community=6.0.0-1693-1</code></p>
+<p>You&#8217;ll be prompted to start the download of Couchbase Server and any dependencies, as well as import several GPG keys.
+For each of these prompts, type <code>y</code> to accept and continue.</p>
 </div>
 </li>
 </ol>
@@ -3292,9 +3296,6 @@ This method involves downloading and installing a small meta package from Couchb
 </div>
 </div>
 </div>
-</div>
-<div class="paragraph">
-<p>The <code>yum</code> command automatically downloads and installs the latest version of Couchbase Server, along with all of its dependencies.</p>
 </div>
 <div class="paragraph">
 <p>Once installation is complete, Couchbase Server will start automatically (and will continue to start automatically at run levels 2, 3, 4, and 5, and explicitly shut down at run levels 0, 1, and 6).
@@ -3317,14 +3318,6 @@ Refer to <a href="startup-shutdown.html" class="page">Couchbase Server Startup a
 <ol class="arabic">
 <li>
 <p>Download the appropriate package for your operating system from the Couchbase <a href="https://www.couchbase.com/downloads" target="_blank" rel="noopener">downloads page</a>.</p>
-</li>
-<li>
-<p>Reload the local package database.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum update</code></pre>
-</div>
-</div>
 </li>
 <li>
 <p>Install Couchbase Server.</p>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Red Hat and CentOS Installation | Couchbase Docs</title>
+    <title>Install Couchbase Server on Red Hat Enterprise and CentOS | Couchbase Docs</title>
     <link rel="canonical" href="eric-schneider.github.io/DOC-4991-6.0/server/6.0/install/rhel-suse-install-intro.html">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
@@ -3081,150 +3081,247 @@
 </div>
   </div>
 <article class="doc">
-<h1 class="page">Red Hat and CentOS Installation</h1>
+<h1 class="page">Install Couchbase Server on Red Hat Enterprise and CentOS</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Couchbase Server supports Red Hat (RHEL) and RHEL-based operating systems such as CentOS.
+Couchbase Server can be installed on Red Hat Enterprise Linux and CentOS Linux for production and development use-cases.
+Root and non-root installations are supported.
 </blockquote>
 </div>
 <div class="paragraph">
-<p>Before you start with the installation, ensure that dependency checking tool <code class="cmd">pkgconfig</code> is installed.
-The Couchbase Server package requires this package to verify certain package dependencies have been met.</p>
+<p>Use the instructions on this page to install Couchbase Server on Red Hat Enterprise Linux and CentOS platforms using Couchbase-provided RPM packages.
+The instructions support both Enterprise and Community <a href="https://www.couchbase.com/products/editions" target="_blank" rel="noopener">editions</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re upgrading an existing installation of Couchbase Server, refer to <a href="upgrade.html" class="page">Upgrading Couchbase Server</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="check-openssl-dependency"><a class="anchor" href="#check-openssl-dependency"></a>Check OpenSSL Dependency</h2>
+<h2 id="before-you-install"><a class="anchor" href="#before-you-install"></a>Before You Install</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Couchbase Server RPM performs dependency checks using <code>pkgconfig</code> for RHEL.
-Verify that <code>pkgconfig</code> is installed, and install it if necessary:</p>
+<p>Couchbase Server works out-of-the-box with most OS configurations.
+However, the procedures on this page assume the following:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo yum install -y pkgconfig</code></pre>
+<div class="ulist">
+<ul>
+<li>
+<p>Your system meets the <a href="pre-install.html" class="page">minimum requirements</a> and that your operating system version is <a href="install-platforms.html" class="page">supported</a>.</p>
+</li>
+<li>
+<p>You&#8217;re working from a clean system and that you&#8217;ve <a href="install-uninstalling.html" class="page">uninstalled</a> any previous versions of Couchbase Server.</p>
+<div class="paragraph">
+<p>If you&#8217;re upgrading an existing installation of Couchbase Server, refer to <a href="upgrade.html" class="page">Upgrading Couchbase Server</a>.</p>
 </div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Upon successful installation, the following output appears:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Loaded plugins .... Installed: pkgconfig.x86_64 1:0.21-2.el5 Complete!</pre>
-</div>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Please ensure that you are running OpenSSL v1.0.1g or higher.
-On Monday, April 7th, 2014, an OpenSSL vulnerability was disclosed which has been called one of the worst security holes in recent internet history.
-The bug, called the Heartbleed bug, was introduced in OpenSSL version 1.0.1.
-It has been in the wild since March of 2012 and is patched with OpenSSL version 1.0.1g released on April 7th, 2014.
-The problem, tagged CVE-2014-0160, is described in detail in this <a href="https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-0160" target="_blank" rel="noopener">NIST article</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>For CentOS systems, you can query the version of the OpenSSL package installed on your system by typing:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> rpm -q -a | grep "openssl"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You should receive output that looks like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>openssl-1.0.1e-16.el6_5.7.x86_64</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you are on one of the supported distributions, ensure that your OpenSSL version is up-to-date.
-If your distribution is not supported anymore, it is highly recommended that you transition to a supported operating system due to this bug&#8217;s severity.</p>
+<p>For production deployments, make sure to follow the <a href="install-production-deployment.html" class="page">deployment guidelines</a> so that your systems and environment are properly sized and configured before installation.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="installing-using-rpm"><a class="anchor" href="#installing-using-rpm"></a>Installing Using <code class="cmd">rpm</code></h2>
+<h2 id="basic-installation"><a class="anchor" href="#basic-installation"></a>Basic Installation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Install Couchbase Server on RHEL using the <code class="cmd">rpm</code> command-line tool with the downloaded RPM package.</p>
+<p>You must be logged in as root (superuser) or use <code>sudo</code> to run the installation commands.</p>
+</div>
+<div class="sect2">
+<h3 id="install-using-yum"><a class="anchor" href="#install-using-yum"></a>Install Using Yum</h3>
+<div class="paragraph">
+<p>The Red Hat package manager (<code>yum</code>) provides the simplest and most comprehensive way to install Couchbase Server on Red Hat Enterprise and CentOS platforms.
+This method involves downloading and installing a small meta package from Couchbase, which <code>yum</code> can then use to automatically download and install Couchbase Server and all of its dependencies.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download the meta package.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install the meta package.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo rpm -i ./couchbase-release-1.0-6-x86_64.rpm</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Only 64-bit systems are supported.
-See <a href="install-platforms.html" class="page">Supported Operating Systems</a> for details.</p>
+<p>The meta package installs the necessary information for <code>yum</code> to be able to retrieve all of the necessary Couchbase Server installation packages and dependencies.</p>
+</div>
+</li>
+<li>
+<p>Install Couchbase Server.</p>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_enterprise"></a>Enterprise</p>
+</li>
+<li>
+<p><a id="tabset1_community"></a>Community</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset1_enterprise">
+<div class="listingblock">
+<div class="title">To install the latest release</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><strong>Disable Transparent Huge Pages (THP)</strong></p>
+<p>You&#8217;ll be prompted to start the download of Couchbase Server (plus any dependencies), as well as import several GPG keys.
+For each of these prompts, type <code>y</code> to accept and continue.</p>
+</div>
+<div class="olist arabic">
+<div class="title">To install a specific release</div>
+<ol class="arabic">
+<li>
+<p>List the available releases.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">yum list --showduplicates couchbase-server</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>RHEL6 and other newer Linux distributions are known to have Transparent Huge Pages (THP) feature enabled by default.
-THP can cause issues in database software, including Couchbase Server.
-THP can cause nodes to lose cluster heartbeats, resulting in erroneous automatic fail overs.
-<a href="thp-disable.html" class="page">Disabling Transparent Huge Pages (THP)</a> prior to installing Couchbase Server is strongly encouraged.</p>
-</div>
-<div class="paragraph">
-<p><strong>Complete the Installation</strong></p>
-</div>
-<div class="paragraph">
-<p>You must be logged in as <code>root</code> (superuser) or use the <code class="cmd">sudo</code> command to complete the installation.
-Use the following command to install the Couchbase Server package:</p>
+<p>Available releases are listed with their full <code>version-build</code> number:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rpm --install couchbase-server-version.rpm</code></pre>
+<pre>couchbase-server.x86_64   <strong>6.0.0-1693</strong></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Specify a release to install it.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server-<em class="var">version-build</em></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where <code class="var">version</code> is the version number of the downloaded package.</p>
-</div>
-<div class="paragraph">
-<p>After the <code class="cmd">rpm</code> command completes, the Couchbase Server service starts automatically.
-It is configured to start automatically under OS runlevels 2, 3, 4, and 5.
-Refer to the Red Hat RPM documentation for more information about installing packages using RPM.</p>
-</div>
-<div class="paragraph">
-<p>After installation is completed, the installation process displays a message similar to the following:</p>
+<p>Using the example listing from the previous step, the resulting installation command would be:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>    Minimum RAM required : 4 GB
-    System RAM configured : 8174464 kilobytes
-    Minimum number of processors required :  4 cores
-    Number of processors on the system : 4 cores
-
-
-    Starting couchbase-server[ OK ]
-
-    You have successfully installed Couchbase Server.
-    Browse to http://host_name:8091/ to configure your server.
-    Refer to http://couchbase.com for additional resources.
-
-    Update your firewall configuration
-    to allow connections to the following ports:
-
-    11211, 11210, 11209, 4369, 8091, 8092 and from 21100 to 21299.
-
-
-    By using this software you agree to the End User License Agreement.
-    See /opt/couchbase/LICENSE.txt.</pre>
+<pre>sudo yum install couchbase-server-<strong>6.0.0-1693</strong></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After the installation is completed, use the <code class="cmd">service</code> command to manage the Couchbase Server service, including checking the current status.
-Refer to the Ubuntu documentation for instructions.</p>
+<p>You&#8217;ll be prompted to start the download of Couchbase Server (plus any dependencies), as well as import several GPG keys.
+For each of these prompts, type <code>y</code> to accept and continue.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_community">
+<div class="listingblock">
+<div class="title">To install the latest release</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server-community</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>To perform the initial Couchbase Server setup, open a web browser and access the Couchbase Web Console.</p>
+<p>You&#8217;ll be prompted to start the download of Couchbase Server (plus any dependencies), as well as import several GPG keys.
+For each of these prompts, type <code>y</code> to accept and continue.</p>
+</div>
+<div class="olist arabic">
+<div class="title">To install a specific release</div>
+<ol class="arabic">
+<li>
+<p>List the available releases.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">yum list --showduplicates couchbase-server-community</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Available releases are listed with their full <code>version-build</code> number:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>couchbase-server-community.x86_64   <strong>6.0.0-1693</strong></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Specify a release to install it.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install couchbase-server-community-<em class="var">version-build</em></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using the example listing from the previous step, the resulting installation command would be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sudo yum install couchbase-server-community-<strong>6.0.0-1693</strong></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll be prompted to start the download of Couchbase Server (plus any dependencies), as well as import several GPG keys.
+For each of these prompts, type <code>y</code> to accept and continue.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Once installation is complete, Couchbase Server will start automatically (and will continue to start automatically at run levels 2, 3, 4, and 5, and explicitly shut down at run levels 0, 1, and 6).
+You can use the <code>systemctl</code> command (<code>service</code> on older operating systems) to start and stop the Couchbase Server service, as well as check the current status.
+Refer to <a href="startup-shutdown.html" class="page">Couchbase Server Startup and Shutdown</a> for more information.</p>
+</div>
+</li>
+<li>
+<p>Open a web browser and access the Couchbase Web Console to <a href="testing.html" class="page">verify</a> that the installation was successful and that the node is available.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="install-using-rpm-package"><a class="anchor" href="#install-using-rpm-package"></a>Install Using RPM Package</h3>
+<div class="paragraph">
+<p>Install Couchbase Server on Red Hat Enterprise and CentOS using a full RPM package provided by Couchbase.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download the appropriate package from the Couchbase <a href="https://www.couchbase.com/downloads" target="_blank" rel="noopener">downloads page</a>.</p>
+</li>
+<li>
+<p>Install Couchbase Server.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo yum install ./<em class="var">package-name</em>.rpm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If any Couchbase Server dependencies are missing on your system, <code>yum</code> will automatically download and install them as part of the installation process.</p>
+</div>
+<div class="paragraph">
+<p>Once installation is complete, Couchbase Server will start automatically (and will continue to start automatically at run levels 2, 3, 4, and 5, and explicitly shut down at run levels 0, 1, and 6).
+You can use the <code>systemctl</code> command (<code>service</code> on older operating systems) to start and stop the Couchbase Server service, as well as check the current status.
+Refer to <a href="startup-shutdown.html" class="page">Couchbase Server Startup and Shutdown</a> for more information.</p>
+</div>
+</li>
+<li>
+<p>Open a web browser and access the Couchbase Web Console to <a href="testing.html" class="page">verify</a> that the installation was successful and the node is available.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
@@ -3232,7 +3329,7 @@ Refer to the Ubuntu documentation for instructions.</p>
 <h2 id="rh-nonroot-nonsudo-"><a class="anchor" href="#rh-nonroot-nonsudo-"></a>Installing as non-root, non-sudo</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Installing on RHEL as a non-root, non-sudo user on a single machine.</p>
+<p>Installing as a non-root, non-sudo user on a single machine.</p>
 </div>
 <div class="paragraph">
 <p>A non-sudo, non-root installation still runs Couchbase Server and all Couchbase command-line tools.</p>
@@ -3298,59 +3395,10 @@ Refer to the Ubuntu documentation for instructions.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="installing-using-yum"><a class="anchor" href="#installing-using-yum"></a>Installing using <code class="cmd">yum</code></h2>
+<h2 id="setting-max-process-limits"><a class="anchor" href="#setting-max-process-limits"></a>Setting Max Process Limits</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This installation uses a package management system.</p>
-</div>
-<div class="paragraph">
-<p>To install on RHEL/CentOS version 6 or 7 using <code class="cmd">yum</code>:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Download and install the appropriate meta package from the <a href="https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-5-x86_64.rpm" target="_blank" rel="noopener">package download location</a>.
-This will install the package source and the Couchbase public keys:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-5-x86_64.rpm
-sudo rpm -i couchbase-release-1.0-5-x86_64.rpm</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Proceed with installing the actual Couchbase Server package:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo yum update</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo yum install couchbase-server</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Or:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo yum install couchbase-server-community</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="about-max-process-limits"><a class="anchor" href="#about-max-process-limits"></a>About Max Process Limits</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>On Red Hat and CentOS systems, it is recommended that you increase the maximum process limits for Couchbase.</p>
+<p>On Red Hat Enterprise and CentOS, it&#8217;s recommended that you increase the maximum process limits for Couchbase.</p>
 </div>
 <div class="paragraph">
 <p>To set the process limits, create a <code>.conf</code> file in the <code>/etc/security/limits.d</code> directory (such as <code>91-couchbase.conf</code>), and add the following values:</p>
@@ -3360,6 +3408,36 @@ sudo rpm -i couchbase-release-1.0-5-x86_64.rpm</code></pre>
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">couchbase soft nproc 4096
 couchbase hard nproc 16384</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="next-steps"><a class="anchor" href="#next-steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Following installation and start-up of Couchbase Server, a node must be <em>initialized</em> and <em>provisioned</em>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If it is the first node in a deployment, initialization and provisioning happens all at once when you create a <em>cluster of one</em>.</p>
+<div class="paragraph">
+<p>Refer to <a href="../manage/manage-nodes/create-cluster.html" class="page">Create a Cluster</a></p>
+</div>
+</li>
+<li>
+<p>If you already have an existing cluster, the node is initialized and provisioned when you add it to the cluster.</p>
+<div class="paragraph">
+<p>Refer to <a href="../manage/manage-nodes/add-node-and-rebalance.html" class="page">Add a Node and Rebalance</a></p>
+</div>
+</li>
+<li>
+<p>Optionally, initialization can be performed explicitly and independently of provisioning, as a prior process, in order to establish certain configurations, such as custom disk-paths.</p>
+<div class="paragraph">
+<p>Refer to <a href="../manage/manage-nodes/initialize-node.html" class="page">Initialize a Node</a></p>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>

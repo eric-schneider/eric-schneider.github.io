@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Install Couchbase Server on SUSE Linux Enterprise Server | Couchbase Docs</title>
+    <title>SUSE Enterprise Linux installation | Couchbase Docs</title>
     <link rel="canonical" href="eric-schneider.github.io/DOC-4991-6.0/server/6.0/install/install_suse.html">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
@@ -3081,114 +3081,66 @@
 </div>
   </div>
 <article class="doc">
-<h1 class="page">Install Couchbase Server on SUSE Linux Enterprise Server</h1>
-<div id="preamble">
-<div class="sectionbody">
+<h1 class="page">SUSE Enterprise Linux installation</h1>
 <div class="quoteblock abstract">
 <blockquote>
-Couchbase Server can be installed on SUSE Linux Enterprise Server for production and development use-cases.
+Install Couchbase Server on the SUSE Enterprise Linux platform using the <code class="cmd">rpm</code> command-line tool with the downloaded <code>RPM</code> package.
 </blockquote>
 </div>
 <div class="paragraph">
-<p>Use the instructions on this page to install Couchbase Server on SUSE Linux Enterprise using Couchbase-provided RPM packages.
-The instructions support both Enterprise and Community <a href="https://www.couchbase.com/products/editions" target="_blank" rel="noopener">editions</a>.</p>
+<p>Only 64 bit systems are supported.</p>
 </div>
 <div class="paragraph">
-<p>If you&#8217;re upgrading an existing installation of Couchbase Server, refer to <a href="upgrade.html" class="page">Upgrading Couchbase Server</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="before-you-install"><a class="anchor" href="#before-you-install"></a>Before You Install</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Couchbase Server works out-of-the-box with most OS configurations.
-However, the procedures on this page assume the following:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Your system meets the <a href="pre-install.html" class="page">minimum requirements</a> and that your operating system version is <a href="install-platforms.html" class="page">supported</a>.</p>
-</li>
-<li>
-<p>You&#8217;re working from a clean system and that you&#8217;ve <a href="install-uninstalling.html" class="page">uninstalled</a> any previous versions of Couchbase Server.</p>
-<div class="paragraph">
-<p>If you&#8217;re upgrading an existing installation of Couchbase Server, refer to <a href="upgrade.html" class="page">Upgrading Couchbase Server</a>.</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For production deployments, make sure to follow the <a href="install-production-deployment.html" class="page">deployment guidelines</a> so that your systems and environment are properly sized and configured before installation.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="basic-installation"><a class="anchor" href="#basic-installation"></a>Basic Installation</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You must be logged in as root (superuser) or use <code>sudo</code> to run the installation commands.</p>
-</div>
-<div class="sect2">
-<h3 id="install-using-rpm-package"><a class="anchor" href="#install-using-rpm-package"></a>Install Using RPM Package</h3>
-<div class="paragraph">
-<p>Install Couchbase Server on SUSE Linux Enterprise using a full RPM package provided by Couchbase.</p>
+<p>You must be logged in as root (superuser) to complete the installation.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Download the appropriate package from the Couchbase <a href="https://www.couchbase.com/downloads" target="_blank" rel="noopener">downloads page</a>.</p>
-</li>
-<li>
-<p>Install Couchbase Server.</p>
+<p>Enter the command:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo rpm -i <em class="var">package-name</em>.rpm</code></pre>
+<pre>rpm -install couchbase-server-enterprise-version-suse11.3.x86_64.rpm</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once installation is complete, Couchbase Server will start automatically (and will continue to start automatically at run levels 2, 3, 4, and 5, and explicitly shut down at run levels 0, 1, and 6).
-You can use the <code>systemctl</code> command (<code>service</code> on older operating systems) to start and stop the Couchbase Server service, as well as check the current status.
-Refer to <a href="startup-shutdown.html" class="page">Couchbase Server Startup and Shutdown</a> for more information.</p>
+<p>where <code class="var">version</code> is the version number of the downloaded package.</p>
 </div>
 </li>
 <li>
-<p>Open a web browser and access the Couchbase Web Console to <a href="testing.html" class="page">verify</a> that the installation was successful and the node is available.</p>
+<p>After the <code class="cmd">rpm</code> command completes, Couchbase Server starts automatically.</p>
+</li>
+<li>
+<p>After installation is completed, the installation process displays a message similar to the following:</p>
+<div class="listingblock">
+<div class="content">
+<pre> Minimum RAM required : 4 GB
+ System RAM configured : 8174464 kilobytes
+    Minimum number of processors required :  4 cores
+    Number of processors on the system : 4 cores
+
+Starting couchbase-server[ OK ]
+
+You have successfully installed Couchbase Server.
+    Browse to http://host_name:8091/ to configure your server.
+   Refer to http://couchbase.com for additional resources.
+
+   Update your firewall configuration
+    to allow connections to the following ports:
+
+    11211, 11210, 11209, 4369, 8091, 8092 and from 21100 to 21299.
+
+By using this software you agree to the End User License Agreement.
+See /opt/couchbase/LICENSE.txt.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>After the installation is completed, use the <code class="cmd">chkconfig</code> command to manage the Couchbase Server service, including checking the current status and creating the links to turn on and off the automatic startup.</p>
+</li>
+<li>
+<p>To perform the initial Couchbase Server setup, open a web browser and access the Couchbase Web Console.</p>
 </li>
 </ol>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="next-steps"><a class="anchor" href="#next-steps"></a>Next Steps</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Following installation and start-up of Couchbase Server, a node must be <em>initialized</em> and <em>provisioned</em>.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If it is the first node in a deployment, initialization and provisioning happens all at once when you create a <em>cluster of one</em>.</p>
-<div class="paragraph">
-<p>Refer to <a href="../manage/manage-nodes/create-cluster.html" class="page">Create a Cluster</a></p>
-</div>
-</li>
-<li>
-<p>If you already have an existing cluster, the node is initialized and provisioned when you add it to the cluster.</p>
-<div class="paragraph">
-<p>Refer to <a href="../manage/manage-nodes/add-node-and-rebalance.html" class="page">Add a Node and Rebalance</a></p>
-</div>
-</li>
-<li>
-<p>Optionally, initialization can be performed explicitly and independently of provisioning, as a prior process, in order to establish certain configurations, such as custom disk-paths.</p>
-<div class="paragraph">
-<p>Refer to <a href="../manage/manage-nodes/initialize-node.html" class="page">Initialize a Node</a></p>
-</div>
-</li>
-</ul>
-</div>
-</div>
 </div>
 </article>
 </main>

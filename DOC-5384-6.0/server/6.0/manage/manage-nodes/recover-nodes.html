@@ -3085,9 +3085,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-After a node has been failed over, it can be <em>recovered</em>: that is, added back
-into the cluster from which it was failed over, by means of the <em>rebalance</em>
-operation.
+After a node has been failed over, it can be <em>recovered</em>: that is, added back into the cluster from which it was failed over, by means of the <em>rebalance</em> operation.
 </blockquote>
 </div>
 </div>
@@ -3096,16 +3094,11 @@ operation.
 <h2 id="understanding-recovery"><a class="anchor" href="#understanding-recovery"></a>Understanding Recovery</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>After failover has occurred, before the failed over node has been rebalanced
-out of the cluster, the node can be <em>recovered</em>, and thereby reintegrated
-into the cluster. This is useful in circumstances where, following failover,
-the unhealthy node has been fixed, and is therefore now
-assumed fit for re-addition.</p>
+<p>After failover has occurred, before the failed-over node has been rebalanced out of the cluster, the node can be <em>recovered</em>, and thereby reintegrated into the cluster. This is useful in circumstances where, following failover, the unhealthy node has been fixed, and is therefore now assumed fit for re-addition.</p>
 </div>
 <div class="paragraph">
-<p>There are two options for recovery, which are <em>full</em> and <em>delta</em>. These
-are explained in
-<a href="../../learn/clusters-and-availability/recovery.html" class="page">Recovery</a>.</p>
+<p>There are two options for recovery, which are <em>full</em> and <em>delta</em>.
+These are explained in <a href="../../learn/clusters-and-availability/recovery.html" class="page">Recovery</a>.</p>
 </div>
 </div>
 </div>
@@ -3113,14 +3106,8 @@ are explained in
 <h2 id="examples-on-this-page-recover-node"><a class="anchor" href="#examples-on-this-page-recover-node"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show how to perform both <em>full</em> and
-<em>delta</em> recovery on the same failed over node in the same cluster; using the
-<a href="#recover-node-with-the-ui">UI</a>,
-the
-<a href="#recover-node-with-the-cli">CLI</a>,
-and the
-<a href="#recover-node-with-the-rest-api">REST
-API</a> respectively. The examples assume:</p>
+<p>The examples in the subsections below show how to perform both <em>full</em> and <em>delta</em> recovery on the same failed-over node in the same cluster; using the <a href="#recover-node-with-the-ui">UI</a>, the <a href="#recover-node-with-the-cli">CLI</a>, and the <a href="#recover-node-with-the-rest-api">REST API</a> respectively.
+The examples assume:</p>
 </div>
 <div class="paragraph">
 <p>The examples assume:</p>
@@ -3128,14 +3115,10 @@ API</a> respectively. The examples assume:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>A two-node cluster already exists, as
-at the conclusion of
-<a href="join-cluster-and-rebalance.html" class="page">Join a
-Cluster and Rebalance</a>.</p>
+<p>A two-node cluster already exists, as at the conclusion of <a href="join-cluster-and-rebalance.html" class="page">Join a Cluster and Rebalance</a>.</p>
 </li>
 <li>
-<p>The cluster has the Full Administrator username of
-<code>Administrator</code>, and password of <code>password</code>.</p>
+<p>The cluster has the Full Administrator username of <code>Administrator</code>, and password of <code>password</code>.</p>
 </li>
 </ul>
 </div>
@@ -3150,9 +3133,8 @@ Cluster and Rebalance</a>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Access the Couchbase Web Console <strong>Servers</strong> screen, on
-node <code>10.142.181.101</code>, by left-clicking on the <strong>Servers</strong> tab in the left-hand
-navigation bar. The display is as follows:</p>
+<p>Access the Couchbase Web Console <strong>Servers</strong> screen, on node <code>10.142.181.101</code>, by left-clicking on the <strong>Servers</strong> tab in the left-hand navigation bar.
+The display is as follows:</p>
 <div id="servers-screen-with-node-added-after-rebalance" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/twoNodeClusterAfterRebalanceCompressedView.png" alt="twoNodeClusterAfterRebalanceCompressedView" width="800">
@@ -3160,8 +3142,8 @@ navigation bar. The display is as follows:</p>
 </div>
 </li>
 <li>
-<p>To see further details of each node, left-click on the row for
-the node. The row expands vertically, as follows:</p>
+<p>To see further details of each node, left-click on the row for the node.
+The row expands vertically, as follows:</p>
 <div id="two-node-cluster-after-rebalance-expanded" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/twoNodeClusterAfterRebalance.png" alt="twoNodeClusterAfterRebalance" width="800">
@@ -3169,8 +3151,7 @@ the node. The row expands vertically, as follows:</p>
 </div>
 </li>
 <li>
-<p>To initiate failover, left-click on the <strong>Failover</strong> button, at the lower
-right of the row for <code>101.142.181.102</code>:</p>
+<p>To initiate failover, left-click on the <strong>Failover</strong> button, at the lower right of the row for <code>101.142.181.102</code>:</p>
 <div id="failover-button" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/failoverButton.png" alt="failoverButton" width="140">
@@ -3185,17 +3166,16 @@ right of the row for <code>101.142.181.102</code>:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Two radio buttons are provided, to allow selection of either <strong>Graceful</strong> or
-<strong>Hard</strong> failover. <strong>Graceful</strong> is selected by default.</p>
+<p>Two radio buttons are provided, to allow selection of either <strong>Graceful</strong> or <strong>Hard</strong> failover.
+<strong>Graceful</strong> is selected by default.</p>
 </div>
 </li>
 <li>
 <p>Confirm <em>graceful</em> failover by
 left-clicking on the <strong>Failover Node</strong> button.</p>
 <div class="paragraph">
-<p>Graceful failover is now initiated. A progress dialog appears new the top
-of the screen, summarizing overall progress; while each node-row also
-features its own progress bar, indicating progress per node:</p>
+<p>Graceful failover is now initiated.
+A progress dialog appears new the top of the screen, summarizing overall progress; while each node-row also features its own progress bar, indicating progress per node:</p>
 </div>
 <div id="graceful-failover-fullscreen-progress" class="imageblock text-middle">
 <div class="content">
@@ -3203,10 +3183,7 @@ features its own progress bar, indicating progress per node:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>For server-level details of the graceful failover process, see the conceptual
-overview provided in
-<a href="../../learn/clusters-and-availability/graceful-failover.html" class="page">Graceful
-Failover</a>.</p>
+<p>For server-level details of the graceful failover process, see the conceptual overview provided in <a href="../../learn/clusters-and-availability/graceful-failover.html" class="page">Graceful Failover</a>.</p>
 </div>
 <div class="paragraph">
 <p>When the process ends, the display is as follows:</p>
@@ -3217,10 +3194,9 @@ Failover</a>.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This indicates the graceful failover has successfully completed. A rebalance
-is required to complete the reduction of the cluster to one node. Additionally,
-the <strong>Add Back: Full Recovery</strong> and <strong>Add Back: Delta Recovery</strong> buttons are
-displayed, towards the left-hand side of the row:</p>
+<p>This indicates the graceful failover has successfully completed.
+A rebalance is required to complete the reduction of the cluster to one node.
+Additionally, the <strong>Add Back: Full Recovery</strong> and <strong>Add Back: Delta Recovery</strong> buttons are displayed, towards the left-hand side of the row:</p>
 </div>
 <div id="full-and-delta-recovery-buttons" class="imageblock text-middle">
 <div class="content">
@@ -3229,29 +3205,23 @@ displayed, towards the left-hand side of the row:</p>
 </div>
 </li>
 <li>
-<p>Select one of the two available forms of recovery, by left-clicking the
-corresponding button. Note that <em>full</em> and <em>delta</em> recovery are described in
-<a href="../../learn/clusters-and-availability/recovery.html" class="page">Recovery</a>.
-If you select <em>full</em>, by left-clicking on the <strong>Add Back: Full Recovery</strong> button,
-the row for <code>10.142.181.102</code> is displayed as follows:</p>
+<p>Select one of the two available forms of recovery, by left-clicking the corresponding button. Note that <em>full</em> and <em>delta</em> recovery are described in <a href="../../learn/clusters-and-availability/recovery.html" class="page">Recovery</a>.
+If you select <em>full</em>, by left-clicking on the <strong>Add Back: Full Recovery</strong> button, the row for <code>10.142.181.102</code> is displayed as follows:</p>
 <div id="node-row-after-full-recovery-select" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/nodeRowAfterFullRecoverySelect.png" alt="nodeRowAfterFullRecoverySelect" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p>The row specifies <code>FULL RECOVERY pending rebalance</code>: therefore, left-click
-the <strong>Rebalance</strong> button to apply full recovery.</p>
+<p>The row specifies <code>FULL RECOVERY pending rebalance</code>: therefore, left-click the <strong>Rebalance</strong> button to apply full recovery.</p>
 </div>
 <div class="paragraph">
-<p>Similarly, left-clicking on the <strong>Add Back: Delta Recovery</strong> displays
-<code>DELTA RECOVERY pending rebalance</code>. Note that recovery can be aborted, by
-left-clicking on the <strong>CANCEL ADD BACK</strong> button.</p>
+<p>Similarly, left-clicking on the <strong>Add Back: Delta Recovery</strong> displays <code>DELTA RECOVERY pending rebalance</code>.
+Recovery can be aborted, by left-clicking on the <strong>CANCEL ADD BACK</strong> button.</p>
 </div>
 </li>
 <li>
-<p>Left-click on the <strong>Rebalance</strong> button. Whichever form of recovery you have
-chosen, <em>full</em> or <em>delta</em>, is performed.</p>
+<p>Left-click on the <strong>Rebalance</strong> button. Whichever form of recovery you have chosen, <em>full</em> or <em>delta</em>, is performed.</p>
 </li>
 </ol>
 </div>
@@ -3263,8 +3233,7 @@ chosen, <em>full</em> or <em>delta</em>, is performed.</p>
 <div class="paragraph">
 <p>For a node to be recovered with the CLI, it must first be failed over.
 Perform graceful failover as documented in
-<a href="failover-graceful.html#graceful-failover-with-the-cli" class="page">Graceful
-Failover with the CLI</a>, as follows:</p>
+<a href="failover-graceful.html#graceful-failover-with-the-cli" class="page">Graceful Failover with the CLI</a>, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3275,8 +3244,7 @@ Failover with the CLI</a>, as follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>To recover the failed over node,
-use the <code>recovery</code> command, in either of the following ways:</p>
+<p>To recover the failed-over node, use the <code>recovery</code> command, in either of the following ways:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3307,8 +3275,7 @@ use the <code>recovery</code> command, in either of the following ways:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Whichever option you have chosen, if it completes successfully, the
-command produces the following output:</p>
+<p>Whichever option you have chosen, if it completes successfully, the command produces the following output:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3344,10 +3311,7 @@ Bucket: 01/01 (travel-sample)                    60714 docs remaining
 </div>
 </div>
 <div class="paragraph">
-<p>For more information on <code>rebalance</code>, see the command reference at
-<a href="#">cli:cbcli/couchbase-cli-rebalance.adoc</a>. For
-more information on <code>recover</code>, see the command reference at
-<a href="#">cli:cbcli/couchbase-cli-recovery.adoc</a>.</p>
+<p>For more information on <code>rebalance</code>, see the command reference at <a href="#">cli:cbcli/couchbase-cli-rebalance.adoc</a>. For more information on <code>recover</code>, see the command reference at <a href="#">cli:cbcli/couchbase-cli-recovery.adoc</a>.</p>
 </div>
 </div>
 </div>
@@ -3356,8 +3320,7 @@ more information on <code>recover</code>, see the command reference at
 <div class="sectionbody">
 <div class="paragraph">
 <p>For a node to be recovered with the REST API, it must first be failed over.
-Perform graceful failover as documented in
-<a href="failover-graceful.html#graceful-failover-with-the-rest-api" class="page">Graceful
+Perform graceful failover as documented in <a href="failover-graceful.html#graceful-failover-with-the-rest-api" class="page">Graceful
 Failover with the REST API</a>, as follows:</p>
 </div>
 <div class="listingblock">
@@ -3368,8 +3331,7 @@ http://10.142.181.101:8091/controller/startGracefulFailover \
 </div>
 </div>
 <div class="paragraph">
-<p>To recover the failed over node,
-use the <code>recovery</code> command, in either of the following ways:</p>
+<p>To recover the failed-over node, use the <code>recovery</code> command, in either of the following ways:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3399,8 +3361,7 @@ http://10.142.181.101:8091/controller/setRecoveryType \
 </div>
 <div class="paragraph">
 <p>The server must now be rebalanced back into the cluster.
-Use the
-<code>/controller/rebalance</code> URI, as follows:</p>
+Use the <code>/controller/rebalance</code> URI, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3410,12 +3371,9 @@ Use the
 </div>
 </div>
 <div class="paragraph">
-<p>For more information on /controller/startGracefulFailover`, see
-<a href="../../rest-api/rest-failover-graceful.html" class="page">Setting Graceful Failover</a>.
-For more information on <code>/controller/setRecoveryType</code> see
-<a href="../../rest-api/rest-node-recovery-incremental.html" class="page">Setting Recovery Type</a>.
-For more information on <code>/controller/rebalance</code>, see
-<a href="../../rest-api/rest-cluster-rebalance.html" class="page">Rebalancing Nodes</a>.</p>
+<p>For more information on /controller/startGracefulFailover`, see <a href="../../rest-api/rest-failover-graceful.html" class="page">Setting Graceful Failover</a>.
+For more information on <code>/controller/setRecoveryType</code> see <a href="../../rest-api/rest-node-recovery-incremental.html" class="page">Setting Recovery Type</a>.
+For more information on <code>/controller/rebalance</code>, see <a href="../../rest-api/rest-cluster-rebalance.html" class="page">Rebalancing Nodes</a>.</p>
 </div>
 </div>
 </div>

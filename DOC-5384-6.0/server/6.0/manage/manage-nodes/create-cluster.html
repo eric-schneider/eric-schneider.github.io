@@ -3248,7 +3248,7 @@ The read-only <strong class="ui">Free</strong> field shows the current amount of
 </div>
 </li>
 <li>
-<p><strong class="ui">Analytics Disk Paths</strong>: Enter the location on the current node where indices will be stored.
+<p><strong class="ui">Analytics Disk Paths</strong>: Enter the location on the current node where indexes will be stored.
 An OS-specific default is provided: here, for MacOS, this is <code>/Users/username/Library/Application Support/Couchbase/var/lib/couchbase/data</code>.
 The read-only <strong class="ui">Free</strong> field shows the current amount of free space for this location.</p>
 <div class="paragraph">
@@ -3392,8 +3392,10 @@ The following methods are used:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>/node/controller/setupServices</code>: Allows services to be assigned, by means of the <code>services</code> flag. Values can be <code>kv</code> (Data Service), <code>index</code> (Index Service), <code>n1ql</code> (Query Service), <code>fts</code> (Search Service), and <code>cbas</code> (Analytics Service).
-For the complete reference, see  * <code>/pools/default</code>: Allows memory quotas to be specified.</p>
+<p><code>/node/controller/setupServices</code>: Allows services to be assigned, by means of the <code>services</code> flag. Values can be <code>kv</code> (Data Service), <code>index</code> (Index Service), <code>n1ql</code> (Query Service), <code>fts</code> (Search Service), <code>eventing</code> (Eventing Service), and <code>cbas</code> (Analytics Service).</p>
+</li>
+<li>
+<p><code>/pools/default</code>: Allows memory quotas to be specified.</p>
 </li>
 <li>
 <p><code>/settings/web</code>: Allows Full Administrator username and password to be specified.

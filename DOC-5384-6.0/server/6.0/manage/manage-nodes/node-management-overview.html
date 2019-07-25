@@ -3134,10 +3134,18 @@ This includes:</p>
 <div class="paragraph">
 <p>For information on starting and stopping Couchbase Server on different platforms, see <a href="../../install/startup-shutdown.html" class="page">Startup and Shutdown</a>.</p>
 </div>
+<div class="sect2">
+<h3 id="certificate-management"><a class="anchor" href="#certificate-management"></a>Certificate Management</h3>
 <div class="paragraph">
-<p>Note that the examples in this section assume that no node is certificate-protected.
-If certificate-protection has been applied to a cluster, all new nodes to be incorporated into that cluster must themselves be appropriately certificate-protected, before incorporation is attempted; otherwise, an error occurs.
-For information, see <a href="../../learn/clusters-and-availability/nodes.html#node-certificates" class="page">Node Certificates</a>.</p>
+<p>The examples in this section assume that nodes are protected with the out-of-the-box, <em>self-signed</em> SSL/TLS certificate that is provided with Couchbase Server by default.
+This allows nodes to be added to the cluster with no need for explicit certificate-related management; since each node has the same certificate.
+However, this certificate is only intended for use in pre-production environments.</p>
+</div>
+<div class="paragraph">
+<p>If, across the cluster, an <em>authority-signed</em> certificate is substituted for the default (as would be required for production deployments), no further node can subsequently be added until a certificate signed by the same authority has been installed on it.
+An attempt incorporate into a cluster a new node that is not appropriately certificate-protected results in an error.
+For more information, see <a href="../../learn/clusters-and-availability/nodes.html#node-certificates" class="page">Node Certificates</a>.</p>
+</div>
 </div>
 </div>
 </div>

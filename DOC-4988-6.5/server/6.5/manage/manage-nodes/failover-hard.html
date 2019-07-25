@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1961,11 +1966,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3180,7 +3180,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Hard failover allows a node to be removed from a cluster reactively, because the node has become unavailable or unstable.
+Hard failover allows a node to be removed from a cluster reactively, because the node has become unresponsive or unstable.
 </blockquote>
 </div>
 </div>
@@ -3189,7 +3189,7 @@ Hard failover allows a node to be removed from a cluster reactively, because the
 <h2 id="understanding-hard-failover"><a class="anchor" href="#understanding-hard-failover"></a>Understanding Hard Failover</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em>Hard</em> failover drops a node from a cluster <em>reactively</em>, because the node has become unavailable or unstable.
+<p><em>Hard</em> failover drops a node from a cluster <em>reactively</em>, because the node has become unresponsive or unstable.
 It is manually or automatically initiated, and occurs after the point at which active vBuckets have been lost.</p>
 </div>
 <div class="paragraph">
@@ -3205,7 +3205,7 @@ This page explains how to initiate hard failover manually.</p>
 <h2 id="examples-on-this-page-hard-failover"><a class="anchor" href="#examples-on-this-page-hard-failover"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show fail the same node over gracefully, from the same two-node cluster; using the <a href="#hard-failover-with-the-ui">UI</a>, the <a href="#hard-failover-with-the-cli">CLI</a>, and the <a href="#hard-failover-with-the-rest-api">REST API</a> respectively. The examples assume:</p>
+<p>The examples in the subsections below perform the same <em>hard</em> failover, on the same two-node cluster; using the <a href="#hard-failover-with-the-ui">UI</a>, the <a href="#hard-failover-with-the-cli">CLI</a>, and the <a href="#hard-failover-with-the-rest-api">REST API</a> respectively. The examples assume:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3237,7 +3237,7 @@ The display is as follows:</p>
 </div>
 </li>
 <li>
-<p>To see further details of each node, left-click on the row for the node.
+<p>To see further details of the node to be failed over, which in this example will be <code>101.142.181.102</code>, left-click on the row for the node.
 The row expands vertically, as follows:</p>
 <div id="two-node-cluster-after-rebalance-expanded" class="imageblock text-middle">
 <div class="content">
@@ -3287,7 +3287,7 @@ On conclusion, the <strong>Servers</strong> screen appears as follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This indicates that hard failover has successfully completed, but a rebalance is required to complete the reduction of the cluster to one node.</p>
+<p>This indicates that hard failover has successfully completed, but a rebalance is required to complete the reduction of the two-node cluster to one node.</p>
 </div>
 </li>
 <li>
@@ -3320,7 +3320,8 @@ See also the information provided on <a href="add-node-and-rebalance.html#automa
 </div>
 </div>
 <div class="paragraph">
-<p>Left-click on the tab to perform hard failover on one or more of the three nodes:</p>
+<p>As the <strong>Servers</strong> screen here shows, this example features a cluster of three nodes.
+Left-click on the <strong>FAILOVER</strong> tab to perform hard failover on one or more of the three nodes:</p>
 </div>
 <div class="imageblock text-middle">
 <div class="content">
@@ -3340,7 +3341,8 @@ See also the information provided on <a href="add-node-and-rebalance.html#automa
 Since hard failover removes nodes immediately it may also result in failure of in-flight operations.</em></p>
 </div>
 <div class="paragraph">
-<p>Select one or more nodes from the checkboxes, then left-click on the <strong>Failover Nodes</strong> button, to start hard failover.</p>
+<p>Select one or more nodes from the checkboxes, then left-click on the <strong>Failover Nodes</strong> button, to start hard failover.
+When failover has complete, a rebalance will, as usual, be required.</p>
 </div>
 </div>
 </div>
@@ -3371,7 +3373,7 @@ Since hard failover removes nodes immediately it may also result in failure of i
 </div>
 </div>
 <div class="paragraph">
-<p>The cluster can now be rebalanced with the following command, to remove the failed over node:</p>
+<p>The cluster can now be rebalanced with the following command, to remove the failed-over node:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3397,10 +3399,10 @@ more information on <code>rebalance</code>, see
 </div>
 </div>
 <div class="sect1">
-<h2 id="graceful-failover-with-the-rest-api"><a class="anchor" href="#graceful-failover-with-the-rest-api"></a>Hard Failover with the REST API</h2>
+<h2 id="hard-failover-with-the-rest-api"><a class="anchor" href="#hard-failover-with-the-rest-api"></a>Hard Failover with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To perform hard failover on a node over gracefully with the REST API, use the <code>/controller/failover</code> URI, specifying the node to be failed over, as follows:</p>
+<p>To perform hard failover on a node with the REST API, use the <code>/controller/failover</code> URI, specifying the node to be failed over, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3410,7 +3412,7 @@ http://10.142.181.101:8091/controller/failOver \
 </div>
 </div>
 <div class="paragraph">
-<p>Subsequently, the cluster can be rebalanced, and the failed over node removed, with the <code>/controller/rebalance</code> URI:</p>
+<p>Subsequently, the cluster can be rebalanced, and the failed-over node removed, with the <code>/controller/rebalance</code> URI:</p>
 </div>
 <div class="listingblock">
 <div class="content">

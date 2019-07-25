@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1961,11 +1966,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3223,8 +3223,8 @@ Service-assignments are made independently for this node.</p>
 <h2 id="provision-a-node-with-the-ui"><a class="anchor" href="#provision-a-node-with-the-ui"></a>Provision a Node with the UI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Couchbase Web Console is, by default, available on port 8091.
-Therefore, if your machine can be identified on the network as <code>servera</code>, you can access the Couchbase Web Console by opening <code>http://servera:8091/</code>.
+<p>Couchbase Web Console is, by default, available on port <code>8091</code>.
+Therefore, if your machine can be identified on the network as <code>servera</code>, you can access Couchbase Web Console by opening <code>http://servera:8091/</code>.
 Alternatively, you can use an IP address or, if you are working on the machine on which installation was performed, <code>http://localhost:8091</code>.
 If you have chosen to run Couchbase Server on a port other than <code>8091</code>, connect on that specific port.</p>
 </div>
@@ -3233,13 +3233,13 @@ If you have chosen to run Couchbase Server on a port other than <code>8091</code
 </div>
 <div id="welcome" class="imageblock text-left">
 <div class="content">
-<img src="../_images/manage-nodes/welcome.png" alt="welcome" width="400">
+<img src="../_images/manage-nodes/welcome.png" alt="Welcome Screen" width="400">
 </div>
 </div>
 <div class="paragraph">
 <p>The <strong class="ui">Welcome</strong> screen lets you either <strong class="ui">Setup New Cluster</strong>, or <strong class="ui">Join Existing Cluster</strong>.
 Information on joining an existing cluster is provided in <a href="join-cluster-and-rebalance.html" class="page">Join a Cluster and Rebalance</a>.
-To set up a new cluster, left-click on <strong class="ui">Setup New Cluster</strong>.</p>
+To set up a new cluster, left-click on <b class="button">Setup New Cluster</b>.</p>
 </div>
 <div class="sect2">
 <h3 id="set-up-a-new-cluster"><a class="anchor" href="#set-up-a-new-cluster"></a>Set Up a New Cluster</h3>
@@ -3248,7 +3248,7 @@ To set up a new cluster, left-click on <strong class="ui">Setup New Cluster</str
 </div>
 <div id="set_up_new_cluster_01" class="imageblock text-left">
 <div class="content">
-<img src="../_images/manage-nodes/setUpNewCluster01.png" alt="setUpNewCluster01" width="390">
+<img src="../_images/manage-nodes/setUpNewCluster01.png" alt="New Cluster Screen" width="400">
 </div>
 </div>
 <div class="paragraph">
@@ -3268,7 +3268,7 @@ Usernames <em>may not</em> be more than 128 UTF-8 characters in length; and it i
 </div>
 </li>
 <li>
-<p>Your choice of password, for yourself: the Full Administrator for this cluster.
+<p><strong class="ui">Create Password</strong>: Your choice of password, for yourself: the Full Administrator for this cluster.
 The only default format-requirement is that the password be at least 6 characters in length.
 However, following cluster-initialization, you can modify (and indeed strengthen) the default password-policy, by means of the Couchbase CLI <a href="#">cli:cbcli/couchbase-cli-setting-password-policy.adoc</a> command.</p>
 </li>
@@ -3285,7 +3285,7 @@ However, following cluster-initialization, you can modify (and indeed strengthen
 </div>
 <div id="ts_and_cs_01" class="imageblock text-left">
 <div class="content">
-<img src="../_images/manage-nodes/TsAndCs01.png" alt="TsAndCs01" width="390">
+<img src="../_images/manage-nodes/TsAndCs01.png" alt="Terms and Conditions Screen" width="400">
 </div>
 </div>
 <div class="paragraph">
@@ -3293,8 +3293,11 @@ However, following cluster-initialization, you can modify (and indeed strengthen
 </div>
 <div class="paragraph">
 <p>You now have two options for proceeding.
-If you left-click on the <strong class="ui">Finish With Defaults</strong> button, cluster-initialization is performed with default settings, provided by Couchbase; the Couchbase Web Console <strong class="ui">Dashboard</strong> appears, and your configuration is complete.
-However, if you wish to customize those settings, left-click on the <b class="button">Configure Disk, Memory, Services</b> button, and proceed as follows.</p>
+If you left-click on the <b class="button">Finish With Defaults</b> button, cluster-initialization is performed with default settings, provided by Couchbase; the Couchbase Web Console <strong class="ui">Dashboard</strong> appears, and your configuration is complete.
+<em>All</em> Couchbase services will have been deployed.</p>
+</div>
+<div class="paragraph">
+<p>However, if you wish to customize those settings, left-click on the <b class="button">Configure Disk, Memory, Services</b> button, and proceed as follows.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3304,7 +3307,7 @@ However, if you wish to customize those settings, left-click on the <b class="bu
 </div>
 <div id="configure_new_cluster_01" class="imageblock text-left">
 <div class="content">
-<img src="../_images/manage-nodes/configureNewCluster01.png" alt="configureNewCluster01" width="390">
+<img src="../_images/manage-nodes/configureNewCluster01.png" alt="New Cluster Configuration Screen" width="400">
 </div>
 </div>
 <div class="paragraph">
@@ -3313,33 +3316,33 @@ However, if you wish to customize those settings, left-click on the <b class="bu
 <div class="ulist">
 <ul>
 <li>
-<p><strong class="ui">Host Name/IP Address</strong>: Enter the hostname or IP address for the machine on which you are configuring Couchbase Server.</p>
+<p><strong class="ui">Host Name / IP Address</strong>: Enter the hostname or IP address for the machine on which you are configuring Couchbase Server.</p>
 </li>
 <li>
 <p><strong>use IPv6 addresses</strong>: Check the checkbox to use the IPv6 address family for the cluster.</p>
 </li>
 <li>
-<p><strong>enable node encryption</strong>: Check he checkbox to enable <em>node-to-node</em> encryption for the cluster.</p>
+<p><strong>enable node encryption</strong>: Check the checkbox to enable <em>node-to-node</em> encryption for the cluster.</p>
 <div class="paragraph">
 <p>Use of IP address families and node-to-node encryption is described in <a href="../../learn/clusters-and-availability/node-to-node-encryption.html" class="page">Node-to-Node Encryption</a>.</p>
 </div>
 </li>
 <li>
 <p><strong class="ui">Data Disk Path</strong>: Enter the location on the current node where the database files will be stored.
-An OS-specific default is provided: here, for MacOS, this is <code>/Users/username/Library/Application Support/Couchbase/var/lib/couchbase/data</code>.
+An OS-specific default is provided.
 The read-only <strong class="ui">Free</strong> field shows the current amount of free space for this location.</p>
 </li>
 <li>
 <p><strong class="ui">Indexes Disk Path</strong>: Enter the location on the current node where indexes will be stored.
-An OS-specific default is provided: here, for MacOS, this is: <code>/Users/username/Library/Application Support/Couchbase/var/lib/couchbase/data</code>.
+An OS-specific default is provided.
 The read-only <strong class="ui">Free</strong> field shows the current amount of free space for this location.</p>
 <div class="paragraph">
 <p>Note that for a production environment, it is recommended that data and indexes should <em>not</em> share the same location.</p>
 </div>
 </li>
 <li>
-<p><strong class="ui">Analytics Disk Paths</strong>: Enter the location on the current node where indices will be stored.
-An OS-specific default is provided: here, for MacOS, this is <code>/Users/username/Library/Application Support/Couchbase/var/lib/couchbase/data</code>.
+<p><strong class="ui">Analytics Disk Paths</strong>: Enter the location on the current node where indexes will be stored.
+An OS-specific default is provided.
 The read-only <strong class="ui">Free</strong> field shows the current amount of free space for this location.</p>
 <div class="paragraph">
 <p>You can enter more than one location to store Analytics data.
@@ -3349,8 +3352,9 @@ Click <b class="button">+</b> to specify an additional location for Analytics da
 <li>
 <p><strong class="ui">Java Runtime Path</strong>: If desired, enter the location for an alternative Java Runtime Environment (JRE) on the current node that you want to use for the Analytics Service.</p>
 <div class="paragraph">
-<p>Couchbase Server is supplied with the Oracle Java 8 JRE.
-If no location is specified, the supplied JRE is used.</p>
+<p>Couchbase Server is supplied with an OpenJDK-based JRE.
+If no location is specified, the supplied JRE is used.
+For a list of compatible Java Runtime Environments, refer to <a href="../../install/install-environments.html" class="page">Additional Requirements</a>.</p>
 </div>
 </li>
 <li>
@@ -3358,10 +3362,12 @@ If no location is specified, the supplied JRE is used.</p>
 Each service can be selected by checking a checkbox, and then specifying the total number of megabytes to be assigned to the service.
 In each case, a memory quota is suggested, and a minimum quota is required.
 The sum of all quotas must be within the total amount of available RAM for the current node.</p>
+<div class="openblock">
+<div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p><strong class="ui">Data Service</strong>: Since you are starting a new cluster, the Data service (which is essential for the cluster) has been allocated with its checkbox disabled.
+<p><strong class="ui">Data Service</strong>: Since you are starting a new cluster, the Data Service (which is essential for the cluster) has been allocated with its checkbox disabled.
 If this is a development system, you may add up to three services.
 Note that on a production system, it is recommended that only <em>one</em> service ever be allocated per node.</p>
 </li>
@@ -3371,18 +3377,17 @@ This should be 256 MB or more.
 If this service is selected, a default quota is provided.</p>
 </li>
 <li>
-<p><strong class="ui">Search Service</strong>: Selection and RAM-allocation for the Full Text Service.
+<p><strong class="ui">Query Service</strong>: No RAM-allocation is required for this service.</p>
+</li>
+<li>
+<p><strong class="ui">Search Service</strong>: Selection and RAM-allocation for the Full Text Search Service.
 This should be 256 MB or more.
 If this service is selected, a default quota is provided.</p>
 </li>
 <li>
 <p><strong class="ui">Analytics Service</strong>: Selection and RAM-allocation for the Analytics Service.
-By default, this service appears unselected.
 The memory quota should be 1024 MB or more.
 If this service is selected, a default quota is provided.</p>
-</li>
-<li>
-<p><strong class="ui">Query Service</strong>: No RAM-allocation is required for this service.</p>
 </li>
 <li>
 <p><strong class="ui">Eventing Service</strong>: Selection and RAM-allocation for the Eventing Service.
@@ -3391,6 +3396,8 @@ If this service is selected, a default quota is provided.</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
 <div class="paragraph">
 <p>The total memory quota you have allocated is displayed below these fields, towards the right.
 The total RAM available is displayed below this figure, at the center.
@@ -3398,18 +3405,22 @@ If your memory allocation is excessive, a notification warns you, and you must l
 </div>
 </li>
 <li>
-<p><strong class="ui">Index Storage Setting</strong>: If the Index Service has been selected, either <strong class="ui">Standard Global Secondary Indexes</strong> or <strong class="ui">Memory-Optimized Global Secondary Indexes</strong> can be chosen here, by means of radio buttons.
+<p><strong class="ui">Index Storage Setting</strong>: If the Index Service has been selected, either <strong class="ui">Standard Global Secondary</strong> Indexes or <strong class="ui">Memory-Optimized</strong> Global Secondary Indexes can be chosen here, by means of radio buttons.
 See <a href="../../learn/services-and-indexes/indexes/global-secondary-indexes.html" class="page">Global Secondary Indexes</a>, for details.</p>
+</li>
+<li>
+<p><strong class="ui">Enable software update notifications in the web console</strong>: Check this checkbox to allow notifications in the Couchbase Web Console when a new version of Couchbase Server is available.
+Configuration information transferred in the update check is anonymous and doesn&#8217;t include any stored key-value data.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>When you have finished entering your configuration-details, left-click on the <strong class="ui">Save &amp; Finish</strong> button, at the lower right.
+<p>When you have finished entering your configuration-details, left-click on the <b class="button">Save &amp; Finish</b> button, at the lower right.
 This configures the server accordingly, and brings up the Couchbase Web Console <strong class="ui">Dashboard</strong>, for the first time.</p>
 </div>
 <div id="dashboard_01" class="imageblock text-left">
 <div class="content">
-<img src="../_images/manage-nodes/dashboard01.png" alt="dashboard01" width="820">
+<img src="../_images/manage-nodes/dashboard01.png" alt="New Cluster Dashboard" width="820">
 </div>
 </div>
 <div class="paragraph">
@@ -3429,7 +3440,8 @@ In order to save and subsequently access documents and other objects, you must c
 A description of how to create, edit, flush, and delete buckets can be found in the section
 <a href="../manage-buckets/bucket-management-overview.html" class="page">Manage Buckets</a>.
 An architectural description of buckets can be found in the section <a href="../../learn/buckets-memory-and-storage/buckets.html" class="page">Buckets</a>.
-(There are three different kinds of bucket, so you may wish to familiarize yourself with their properties, before you start bucket-creation.) Note that <em>sample</em> buckets already contain data, and so are ready for your immediate experimentation and testing.</p>
+(There are three different kinds of bucket, so you may wish to familiarize yourself with their properties, before you start bucket-creation.)
+Note that <em>sample</em> buckets already contain data, and so are ready for your immediate experimentation and testing.</p>
 </div>
 <div class="paragraph">
 <p>The buckets that you create must be accessed securely: therefore, Couchbase Server provides a system of <em>Role-Based Access Control</em> (RBAC), which must be used by administrators and applications that wish to access buckets.
@@ -3480,14 +3492,16 @@ For information on how to set up RBAC users so that they can access the buckets 
 <h2 id="provision-a-node-with-the-rest-api"><a class="anchor" href="#provision-a-node-with-the-rest-api"></a>Provision a Node with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following REST API examples set up a single-node Couchbase Server cluster with three services, administrative credentials, and a RAM quota.
+<p>The following REST API examples set up a single-node Couchbase-Server cluster with three services, administrative credentials, and a RAM quota.
 The following methods are used:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>/node/controller/setupServices</code>: Allows services to be assigned, by means of the <code>services</code> flag. Values can be <code>kv</code> (Data Service), <code>index</code> (Index Service), <code>n1ql</code> (Query Service), <code>fts</code> (Search Service), and <code>cbas</code> (Analytics Service).
-For the complete reference, see  * <code>/pools/default</code>: Allows memory quotas to be specified.</p>
+<p><code>/node/controller/setupServices</code>: Allows services to be assigned, by means of the <code>services</code> flag. Values can be <code>kv</code> (Data Service), <code>index</code> (Index Service), <code>n1ql</code> (Query Service), <code>fts</code> (Search Service), <code>eventing</code> (Eventing Service), and <code>cbas</code> (Analytics Service).</p>
+</li>
+<li>
+<p><code>/pools/default</code>: Allows memory quotas to be specified.</p>
 </li>
 <li>
 <p><code>/settings/web</code>: Allows Full Administrator username and password to be specified.
@@ -3535,7 +3549,7 @@ Note that the default disk-paths for data, indexes, and analytics will be used, 
 <div class="sectionbody">
 <div class="paragraph">
 <p>Following provisioning, a Couchbase Server node constitutes a <em>Couchbase Cluster</em> of one node.
-From this point, additional nodes can be <em>added</em> to the cluster.
+From this point, more nodes can be <em>added</em> to the cluster.
 See <a href="add-node-and-rebalance.html" class="page">Add a Node and Rebalance</a>, for details.</p>
 </div>
 </div>

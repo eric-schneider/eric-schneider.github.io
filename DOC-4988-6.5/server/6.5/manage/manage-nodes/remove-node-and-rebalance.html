@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1961,11 +1966,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3179,8 +3179,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Couchbase Server allows a cluster node to be removed, and the remaining
-nodes rebalanced.
+Couchbase Server allows a cluster node to be removed, and the remaining nodes rebalanced.
 </blockquote>
 </div>
 </div>
@@ -3189,23 +3188,14 @@ nodes rebalanced.
 <h2 id="understanding-removal-and-rebalance"><a class="anchor" href="#understanding-removal-and-rebalance"></a>Understanding Removal and Rebalance</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <em>rebalance</em> operation distributes active and replica vBuckets across
-available cluster nodes in optimal fashion. This allows the best possible
-data-availability to be maintained after nodes have been added or removed.
-Examples of using rebalance after node-addition have already been provided, in
-<a href="add-node-and-rebalance.html" class="page">Add a Node
-and Rebalance</a> and
-<a href="join-cluster-and-rebalance.html" class="page">Join a
-Cluster and Rebalance</a>. In particular, reference was made in both locations
-to the data initially resident on a single node being replicated and distributed,
-across two nodes, following node-addition.</p>
+<p>The <em>rebalance</em> operation distributes active and replica vBuckets across available cluster nodes in optimal fashion.
+This allows the best possible data-availability to be maintained after nodes have been added or removed.
+Examples of using rebalance after node-addition have already been provided, in <a href="add-node-and-rebalance.html" class="page">Add a Node and Rebalance</a> and <a href="join-cluster-and-rebalance.html" class="page">Join a Cluster and Rebalance</a>.
+In particular, reference was made in both locations to the data initially resident on a single node being replicated and distributed, across two nodes, following node-addition.</p>
 </div>
 <div class="paragraph">
-<p>Nodes can also be rebalanced following removal: this is demonstrated in
-the current section. When a node is flagged for <em>removal</em> (as opposed to
-<em>failover</em>), new replica vBuckets will be created on the remaining nodes,
-as node-removal occurs. This has the effect of reducing available
-memory for the specified number of replicas.</p>
+<p>Nodes can also be rebalanced following removal: this is demonstrated in the current section. When a node is flagged for <em>removal</em> (as opposed to <em>failover</em>), new replica vBuckets will be created on the remaining nodes, as node-removal occurs.
+This has the effect of reducing available memory for the specified number of replicas.</p>
 </div>
 <div class="paragraph">
 <p>This page provides the steps to be taken for node-removal and rebalance.
@@ -3217,25 +3207,16 @@ For a conceptual explanation of removal, see <a href="../../learn/clusters-and-a
 <h2 id="examples-on-this-page-node-removal"><a class="anchor" href="#examples-on-this-page-node-removal"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show how to remove the same
-node from the same two-node cluster; using the
-<a href="#remove-a-node-with-the-ui">UI</a>,
-the
-<a href="#remove-a-node-with-the-cli">CLI</a>,
-and the
-<a href="#remove-a-node-with-the-rest-api">REST
-API</a> respectively. The examples assume:</p>
+<p>The examples in the subsections below show how to remove the same node from the same two-node cluster; using the <a href="#remove-a-node-with-the-ui">UI</a>, the <a href="#remove-a-node-with-the-cli">CLI</a>, and the <a href="#remove-a-node-with-the-rest-api">REST API</a> respectively.
+The examples assume:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>A two-node cluster already exists; as at the conclusion of
-<a href="list-cluster-nodes.html" class="page">List
-Cluster Nodes</a>.</p>
+<p>A two-node cluster already exists; as at the conclusion of <a href="list-cluster-nodes.html" class="page">List Cluster Nodes</a>.</p>
 </li>
 <li>
-<p>The cluster has the Full Administrator username of
-<code>Administrator</code>, and password of <code>password</code>.</p>
+<p>The cluster has the Full Administrator username of <code>Administrator</code>, and password of <code>password</code>.</p>
 </li>
 </ul>
 </div>
@@ -3250,9 +3231,8 @@ Cluster Nodes</a>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Access the <strong>Servers</strong> screen of Couchbase Web Console, by means of the
-<strong>Servers</strong> tab in the left-hand navigation bar. The screen appears as
-follows:</p>
+<p>Access the <strong>Servers</strong> screen of Couchbase Web Console, by means of the <strong>Servers</strong> tab in the left-hand navigation bar.
+The screen appears as follows:</p>
 <div id="servers-screen-with-node-added-after-rebalance" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/twoNodeClusterAfterRebalanceCompressedView.png" alt="twoNodeClusterAfterRebalanceCompressedView" width="800">
@@ -3260,8 +3240,7 @@ follows:</p>
 </div>
 </li>
 <li>
-<p>Left-click on the row for node <code>10.142.181.102</code>. The row expands vertically,
-as follows:</p>
+<p>Left-click on the row for node <code>10.142.181.102</code>. The row expands vertically, as follows:</p>
 <div id="two-node-cluster-after-rebalance-expanded" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/twoNodeClusterAfterRebalance.png" alt="twoNodeClusterAfterRebalance" width="800">
@@ -3269,8 +3248,7 @@ as follows:</p>
 </div>
 </li>
 <li>
-<p>To initiate removal, left-click on the <strong>Remove</strong> button, at the lower left of
-the row:</p>
+<p>To initiate removal, left-click on the <strong>Remove</strong> button, at the lower left of the row:</p>
 <div id="remove-button" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/removeButton.png" alt="removeButton" width="140">
@@ -3285,9 +3263,7 @@ the row:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Left-click on the <strong>Remove Server</strong> confirmation button. The <strong>Servers</strong>
-screen reappears as
-follows:</p>
+<p>Left-click on the <strong>Remove Server</strong> confirmation button. The <strong>Servers</strong> screen reappears as follows:</p>
 </div>
 <div id="folowing-removal" class="imageblock text-middle">
 <div class="content">
@@ -3295,8 +3271,7 @@ follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This indicates that node <code>10.142.181.102</code> has been <code>flagged for removal</code>, and
-is <code>still taking traffic</code>.
+<p>This indicates that node <code>10.142.181.102</code> has been <code>flagged for removal</code>, and is <code>Still taking traffic</code>.
 A rebalance must be performed to complete removal.</p>
 </div>
 </li>
@@ -3357,8 +3332,7 @@ See also the information provided on <a href="add-node-and-rebalance.html#automa
 </div>
 </div>
 <div class="paragraph">
-<p>This initiates the rebalance process. As it continues, progress is
-shown as console output:</p>
+<p>This initiates the rebalance process. As it continues, progress is shown as console output:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3397,7 +3371,7 @@ http://10.142.181.101:8091/controller/rebalance \
 <h2 id="next-steps-after-remove-nodes"><a class="anchor" href="#next-steps-after-remove-nodes"></a>Next Steps</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Nodes can be <em>failed over</em>, so that an unhealthy or responsive node can be removed from the cluster without application-access being affected. See <a href="fail-nodes-over.html" class="page">Fail Nodes Over</a>.</p>
+<p>Nodes can be <em>failed over</em>, so that an unhealthy or unresponsive node can be removed from the cluster without application-access being affected. See <a href="fail-nodes-over.html" class="page">Fail Nodes Over</a>.</p>
 </div>
 </div>
 </div>

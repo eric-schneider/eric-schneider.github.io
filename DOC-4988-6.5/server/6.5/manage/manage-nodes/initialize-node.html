@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1961,11 +1966,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3270,7 +3270,7 @@ Note that the command requires that a username and password be specified, althou
 <h2 id="initialize-a-node-with-the-rest-api"><a class="anchor" href="#initialize-a-node-with-the-rest-api"></a>Initialize a Node with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To initialize a node with the REST API, use the '/nodes/self/controller/settings' URI, as follows:</p>
+<p>To initialize a node with the REST API, use the <code>POST /nodes/self/controller/settings</code> http method and URI, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">

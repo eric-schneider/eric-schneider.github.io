@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1961,11 +1966,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3188,7 +3188,7 @@ An independent Couchbase Server-node can be joined to an existing cluster.
 <h2 id="understanding-the-join-operation"><a class="anchor" href="#understanding-the-join-operation"></a>Understanding the Join Operation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em>Full</em> and <em>Cluster</em> administrators can use the UI, CLI, or REST API to join a Couchbase Server nodes to an existing cluster. On each node to be added, Couchbase Server must have been <em>installed and started</em>.
+<p><em>Full</em> and <em>Cluster</em> administrators can use the UI or REST API to join a Couchbase Server nodes to an existing cluster. On each node to be added, Couchbase Server must have been <em>installed and started</em>.
 The process of node-addition grants to the new node the settings already established for the parent cluster.
 (See <a href="../manage-settings/manage-settings.html" class="page">Manage Settings</a> for details.)
 The process allow services to be assigned to the new node.
@@ -3212,8 +3212,8 @@ If the node has been provisioned, the cluster must <em>add</em> the node.</p>
 <h2 id="examples-on-this-page-node-addition"><a class="anchor" href="#examples-on-this-page-node-addition"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show how the same uninitialized and unprovisioned node joins itself to the same existing cluster, using the <a href="#join-a-cluster-with-the-ui">UI</a>, the <a href="#join-a-cluster-with-the-ui">UI</a>, and the <a href="#join-a-cluster-with-the-rest-api">REST API</a> respectively.
-No node-join is supported by the CLI.</p>
+<p>The examples in the subsections below show how the same uninitialized and unprovisioned node joins itself to the same existing cluster, using the <a href="#join-a-cluster-with-the-ui">UI</a> and the <a href="#join-a-cluster-with-the-rest-api">REST API</a> respectively.
+Node-join is not supported by the CLI.</p>
 </div>
 <div class="paragraph">
 <p>The examples assume:</p>
@@ -3244,7 +3244,7 @@ It is running the Data, Query, and Index services, and has the <code>travel-samp
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Bring up Couchbase Web Console, and acccess the new node&#8217;s Couchbase Web Console instance, at <code>10.142.181.102:8091</code>.
+<p>Acccess the new node&#8217;s Couchbase Web Console instance, at <code>10.142.181.102:8091</code>.
 The welcome screen is displayed:</p>
 <div id="new-node-welcome-screen" class="imageblock text-middle">
 <div class="content">
@@ -3285,7 +3285,7 @@ It also requires the username and password of the <strong>Cluster Admin</strong>
 <p>Enter the cluster-name and password, and uncheck all <strong>Services</strong> fields except <strong>Data</strong>. Leave all other details unchanged. Then, left-click on the <strong>Join With Custom Configuration</strong> button, at the lower right.</p>
 <div class="paragraph">
 <p>The dashboard for the cluster now appears.
-The following notification is provided along the top:</p>
+The following notification is provided at the lower left:</p>
 </div>
 <div id="server-association-message" class="imageblock text-middle">
 <div class="content">
@@ -3308,7 +3308,7 @@ Note, at this point, the figure under the <strong>Items</strong> column for for 
 Meanwhile, the <strong>Items</strong> figure for <code>10.142.181.102</code> is 0/0, indicating that no items are yet distributed onto that node in either active or replica form.</p>
 </div>
 <div class="paragraph">
-<p>To access information on buckets, vBuckets, and intra-cluster replication, see the <a href="../../learn/architecture-overview.html" class="page">Architecture Overview</a>.</p>
+<p>To access information on buckets, vBuckets, and intra-cluster replication, see the architecture  <a href="../../learn/architecture-overview.html" class="page">Overview</a>.</p>
 </div>
 </li>
 <li>
@@ -3371,7 +3371,7 @@ http://10.142.181.102:8091/node/controller/doJoinCluster \
 </div>
 <div class="paragraph">
 <p>The <code>hostname</code> and <code>user</code>(-name) and <code>password</code> of the Full Administrator for the cluster to be joined are specified.
-The service specified to be run on the new node is <code>kv</code>, signifying the Data Server.</p>
+The service specified to be run on the new node is <code>kv</code>, signifying the Data Service.</p>
 </div>
 <div class="paragraph">
 <p>At this point, the newly joined node must be rebalanced into the cluster.

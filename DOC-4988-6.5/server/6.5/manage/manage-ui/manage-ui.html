@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1961,11 +1966,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3244,10 +3244,10 @@ When the appropriate port is accessed, the following interface is displayed:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Setup New Cluster</strong>: which establishes the current server as an independent cluster of one node, to which other node can subsequently be added.</p>
+<p><strong>Setup New Cluster</strong>: which establishes the current server as an independent cluster of one node, to which other nodes can subsequently be added.</p>
 </li>
 <li>
-<p><strong>Join Existing Cluster</strong>: which establishes current server as a node that is part of a pre-existing cluster.</p>
+<p><strong>Join Existing Cluster</strong>: which establishes the current server as a node that is part of a pre-existing cluster.</p>
 </li>
 </ul>
 </div>
@@ -3689,7 +3689,7 @@ Operations resulting from the cluster&#8217;s role as a target cluster for anoth
 <h3 id="buckets-learning-and-managing"><a class="anchor" href="#buckets-learning-and-managing"></a>Buckets: Learn and Manage</h3>
 <div class="paragraph">
 <p>A conceptual account of buckets is provided in <a href="../../learn/buckets-memory-and-storage/buckets.html" class="page">Buckets</a>.
-Information on how manage buckets is provided in <a href="../manage-buckets/bucket-management-overview.html" class="page">Manage Buckets</a>.</p>
+Information on how to manage buckets is provided in <a href="../manage-buckets/bucket-management-overview.html" class="page">Manage Buckets</a>.</p>
 </div>
 </div>
 </div>
@@ -3718,10 +3718,8 @@ Information on how manage buckets is provided in <a href="../manage-buckets/buck
 Replication occurs from a specific bucket on the source cluster to a specific bucket on a target cluster.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>XDCR</strong> screen provides an upper panel named <strong>Remote Clusters</strong>.
-This lists the clusters that have been defined as targets for repliction.
-It also provides a lower panel, named <strong>Ongoing Replications</strong>, which will list those replications that are currently in progress.
-For an example of the <strong>Ongoing Replications</strong> panel populated with information corresponding to an ongoing replication, see the <a href="../manage-xdcr/create-xdcr-replication.html#ongoing-replications-with-replication" class="page">illustration</a> in <a href="../manage-xdcr/create-xdcr-replication.html" class="page">Create a Replication</a>.</p>
+<p>In its initial display, the <strong>XDCR</strong> screen provides a panel named <strong>Remote Clusters</strong>.
+This will list the clusters that have been defined as targets for repliction.</p>
 </div>
 <div class="sect2">
 <h3 id="xdcr-learning-and-managing"><a class="anchor" href="#xdcr-learning-and-managing"></a>XDCR: Learn and Manage</h3>
@@ -3920,7 +3918,7 @@ If the <code>travel-sample</code> bucket is installed, the <strong>Query</strong
 <div class="paragraph">
 <p>For information on the Query Service, see <a href="../../learn/services-and-indexes/services/query-service.html" class="page">Query Service</a>.
 For information on using the Query Workbench to make N1QL queries, see <a href="../../getting-started/try-a-query.html" class="page">Run Your First N1QL Query</a>, which is part of the <em>Getting Started</em> sequence.
-For information on N1QL, see <a href="../../n1ql/n1ql-language-reference/index.html" class="page">N1QL Language Reference</a>.</p>
+For information on N1QL, see the <a href="../../n1ql/n1ql-language-reference/index.html" class="page">N1QL Language Reference</a>.</p>
 </div>
 </div>
 </div>
@@ -4083,7 +4081,7 @@ After this procedure is followed for the <code>travel-sample</code> bucket, the 
 </div>
 <div class="paragraph">
 <p>The defining and editing of indexes is performed by means of <em>N1QL</em>.
-See <a href="../../n1ql/n1ql-language-reference/index.html" class="page">N1QL Language Reference</a> for information.
+See the <a href="../../n1ql/n1ql-language-reference/index.html" class="page">N1QL Language Reference</a> for information.
 Index management, including editing, can be performed within Couchbase Web Console.
 For example, left-clicking on the row of an index to be edited opens the row, and provides options:</p>
 </div>

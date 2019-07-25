@@ -3176,13 +3176,13 @@ Note that the command requires that a username and password be specified, althou
 <h2 id="initialize-a-node-with-the-rest-api"><a class="anchor" href="#initialize-a-node-with-the-rest-api"></a>Initialize a Node with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To initialize a node with the REST API, use the '/nodes/self/controller/settings' URI, as follows:</p>
+<p>To initialize a node with the REST API, use the <code>POST /nodes/self/controller/settings</code> http method and URI, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>curl  -u Administrator:password -v -X POST \
 http://10.142.181.103:8091/nodes/self/controller/settings \
--d 'data_path=/home/vagrant/dpath' \
+-d 'path=/home/vagrant/dpath' \
 -d 'index_path=/home/vagrant/ipath' \
 -d 'cbas_path=/home/vagrant/apath'</pre>
 </div>

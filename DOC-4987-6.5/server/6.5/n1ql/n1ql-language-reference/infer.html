@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1953,11 +1958,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3169,8 +3169,15 @@
   </div>
 <article class="doc">
 <h1 class="page">INFER</h1>
+<div class="labels">
+  <ul>
+    <li class="edition"><a href="https://www.couchbase.com/products/editions">enterprise edition</a></li>
+  </ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>Couchbase Server 4.5 introduces INFER, a N1QL statement that infers the metadata of documents in a keyspace, for example the structure of documents, data types of various attributes, sample values, and so on.
+<p>The INFER statement enables you to infer the metadata of documents in a keyspace, for example the structure of documents, data types of various attributes, sample values, and so on.
 Since a keyspace or bucket can contain documents with varying structures, the INFER statement is statistical in nature rather than deterministic.
 You can specify the sample size that must be used to analyze and identify the structure of documents in a keyspace or bucket.
 The INFER statement is only supported in the Enterprise Edition.</p>
@@ -3188,81 +3195,74 @@ The <code class="cmd">describe</code> statement introduced in the Couchbase Serv
 </table>
 </div>
 <div class="paragraph">
-<p>The statement returns the output in the <a href="http://json-schema.org/documentation.html" target="_blank" rel="noopener">JSON Schema draft v4</a> format as specified by <a href="http://json-schema.org/" target="_blank" rel="noopener">json-schema.org</a>.
-It supports the following data types: array, boolean, integer, null, number, and object.
-For each identified attribute, the statement returns the following details:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code class="out">#docs</code>: Specifies the number of documents in the sample that contain this attribute.</p>
-</li>
-<li>
-<p><code class="out">%docs</code>: Specifies the percentage of documents in the sample that contain this attribute.</p>
-</li>
-<li>
-<p><code class="out">minitems</code>: If the data type is an array, specifies the minimum number of elements (array size).</p>
-</li>
-<li>
-<p><code class="out">maxitems</code>: If the data type is an array, specifies the maximum number of elements (array size).</p>
-</li>
-<li>
-<p><code class="out">samples</code>: Displays a list of sample values for the attribute found in the sample population.</p>
-</li>
-<li>
-<p><code class="out">type</code>: Specifies the identified data type of the attribute.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
 <p>The Query Workbench in the Couchbase Web console (available under the <strong class="ui">Query</strong> tab) uses the INFER statement to display the structure of documents in the <strong class="ui">Bucket Analysis</strong> area when you expand the keyspace or bucket name.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="syntax"><a class="anchor" href="#syntax"></a>Syntax</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>infer-clause ::= INFER keyspace-ref [ WITH '{' <a href="#infer-parameters">parameter</a> ':' value ( ',' <a href="#infer-parameters">parameter</a> ':' value )* '}' ]</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/n1ql-language-reference/infer-clause.png" alt="'INFER' keyspace-ref ( 'WITH' '{' parameter ':' value ( ',' parameter ':' value )* '}' )?">
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code class="var">keyspace_ref</code></dt>
+<dd>
+<p>Specifies a simple or fully-qualified keyspace name.</p>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="infer-parameters"><a class="anchor" href="#infer-parameters"></a>Parameters</h3>
+<div class="listingblock">
+<div class="content">
+<pre>parameter ::= '"' ( 'sample_size' | 'num_sample_values' | 'similarity_metric' | 'dictionary_threshold' ) '"'</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/n1ql-language-reference/infer-parameters.png" alt="'&amp;quot' ( 'sample_size' | 'num_sample_values' | 'similarity_metric' | 'dictionary_threshold' ) '&quot;'">
+</div>
+</div>
 <div class="paragraph">
-<p><strong>Syntax</strong></p>
+<p>You may specify one or more of the following comma-separated parameters to guide the INFER statement.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>INFER &lt;keyspace_ref&gt; [ WITH { "parameter" : value, … } ]</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code class="var">keyspace_ref</code>: Specifies a simple or fully-qualified keyspace name.</p>
-</li>
-<li>
-<p><code class="var">parameter</code>: Specifies one or more of the following comma separated parameters to guide the INFER statement.</p>
-<div class="listingblock">
-<div class="content">
-<pre>parameter ::= [ "sample_size" : &lt;value&gt; ]
-              [ , "num_sample_values" : &lt;value&gt; ]
-              [ , "similarity_metric" : &lt;value&gt; ]
-              [ , "dictionary_threshold" : &lt;value&gt; ]</pre>
-</div>
-</div>
-</li>
-<li>
-<p><code class="var">sample_size</code>: Specifies the number of documents to randomly sample in the keyspace or bucket when inferring the schema.
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code class="var">sample_size</code></dt>
+<dd>
+<p>Specifies the number of documents to randomly sample in the keyspace or bucket when inferring the schema.
 The default sample size is 1000 documents.
 If a bucket contains fewer documents than the specified <code class="var">sample_size</code>, then all the documents in the bucket will be used.</p>
-</li>
-<li>
-<p><code class="var">num_sample_values</code>: Specifies the number of sample values for each attributes to be returned.
+</dd>
+<dt class="hdlist1"><code class="var">num_sample_values</code></dt>
+<dd>
+<p>Specifies the number of sample values for each attributes to be returned.
 The sample values provide examples of the data format.
 The default value is 5.</p>
-</li>
-<li>
-<p><code class="var">similarity_metric</code>: The schema inferencing process groups similar schemas into document flavors.
-<em>Similarity-metric</em> is the degree of similarity that two schemas must have to be considered part of the same flavor.
+</dd>
+<dt class="hdlist1"><code class="var">similarity_metric</code></dt>
+<dd>
+<p>The schema inferencing process groups similar schemas into document flavors.
+The <code>similarity_metric</code> is the degree of similarity that two schemas must have to be considered part of the same flavor.
 You can specify a real number between 0 and 1 indicating the percentage match (of attributes) required to establish similarity between two documents.
 The default value is 0.6, which means two documents are considered similar if 60% of the attributes at the top-level attributes are the same.</p>
-</li>
-<li>
-<p><code class="var">dictionary_threshold</code>: Sometimes JSON documents follow the dictionary pattern, where a field has sub-fields that are key-value pairs, instead of general field-name and value pairs.
+</dd>
+<dt class="hdlist1"><code class="var">dictionary_threshold</code></dt>
+<dd>
+<p>Sometimes JSON documents follow the dictionary pattern, where a field has sub-fields that are key-value pairs, instead of general field-name and value pairs.
 For example, one of the Couchbase training modules has music tracks with a sub-document called "ratings" where each rating has the user ID paired with the object:</p>
 <div class="listingblock">
 <div class="content">
-<pre>   "ratings": {
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">   "ratings": {
           "brambliertypo75631": {
             "created": 1439939260000,
             "rating": 1
@@ -3279,21 +3279,113 @@ For example, one of the Couchbase training modules has music tracks with a sub-d
             "created": 1440204913000,
             "rating": 1
           },
-      },</pre>
+      },</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>While this pattern may not be ideal for a number of reasons, if your data follows this pattern it might seem that the data has a huge number of ‘fields’, since a data value is being used as a field name.
 When the schema inferencing process sees more than <code class="var">dictionary_threshold</code> fields with different names, but the same sub-document schema, it collapses them into a single schema field marked as a dictionary.</p>
 </div>
-</li>
-</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="schema-output"><a class="anchor" href="#schema-output"></a>Schema Output</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The statement returns the output in the <a href="http://json-schema.org/documentation.html" target="_blank" rel="noopener">JSON Schema draft</a> format as specified by <a href="http://json-schema.org/" target="_blank" rel="noopener">json-schema.org</a>.
+It supports the following data types: array, boolean, integer, null, number, and object.</p>
 </div>
 <div class="paragraph">
-<p><strong>RBAC Privileges</strong></p>
+<p>At the top level, the output contains an array of schemas.
+Each schema recursively describes the structure of a flavor of document.
+For each identified attribute, the schema may contain the following details:</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Common Details</dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code class="out">#docs</code></dt>
+<dd>
+<p>Specifies the number of documents in the sample that contain this attribute.</p>
+</dd>
+<dt class="hdlist1"><code class="out">%docs</code></dt>
+<dd>
+<p>Specifies the percentage of documents in the sample that contain this attribute.</p>
+</dd>
+<dt class="hdlist1"><code class="out">samples</code></dt>
+<dd>
+<p>Contains sample values for the attribute found in the sample population.</p>
+</dd>
+<dt class="hdlist1"><code class="out">type</code></dt>
+<dd>
+<p>Specifies specifying the identified data type of the attribute.</p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1">Details for Array Data Type</dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code class="out">items</code></dt>
+<dd>
+<p>Contains details of the elements in the array.</p>
+</dd>
+<dt class="hdlist1"><code class="out">minItems</code></dt>
+<dd>
+<p>Specifies the minimum number of elements (array size).</p>
+</dd>
+<dt class="hdlist1"><code class="out">maxItems</code></dt>
+<dd>
+<p>Specifies the maximum number of elements (array size).</p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1">Details for Object Data Type</dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code class="out">properties</code></dt>
+<dd>
+<p>Contains details of the properties of the object.</p>
 <div class="paragraph">
-<p>User executing the INFER statement must have the <em>Query Select</em> privilege granted on the target keyspace/bucket.
+<p>Each property is described by a key-value pair, in which the key is the name of the property, and the value gives recursive details of that property.</p>
+</div>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1">Details for Documents and Subdocuments</dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code class="out">$schema</code></dt>
+<dd>
+<p>Specifies the version of the JSON Schema standard.</p>
+</dd>
+<dt class="hdlist1"><code class="out">Flavor</code></dt>
+<dd>
+<p>Specifies the flavor of a document or subdocument.</p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rbac-privileges"><a class="anchor" href="#rbac-privileges"></a>RBAC Privileges</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To execute the INFER statement, you must have the <em>Query Select</em> privilege granted on the target keyspace/bucket.
 For more details about user roles, see
 <a href="../../learn/security/authorization-overview.html" class="page">Authorization</a>.</p>
 </div>
@@ -3301,24 +3393,29 @@ For more details about user roles, see
 <p>For example,</p>
 </div>
 <div class="paragraph">
-<p>To execute the following statement, user must have the <em>Query Select</em> privilege on <code>`travel-sample`</code>.</p>
+<p>To execute the following statement, you must have the <em>Query Select</em> privilege on <code>`travel-sample`</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>INFER `travel-sample`</pre>
+<pre class="highlightjs highlight"><code class="language-n1ql hljs" data-lang="n1ql">INFER `travel-sample`</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Example</strong></p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="example"><a class="anchor" href="#example"></a>Example</h2>
+<div class="sectionbody">
+<div class="exampleblock">
+<div class="content">
 <div class="listingblock">
 <div class="content">
-<pre>INFER `beer-sample` WITH {"sample_size":10000,"num_sample_values":1,"similarity_metric":0.0};</pre>
+<pre class="highlightjs highlight"><code class="language-n1ql hljs" data-lang="n1ql">INFER `beer-sample` WITH {"sample_size":10000,"num_sample_values":1,"similarity_metric":0.0};</code></pre>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">Results</div>
 <div class="content">
-<pre>[
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
     [
         {
             "#docs": 823,
@@ -3459,7 +3556,11 @@ For more details about user roles, see
               }
           }
       ]
-]</pre>
+]</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </article>

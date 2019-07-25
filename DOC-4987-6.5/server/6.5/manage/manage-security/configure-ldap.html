@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1953,11 +1958,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3288,7 +3288,7 @@ The <strong>ADD USER</strong> tab allows individual users to be added, and optio
 </div>
 <div id="configure-ldap-dialog" class="imageblock text-left">
 <div class="content">
-<img src="../_images/manage-security/configureLDAP.png" alt="configureLDAP" width="420">
+<img src="../_images/manage-security/configureLDAP2.png" alt="configureLDAP2" width="420">
 </div>
 </div>
 <div class="paragraph">
@@ -3676,6 +3676,22 @@ The value must be an integer between 1 and 100: the default is 10.</p>
 </div>
 <div class="paragraph">
 <p>Alternatively, left-click on <strong>Cancel</strong> to abandon the configuration procedure.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clearing-the-cache"><a class="anchor" href="#clearing-the-cache"></a>Clearing the Cache</h3>
+<div class="paragraph">
+<p>The <strong>Clear Cache</strong> button is located at the lower left of the <strong>LDAP Configuration</strong> dialog:</p>
+</div>
+<div class="imageblock text-left">
+<div class="content">
+<img src="../_images/manage-security/clearLDAPcacheButton.png" alt="clearLDAPcacheButton" width="140">
+</div>
+</div>
+<div class="paragraph">
+<p>Couchbase Server <em>caches</em> authentication responses and group-search results, thereby minimizing the number of requests to be made on the LDAP server.
+Each cached value is expired after a configured time-period (controlled by the <strong>Cache Time-to-Live ms</strong> value, provided in the <a href="#advanced-settings">Advanced Settings</a> panel).
+Additionally, the <strong>Clear Cache</strong> button is provided, so that all currently cached values can be explicitly removed: each subsequent authentication or group request is, on its first instance following the removal, passed to the LDAP server; and the latest values established on the LDAP server are thereby retrieved.</p>
 </div>
 </div>
 <div class="sect2">

@@ -1125,6 +1125,11 @@
     <a class="nav-link" href="#">python-sdk::start-using-sdk.adoc</a>
     </span>
   </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="#">scala-sdk::start-using-sdk.adoc</a>
+    </span>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -1953,11 +1958,6 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <a class="nav-link" href="../../install/testing.html">Verifying the Couchbase Server Installation</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <span class="nav-line">
-    <a class="nav-link" href="../../install/init-setup.html">Initializing the Cluster</a>
     </span>
   </li>
   <li class="nav-item" data-depth="2">
@@ -3171,8 +3171,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-The nodes currently included in a cluster can be listed, and details on
-each retrieved.
+The nodes of a cluster can be listed, and details on each retrieved.
 </blockquote>
 </div>
 </div>
@@ -3181,8 +3180,7 @@ each retrieved.
 <h2 id="listing-nodes"><a class="anchor" href="#listing-nodes"></a>Listing Nodes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Couchbase Server allows the nodes currently included in a cluster to be
-listed, and data retrieved on each.</p>
+<p>Couchbase Server allows the nodes of a cluster to be listed, and data retrieved on each.</p>
 </div>
 </div>
 </div>
@@ -3190,12 +3188,8 @@ listed, and data retrieved on each.</p>
 <h2 id="examples-on-this-page-node-listing"><a class="anchor" href="#examples-on-this-page-node-listing"></a>Examples on This Page</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The examples in the subsections below show how the nodes of the
-same cluster can be listed, using the
-<a href="#list-nodes-with-the-ui">UI</a>,
-and the
-<a href="#list-nodes-with-the-rest-api">REST
-API</a> respectively. No node-join is supported by the CLI.</p>
+<p>The examples in the subsections below show how the nodes of the same cluster can be listed, using the <a href="#list-nodes-with-the-ui">UI</a>, the <a href="#list-nodes-with-the-cli">CLI</a>,
+and the <a href="#list-nodes-with-the-rest-api">REST API</a> respectively.</p>
 </div>
 <div class="paragraph">
 <p>The examples assume:</p>
@@ -3203,13 +3197,10 @@ API</a> respectively. No node-join is supported by the CLI.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>A two-node cluster already exists; as at the conclusion of
-<a href="join-cluster-and-rebalance.html" class="page">Join a
-Cluster and Rebalance</a>.</p>
+<p>A two-node cluster already exists; as at the conclusion of <a href="join-cluster-and-rebalance.html" class="page">Join a Cluster and Rebalance</a>.</p>
 </li>
 <li>
-<p>The cluster has the Full Administrator username of
-<code>Administrator</code>, and password of <code>password</code>.</p>
+<p>The cluster has the Full Administrator username of <code>Administrator</code>, and password of <code>password</code>.</p>
 </li>
 </ul>
 </div>
@@ -3219,10 +3210,8 @@ Cluster and Rebalance</a>.</p>
 <h2 id="list-nodes-with-the-ui"><a class="anchor" href="#list-nodes-with-the-ui"></a>List Nodes with the UI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>All nodes in the current cluster can be viewed on the <strong>Servers</strong> screen of
-Couchbase Web Console. Note that this display is identical for all nodes in
-the cluster: therefore, whether you open the console on node one or node two
-of a two-node cluster, the same information is provided.</p>
+<p>All nodes in the current cluster can be viewed on the <strong>Servers</strong> screen of Couchbase Web Console.
+Note that this display is identical for all nodes in the cluster: therefore, whether you open the console on node one or node two of a two-node cluster, the same information is provided.</p>
 </div>
 <div class="paragraph">
 <p>Proceed as follows:</p>
@@ -3230,42 +3219,34 @@ of a two-node cluster, the same information is provided.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Access the Couchbase Web Console <strong>Servers</strong> screen, on either
-node <code>10.142.181.101</code> or node
-<code>101.142.181.102</code>, by left-clicking on the <strong>Servers</strong> tab in the left-hand
-navigation bar. The display is as follows:</p>
+<p>Access the Couchbase Web Console <strong>Servers</strong> screen, on either node <code>10.142.181.101</code> or node <code>101.142.181.102</code>, by left-clicking on the <strong>Servers</strong> tab in the left-hand navigation bar.
+The display is as follows:</p>
 <div id="servers-screen-with-node-added-after-rebalance" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/twoNodeClusterAfterRebalanceCompressedView.png" alt="twoNodeClusterAfterRebalanceCompressedView" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p>This indicates that the cluster currently consists of the nodes
-<code>10.142.181.101</code> and
-<code>101.142.181.102</code>. Each row provides the following details:</p>
+<p>This indicates that the cluster currently consists of the nodes <code>10.142.181.101</code> and <code>101.142.181.102</code>.
+Each row provides the following details:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>name</strong>: The name of the node. In this case, each node is named after
-its IP address.</p>
+<p><strong>name</strong>: The name of the node. In this case, each node is named after its IP address.</p>
 </li>
 <li>
-<p><strong>group</strong>: The <em>Group</em> occupied by the node. For information, see
-<a href="../../learn/clusters-and-availability/groups.html" class="page">Server
-Group Awareness</a>.</p>
+<p><strong>group</strong>: The <em>Group</em> occupied by the node. For information, see <a href="../../learn/clusters-and-availability/groups.html" class="page">Server Group Awareness</a>.</p>
 </li>
 <li>
-<p><strong>services</strong>: The <em>services</em> running on the node. For information, see
-<a href="../../learn/services-and-indexes/services/services.html" class="page">Services</a>.</p>
+<p><strong>services</strong>: The <em>services</em> running on the node. For information, see <a href="../../learn/services-and-indexes/services/services.html" class="page">Services</a>.</p>
 </li>
 <li>
 <p><strong>CPU</strong>: The percentage of available CPU resources currently occupied.</p>
 </li>
 <li>
-<p><strong>RAM</strong>: The percentage of available RAM currently occupied. For information
-on Couchbase memory-management, see
-<a href="../../learn/buckets-memory-and-storage/memory.html" class="page">Memory</a>.</p>
+<p><strong>RAM</strong>: The percentage of available RAM currently occupied.
+For information on Couchbase memory-management, see <a href="../../learn/buckets-memory-and-storage/memory.html" class="page">Memory</a>.</p>
 </li>
 <li>
 <p><strong>swap</strong>: The percentage of available swap space in use.</p>
@@ -3274,18 +3255,16 @@ on Couchbase memory-management, see
 <p><strong>disk used</strong>: The amount of disk space currently used, in megabytes.</p>
 </li>
 <li>
-<p><strong>items</strong>: The number of <em>active</em> and <em>replica</em> items currently on the node,
-in thousands. If the figure is <code>15.2 K/15.8 K</code>, this indicates that 15.2 K
-items are in active vBuckets on the node, and 15.8 in replica. For information
-on vBuckets, see
-<a href="../../learn/buckets-memory-and-storage/vbuckets.html" class="page">vBuckets</a>.</p>
+<p><strong>items</strong>: The number of <em>active</em> and <em>replica</em> items currently on the node, in thousands.
+If the figure is <code>15.2 K/15.8 K</code>, this indicates that 15.2 K items are in active vBuckets on the node, and 15.8 in replica.
+For information on vBuckets, see <a href="../../learn/buckets-memory-and-storage/vbuckets.html" class="page">vBuckets</a>.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>To see further details of each node, left-click on the row for
-the node. The row expands vertically, as follows:</p>
+<p>To see further details of each node, left-click on the row for the node.
+The row expands vertically, as follows:</p>
 <div id="two-node-cluster-after-rebalance-expanded" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/twoNodeClusterAfterRebalance.png" alt="twoNodeClusterAfterRebalance" width="800">
@@ -3300,8 +3279,7 @@ the node. The row expands vertically, as follows:</p>
 <p><strong>Name</strong>, <strong>Version</strong>, <strong>Uptime</strong>, <strong>OS</strong> version, and Data Service <strong>RAM Quota</strong>.</p>
 </li>
 <li>
-<p><strong>Storage Paths</strong> for the Data, Index, and Analytics services, specified
-during node-initialization.</p>
+<p><strong>Storage Paths</strong> for the Data, Index, and Analytics services, specified during node-initialization.</p>
 </li>
 <li>
 <p>Currently available memory and disk-space.</p>
@@ -3310,23 +3288,22 @@ during node-initialization.</p>
 </div>
 </li>
 <li>
-<p>Left-click on the <code>Statistics</code> tab, and the right-hand side of the row. The
-<strong>Statistics</strong> screen is displayed:</p>
+<p>Left-click on the <code>Statistics</code> tab, and the right-hand side of the row.
+The <strong>Statistics</strong> screen is displayed:</p>
 <div id="statistics-screen" class="imageblock text-middle">
 <div class="content">
 <img src="../_images/manage-nodes/statisticsScreen.png" alt="statisticsScreen" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p>The screen provides statistics related each of the buckets on the cluster. These
-include general information on
-operations; gets, sets, and deletes, read and write failures, and
-incoming and outgoing XDCR operations. Specific details are provided for
-server resources, vBucket resources, disk and DCP queues, Indexes, and more.
+<p>The screen provides statistics related to each of the buckets on the cluster.
+These include general information on operations; gets, sets, and deletes, read and write failures, and
+incoming and outgoing XDCR operations.
+Specific details are provided for server resources, vBucket resources, disk and DCP queues, Indexes, and more.
 Buckets can be selected from the pull-down menu at the top.</p>
 </div>
 <div class="paragraph">
-<p>For more information, see <a href="../monitor/ui-monitoring-statistics.html" class="page">Monitoring with the UI</a>.</p>
+<p>For more information, see <a href="../monitor/ui-monitoring-statistics.html" class="page">Monitor with the UI</a>.</p>
 </div>
 </li>
 </ol>
@@ -3337,8 +3314,7 @@ Buckets can be selected from the pull-down menu at the top.</p>
 <h2 id="list-nodes-with-the-cli"><a class="anchor" href="#list-nodes-with-the-cli"></a>List Nodes with the CLI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To list the nodes of a cluster with the CLI, use the <code>server-list</code>
-command, as follows:</p>
+<p>To list the nodes of a cluster with the CLI, use the <code>server-list</code> command, as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3357,8 +3333,7 @@ ns_1@10.142.181.102 10.142.181.102:8091 healthy active</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>On occasions when a node is inactive or failed, output of the following kind
-is produced:</p>
+<p>On occasions when a node is inactive or failed, output of the following kind is produced:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3375,9 +3350,8 @@ ns_1@10.142.181.102 10.142.181.102:8091 healthy inactiveFailed</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that the command above specifies the second node in the cluster: any
-node-name in the cluster can be used, with the same results. The output is
-as follows:</p>
+<p>Note that the command above specifies the second node in the cluster: any node-name in the cluster can be used, with the same results.
+The output is as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3386,12 +3360,10 @@ as follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Thus, the command returns a list of IP addresses and Couchbase Web
-Console port numbers.</p>
+<p>Thus, the command returns a list of IP addresses and Couchbase Web Console port numbers.</p>
 </div>
 <div class="paragraph">
-<p>For more information, see the command reference for
-<a href="#">cli:cbcli/couchbase-cli-server-list.adoc</a> and
+<p>For more information, see the command reference for <a href="#">cli:cbcli/couchbase-cli-server-list.adoc</a> and
 <a href="#">cli:cbcli/couchbase-cli-host-list.adoc</a>.</p>
 </div>
 </div>
@@ -3400,23 +3372,18 @@ Console port numbers.</p>
 <h2 id="list-nodes-with-the-rest-api"><a class="anchor" href="#list-nodes-with-the-rest-api"></a>List Nodes with the REST API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To list all nodes in a cluster by means of the REST API, use the
-<code>/pools/default</code> URI. A Couchbase <em>pool</em> represents computing resources
-(such as machines, memory, CPU, and disks) that are used to
-host Couchbase buckets. Couchbase Server clusters support
-a single pool named <code>default</code>.</p>
+<p>To list all nodes in a cluster by means of the REST API, use the <code>/pools/default</code> URI.
+A Couchbase <em>pool</em> represents computing resources (such as machines, memory, CPU, and disks) that are used to
+host Couchbase buckets.
+Couchbase Server clusters support a single pool, named <code>default</code>.</p>
 </div>
 <div class="paragraph">
-<p>The method returns a large amount of information, which includes many of
-the details used in the Couchbase Web Console <code>Statics</code> panel, described
-above. The output may be unformatted, and thereby difficult to read until
-formatting is applied.</p>
+<p>The method returns a large amount of information, which includes many of the details used in the Couchbase Web Console <code>Statistics</code> panel, described above.
+The output may be unformatted, and thereby difficult to read until formatting is applied.</p>
 </div>
 <div class="paragraph">
-<p>The following call passes the result to the
-<a href="https://stedolan.github.io/jq/" target="_blank" rel="noopener">jq</a> command-line JSON processor for
-formatting, and then uses the standard command-line utility <code>grep</code> to
-reduce the output to available hostnames:</p>
+<p>The following call passes the result to the <a href="https://stedolan.github.io/jq/" target="_blank" rel="noopener">jq</a> command-line JSON processor for
+formatting, and then uses the standard command-line utility <code>grep</code> to reduce the output to available hostnames:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3434,8 +3401,7 @@ http://10.142.181.101:8091/pools/default | jq '.' | grep hostname</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For more information, see
-<a href="../../rest-api/rest-cluster-get.html" class="page">Retrieving Cluster Information</a>.</p>
+<p>For more information, see <a href="../../rest-api/rest-cluster-get.html" class="page">Retrieving Cluster Information</a>.</p>
 </div>
 </div>
 </div>
@@ -3443,10 +3409,7 @@ http://10.142.181.101:8091/pools/default | jq '.' | grep hostname</pre>
 <h2 id="next-steps-after-list-nodes"><a class="anchor" href="#next-steps-after-list-nodes"></a>Next Steps</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Now that you have built a cluster and examined the nodes it contains, learn
-details on how to
-<a href="remove-node-and-rebalance.html" class="page">Remove
-a Node and Rebalance</a>.</p>
+<p>Now that you have built a cluster and examined the nodes it contains, learn details on how to <a href="remove-node-and-rebalance.html" class="page">Remove a Node and Rebalance</a>.</p>
 </div>
 </div>
 </div>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Running Couchbase Server Using Docker | Couchbase Docs</title>
+    <title>Install Couchbase Server Using Docker | Couchbase Docs</title>
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
     <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MVPNN2"></script>
@@ -1989,17 +1989,17 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <button class="nav-toggle"></button>
-    <span class="nav-text">Amazon Web Services</span>
+    <span class="nav-text">AWS</span>
     </span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <span class="nav-line">
-    <a class="nav-link" href="../cloud/couchbase-aws-marketplace.html">AWS Marketplace</a>
+    <a class="nav-link" href="../cloud/couchbase-aws-marketplace.html">Deploy with AWS Marketplace</a>
     </span>
   </li>
   <li class="nav-item" data-depth="3">
     <span class="nav-line">
-    <a class="nav-link" href="../cloud/aws-terraform.html">Terraform</a>
+    <a class="nav-link" href="../cloud/aws-terraform.html">Deploy with Terraform</a>
     </span>
   </li>
 </ul>
@@ -2007,12 +2007,12 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <button class="nav-toggle"></button>
-    <span class="nav-text">Microsoft Azure</span>
+    <span class="nav-text">Azure</span>
     </span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <span class="nav-line">
-    <a class="nav-link" href="../cloud/couchbase-azure-marketplace.html">Azure Marketplace</a>
+    <a class="nav-link" href="../cloud/couchbase-azure-marketplace.html">Deploy with Azure Marketplace</a>
     </span>
   </li>
 </ul>
@@ -2020,12 +2020,12 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <button class="nav-toggle"></button>
-    <span class="nav-text">Google Cloud Platform</span>
+    <span class="nav-text">GCP</span>
     </span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <span class="nav-line">
-    <a class="nav-link" href="../cloud/couchbase-gcp-cloud-launcher.html">GCP Marketplace</a>
+    <a class="nav-link" href="../cloud/couchbase-gcp-cloud-launcher.html">Deploy with GCP Marketplace</a>
     </span>
   </li>
 </ul>
@@ -2033,12 +2033,12 @@
   <li class="nav-item" data-depth="2">
     <span class="nav-line">
     <button class="nav-toggle"></button>
-    <span class="nav-text">Kubernetes and OpenShift</span>
+    <span class="nav-text">Kubernetes &amp; OpenShift</span>
     </span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <span class="nav-line">
-    <a class="nav-link" href="../../../operator/1.2/prerequisite-and-setup.html">Couchbase Autonomous Operator</a>
+    <a class="nav-link" href="../../../operator/1.2/overview.html">Deploy with Autonomous Operator</a>
     </span>
   </li>
 </ul>
@@ -2051,7 +2051,7 @@
 <ul class="nav-list">
   <li class="nav-item is-current-page is-active" data-depth="3">
     <span class="nav-line">
-    <a class="nav-link" href="getting-started-docker.html">Basic Installation</a>
+    <a class="nav-link" href="getting-started-docker.html">Install with Docker</a>
     </span>
   </li>
 </ul>
@@ -3041,26 +3041,6 @@
     <a class="nav-link" href="../rest-api/rbac.html">Role Based Admin Access (RBAC)</a>
     </span>
   </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../rest-api/rest-user-create.html">Create a Read-Only Administrator</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../rest-api/rest-user-getname.html">Retrieve the Read-Only Administrator&#8217;s Name</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../rest-api/rest-user-password-put.html">Change the Read-Only Administrator&#8217;s Password</a>
-    </span>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <span class="nav-line">
-    <a class="nav-link" href="../rest-api/rest-user-delete.html">Delete the Read-Only Administrator</a>
-    </span>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="4">
@@ -3163,7 +3143,7 @@
     <li class="crumb">Install &amp; Upgrade</li>
     <li class="crumb"><a href="../cloud/couchbase-cloud-deployment.html">Cloud and Container Deployment</a></li>
     <li class="crumb">Docker</li>
-    <li class="crumb"><a href="getting-started-docker.html">Basic Installation</a></li>
+    <li class="crumb"><a href="getting-started-docker.html">Install with Docker</a></li>
   </ul>
 </nav>
 <div class="tools" role="navigation">
@@ -3173,19 +3153,19 @@
 </div>
   </div>
 <article class="doc">
-<h1 class="page">Running Couchbase Server Using Docker</h1>
+<h1 class="page">Install Couchbase Server Using Docker</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Using the official Couchbase Server images on Docker Hub, it&#8217;s easy to get started with Couchbase Server on Docker containers.
+Couchbase Server can be installed using official Couchbase images from Docker Hub.
 </blockquote>
 </div>
 <div class="paragraph">
-<p>If you&#8217;re trying Couchbase Server for the first time and just want to explore a Couchbase configuration, the quickest way to install a pre-configured single-node using Docker is to follow the <a href="../getting-started/start-here.html" class="page">Start Here!</a> tutorial.</p>
+<p>If you&#8217;re trying Couchbase Server for the first time and just want to explore a Couchbase configuration, the quickest way to install a pre-configured single-node deployment using Docker is to follow the <a href="../getting-started/start-here.html" class="page">Start Here!</a> tutorial.</p>
 </div>
 <div class="paragraph">
-<p>For more traditional Docker deployments, review the <a href="#section_jvt_zvj_42b">single-node</a> and <a href="#section_msh_fbl_42b">multi-node</a> deployment instructions in this topic, which use the official Couchbase Docker images available on <a href="https://hub.docker.com/_/couchbase/" target="_blank" rel="noopener">Docker Hub</a>. The Official Couchbase Server containers on Docker Hub are based on Ubuntu 16.04.</p>
+<p>For more traditional Docker deployments, review the <a href="#section_jvt_zvj_42b">single-node</a> and <a href="#section_msh_fbl_42b">multi-node</a> deployment instructions in this topic, which use the official Couchbase Docker images available on <a href="https://hub.docker.com/_/couchbase/" target="_blank" rel="noopener">Docker Hub</a>.</p>
 </div>
 </div>
 </div>
@@ -3224,26 +3204,6 @@ Before you begin, review the Couchbase Server <a href="plan-for-production.html"
 </div>
 <div class="paragraph">
 <p>This command downloads and runs the container image that is tagged <code>latest</code> from the official Couchbase repository on Docker Hub.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The container image on Docker Hub is based on Ubuntu.
-If you want to install a container image that is based on Red Hat Enterprise Linux (RHEL), follow the instructions on the <a href="https://access.redhat.com/containers/?tab=images&amp;platform=docker#/registry.connect.redhat.com/couchbase/server" target="_blank" rel="noopener">Red Hat Container Catalog</a> to download the image, and then run the following command to install and run the container:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>docker run -d --name db -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 couchbase/server</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3369,30 +3329,6 @@ $ docker run -d --name db3 -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 cou
 </div>
 <div class="paragraph">
 <p>These commands download and run three instances of the container image that is tagged <code>latest</code> from the official Couchbase repository on Docker Hub.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The container image on Docker Hub is based on Ubuntu.
-If you want to install a container image that is based on Red Hat Enterprise Linux (RHEL), follow the instructions on the <a href="https://access.redhat.com/containers/?tab=images&amp;platform=docker#/registry.connect.redhat.com/couchbase/server" target="_blank" rel="noopener">Red Hat Container Catalog</a> to download the image, and then run the following command to install and run the container:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ docker run -d --name db1 couchbase/server
-
-$ docker run -d --name db2 couchbase/server
-
-$ docker run -d --name db3 -p 8091-8096:8091-8096 -p 11210-11211:11210-11211 couchbase/server</code></pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
 </div>
 <div class="admonitionblock note">
 <table>

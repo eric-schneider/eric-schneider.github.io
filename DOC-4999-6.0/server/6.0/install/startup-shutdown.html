@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Starting and Stopping Couchbase Server | Couchbase Docs</title>
+    <title>Start and Stop Couchbase Server | Couchbase Docs</title>
     <link rel="canonical" href="eric-schneider.github.io/DOC-4999-6.0/server/6.0/install/startup-shutdown.html">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
@@ -3080,18 +3080,18 @@
 </div>
   </div>
 <article class="doc">
-<h1 class="page">Starting and Stopping Couchbase Server</h1>
+<h1 class="page">Start and Stop Couchbase Server</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Start and stop the Couchbase Server service.
+Start and stop the Couchbase Server service and application.
 </blockquote>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="linux"><a class="anchor" href="#linux"></a>Linux</h2>
+<h2 id="start-stop-linux"><a class="anchor" href="#start-stop-linux"></a>Linux</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>On Linux, Couchbase Server is installed as a standalone application with support for running as a background (daemon) process during startup.
@@ -3110,7 +3110,7 @@ By default, Couchbase Server is configured to start automatically at run levels 
 </div>
 </div>
 <div class="sect2">
-<h3 id="legacy-linux"><a class="anchor" href="#legacy-linux"></a>Legacy Linux</h3>
+<h3 id="start-stop-linux-legacy"><a class="anchor" href="#start-stop-linux-legacy"></a>Legacy Linux</h3>
 <div class="paragraph">
 <p>The instructions in the previous section are meant to be used on modern versions of Linux that use systemd for init processing.
 For versions of Linux that use SysV for init processing, you need to use the <code>service</code> command for starting and stopping Couchbase Server.</p>
@@ -3130,7 +3130,7 @@ For versions of Linux that use SysV for init processing, you need to use the <co
 </div>
 </div>
 <div class="sect1">
-<h2 id="windows"><a class="anchor" href="#windows"></a>Windows</h2>
+<h2 id="start-stop-windows"><a class="anchor" href="#start-stop-windows"></a>Windows</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>On Windows, Couchbase Server is installed as a Windows service.
@@ -3210,11 +3210,25 @@ The window will automatically close if the process is successful.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="macos"><a class="anchor" href="#macos"></a>macOS</h2>
+<h2 id="start-stop-macos"><a class="anchor" href="#start-stop-macos"></a>macOS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>On macOS, Couchbase Server is installed as a standard application that resides in the system Applications folder.</p>
+<p>On macOS, Couchbase Server is installed as a standard application that resides in the system Applications folder.
+You can start Couchbase Server by opening the application, and stop it by closing the application.</p>
 </div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_ui"></a>UI</p>
+</li>
+<li>
+<p><a id="tabset1_terminal"></a>Terminal</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset1_ui">
 <div class="paragraph">
 <p>To start Couchbase Server, go to the Applications folder and double-click on <code>Couchbase Server.app</code>.
 Couchbase Server runs as a background application, and when it starts, the Couchbase Server icon <span class="image"><img src="_images/macos-menu-bar-icon-light.png" alt="Couchbase Server menu bar icon" width="20"></span> will appear in the menu bar.</p>
@@ -3222,6 +3236,27 @@ Couchbase Server runs as a background application, and when it starts, the Couch
 <div class="paragraph">
 <p>To stop Couchbase Server, click <span class="image"><img src="_images/macos-menu-bar-icon-light.png" alt="Couchbase Server menu bar icon" width="20"></span> and select menu:[Quit Couchbase Server].
 The menu bar icon will disappear when Couchbase Server shuts down.</p>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_terminal">
+<div class="listingblock">
+<div class="title">Start Couchbase Server</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">open -a Couchbase\ Server</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Stop Couchbase Server</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">osascript -e 'quit app "Couchbase Server"'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may receive the following error: <code>0:27: execution error: Couchbase Server got an error: User canceled. (-128)</code>.
+You can ignore this error.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

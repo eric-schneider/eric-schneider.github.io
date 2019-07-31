@@ -3085,11 +3085,20 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Remove the Couchbase Server application and associated data from supported systems.
+The Couchbase Server application and its associated data can be removed from supported systems.
 </blockquote>
 </div>
 <div class="paragraph">
-<p>Uninstalling Couchbase Server from a system involves removing the Couchbase Server application and any directories containing Couchbase configuration files, data, and logs.</p>
+<p>Uninstalling Couchbase Server from a system involves removing the Couchbase Server application along with any directories containing Couchbase configuration files, data, and logs.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="before-you-uninstall"><a class="anchor" href="#before-you-uninstall"></a>Before You Uninstall</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the system is a part of an active Couchbase cluster, you&#8217;ll need to <a href="../manage/manage-nodes/remove-node-and-rebalance.html" class="page">remove it and rebalance the cluster</a> to take the node out of the configuration.
+You&#8217;ll also need to update Couchbase clients to point to an available node within the active cluster.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -3109,25 +3118,19 @@ Ensure that your configuration and data are backed up before proceeding, as this
 </div>
 </div>
 <div class="sect1">
-<h2 id="before-you-uninstall"><a class="anchor" href="#before-you-uninstall"></a>Before You Uninstall</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>If the system is a part of an active Couchbase cluster, you&#8217;ll need to <a href="../manage/manage-nodes/remove-node-and-rebalance.html" class="page">remove it and rebalance the cluster</a> to take the node out of the configuration.
-You&#8217;ll also need to update Couchbase clients to point to an available node within the active cluster.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="linux"><a class="anchor" href="#linux"></a>Linux</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Stop the Couchbase Server process.</p>
+<p>Stop the Couchbase Server process if it&#8217;s running.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo systemctl stop couchbase-server</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Refer to <a href="startup-shutdown.html#start-stop-linux" class="page">Start and Stop Couchbase Server</a> for more information.</p>
 </div>
 </li>
 <li>
@@ -3136,7 +3139,7 @@ You&#8217;ll also need to update Couchbase clients to point to an available node
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset1_rhel-centos-suse-oracle-and-amazon-linux-2"></a>RHEL, CentOS, SUSE, Oracle, and Amazon Linux 2</p>
+<p><a id="tabset1_rhel-centos-suse-oracle-and-amazon-linux"></a>RHEL, CentOS, SUSE, Oracle, and Amazon Linux</p>
 </li>
 <li>
 <p><a id="tabset1_ubuntu-and-debian"></a>Ubuntu and Debian</p>
@@ -3144,7 +3147,7 @@ You&#8217;ll also need to update Couchbase clients to point to an available node
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset1_rhel-centos-suse-oracle-and-amazon-linux-2">
+<div class="tab-pane" aria-labelledby="tabset1_rhel-centos-suse-oracle-and-amazon-linux">
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo rpm -e couchbase-server</code></pre>
@@ -3169,7 +3172,7 @@ You&#8217;ll also need to update Couchbase clients to point to an available node
 </div>
 </div>
 <div class="paragraph">
-<p>If, during initial setup of the node, you specified non-default locations for Couchbase data, indexes, etc., then you&#8217;ll need to find those files and delete them as well in order to complete the uninstall process.</p>
+<p>If, during initial setup of the node, you specified non-default locations for Couchbase data, indexes, etc., then you&#8217;ll need to locate those files as well and delete them in order to complete the uninstall process.</p>
 </div>
 </li>
 </ol>
@@ -3188,7 +3191,11 @@ You&#8217;ll also need to update Couchbase clients to point to an available node
 <p>Remove the application.</p>
 <div class="paragraph">
 <p>Go to <span class="menuseq"><b class="menu">Start</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Settings</b></span> and click on <strong>Apps</strong>.
-From the list of applications, click on Couchbase Server, and then click <strong>Uninstall</strong>.</p>
+From the list of applications, click on Couchbase Server, and then click <strong class="ui">Uninstall</strong>.</p>
+</div>
+<div class="paragraph">
+<p>A dialogue window may appear asking for your permission to run the uninstall utility.
+If this is the case, click <strong class="ui">Yes</strong> to continue.</p>
 </div>
 </li>
 <li>
@@ -3198,7 +3205,7 @@ From the list of applications, click on Couchbase Server, and then click <strong
 Drag the <code>Couchbase</code> folder to the Recycle Bin.</p>
 </div>
 <div class="paragraph">
-<p>If, during initial setup of the node, you specified non-default locations for Couchbase data, indexes, etc., then you&#8217;ll need to find those files and delete them as well in order to complete the uninstall process.</p>
+<p>If, during initial setup of the node, you specified non-default locations for Couchbase data, indexes, etc., then you&#8217;ll need to locate those files as well and delete them in order to complete the uninstall process.</p>
 </div>
 </li>
 </ol>
@@ -3208,8 +3215,31 @@ Drag the <code>Couchbase</code> folder to the Recycle Bin.</p>
 <div class="sect1">
 <h2 id="macos"><a class="anchor" href="#macos"></a>macOS</h2>
 <div class="sectionbody">
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset2_ui"></a>UI</p>
+</li>
+<li>
+<p><a id="tabset2_terminal"></a>Terminal</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset2_ui">
 <div class="olist arabic">
 <ol class="arabic">
+<li>
+<p>Quit Couchbase Server if it&#8217;s running.</p>
+<div class="paragraph">
+<p>Click <span class="image"><img src="_images/macos-menu-bar-icon-light.png" alt="Couchbase Server menu bar icon" width="20"></span> and select menu:[Quit Couchbase Server].
+The menu bar icon will disappear when Couchbase Server shuts down.</p>
+</div>
+<div class="paragraph">
+<p>Refer to <a href="startup-shutdown.html#start-stop-macos" class="page">Start and Stop Couchbase Server</a> for more information.</p>
+</div>
+</li>
 <li>
 <p>Remove the application.</p>
 <div class="paragraph">
@@ -3219,45 +3249,67 @@ Drag the <code>Couchbase</code> folder to the Recycle Bin.</p>
 <li>
 <p>Remove the data and log directories.</p>
 <div class="paragraph">
-<p>You can remove the directories via the Terminal or the macOS UI.</p>
+<p>Open Finder and go to <code>~/Library/Application Support/</code>, and drag both the <code>Couchbase</code> and <code>Membase</code> folders (if present) to the Trash.</p>
 </div>
-<div class="openblock">
-<div class="content">
-<div class="olist loweralpha">
-<div class="title">Terminal</div>
-<ol class="loweralpha" type="a">
-<li>
-<p>Open a Terminal window and run the following command:</p>
+<div class="paragraph">
+<p>Next, go to <code>~/Library/Python/</code>, and drag the <code>couchbase-py</code> folder to the Trash.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you don&#8217;t see the Library folder in your home folder, you can choose to follow the Terminal instructions instead, or you can toggle-on the Library folder.
+To toggle-on the Library folder, first click on Finder, then click on menu:[View,Show View Options] in the menu bar, then check the checkbox next to <strong class="ui">Show Library Folder</strong>.
+</td>
+</tr>
+</table>
+</div>
 </li>
 </ol>
 </div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset2_terminal">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Quit Couchbase Server if it&#8217;s running.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">sudo rm -rf ~/Library/Application\ Support/Couchbase &amp;&amp; rm -rf ~/Library/Application\ Support/membase &amp;&amp; rm -rf ~/Library/Python/couchbase-py</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">osascript -e 'quit app "Couchbase Server"'</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>You may receive the following error: <code>0:27: execution error: Couchbase Server got an error: User canceled. (-128)</code>.
+You can ignore this error.
+Refer to <a href="startup-shutdown.html#start-stop-macos" class="page">Start and Stop Couchbase Server</a> for more information.</p>
 </div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="olist loweralpha">
-<div class="title">UI</div>
-<ol class="loweralpha" type="a">
-<li>
-<p>Open Finder and go to <code>~/Library/Application Support/</code>, and drag both the <code>Couchbase</code> folder and the <code>Membase</code> folder (if present) to the Trash.</p>
 </li>
 <li>
-<p>Next, go to <code>~/Library/Python/</code>, and drag the <code>couchbase-py</code> folder to the Trash.</p>
+<p>Remove the application.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">rm -rf /Applications/Couchbase\ Server.app</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Remove the data and log directories.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">rm -rf ~/Library/Application\ Support/Couchbase &amp;&amp; rm -rf ~/Library/Application\ Support/membase &amp;&amp; rm -rf ~/Library/Python/couchbase-py</code></pre>
+</div>
+</div>
 </li>
 </ol>
+</div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>If, during initial setup of the node, you specified non-default locations for Couchbase data, indexes, etc., then you&#8217;ll need to find those files and delete them as well in order to complete the uninstall process.</p>
-</div>
-</li>
-</ol>
+<p>If, during initial setup of the node, you specified non-default locations for Couchbase data, indexes, etc., then you&#8217;ll need to locate those files as well and delete them in order to complete the uninstall process.</p>
 </div>
 </div>
 </div>

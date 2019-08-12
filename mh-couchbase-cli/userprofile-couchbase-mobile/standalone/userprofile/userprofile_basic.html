@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>User Profile Sample: Couchbase Lite Fundamentals | Couchbase Docs</title>
+    <link rel="canonical" href="eric-schneider.github.io/mh-couchbase-cli/userprofile-couchbase-mobile/sync/index.html">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MVPNN2"></script>
+    <link rel="schema.dcterms" href="https://purl.org/dc/terms/">
+    <meta name="dcterms.subject" content="userprofile-couchbase-mobile">
+    <meta name="dcterms.identifier" content="standalone">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar" id="topbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://www.couchbase.com"><img src="../../../_/img/logo.svg" alt="Couchbase"></a>
+        <button class="navbar-burger" data-target="topbar-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div id="topbar-menu" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown">
+            <a class="navbar-link" href="eric-schneider.github.io/mh-couchbase-cli">Docs</a>
+            <div class="navbar-dropdown explore">
+              <div class="title">Couchbase Documentation Overview</div>
+              <div class="cols">
+                <ul>
+                  <li class="heading"><a href="../../../server/6.0/index.html">Server</a></li>
+                  <li><a href="../../../server/6.0/n1ql/n1ql-language-reference/index.html">N1QL</a></li>
+                  <li><a href="../../../server/6.0/fts/full-text-intro.html">Full Text Search</a></li>
+                  <li><a href="../../../server/6.0/analytics/introduction.html">Analytics</a></li>
+                  <li><a href="../../../server/6.0/eventing/eventing-overview.html">Eventing</a></li>
+                  <li><a href="../../../operator/1.2/overview.html">Autonomous Operator</a></li>
+                </ul>
+                <ul>
+                  <li class="heading">Mobile</li>
+                  <li><a href="#">Lite</a></li>
+                  <li><a href="#">Sync Gateway</a></li>
+                </ul>
+                <ul class="two-cols">
+                  <li class="heading"><a href="../../../server/6.0/sdk/overview.html">SDKs</a></li>
+                  <li><a href="#">C</a></li>
+                  <li><a href="#">.NET</a></li>
+                  <li><a href="#">Go</a></li>
+                  <li><a href="#">Java</a></li>
+                  <li><a href="#">Node.js</a></li>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Python</a></li>
+                  <li><a href="#">Scala</a></li>
+                </ul>
+                <ul>
+                  <li class="heading"><a href="../../../server/6.0/connectors/intro.html">Connectors</a></li>
+                  <li><a href="../../../elasticsearch-connector/4.0/index.html">Elasticsearch</a></li>
+                  <li><a href="../../../server/6.0/connectors/hadoop-1.2/hadoop.html">Hadoop</a></li>
+                  <li><a href="../../../kafka-connector/3.4/index.html">Kafka</a></li>
+                  <li><a href="../../../spark-connector/2.4/index.html">Spark</a></li>
+                  <li><a href="../../../talend-connector/index.html">Talend</a></li>
+                  <li><a href="../../../server/6.0/connectors/odbc-jdbc-drivers.html">ODBC/JDBC</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-item">
+            <a class="navbar-link component" href="/tutorials/index.html"><span class="title">Tutorials</span></a>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="btn red-btn" href="https://www.couchbase.com/downloads">Downloads</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body container">
+<nav class="nav">
+<div class="nav-menu">
+<ul class="nav-list">
+  <li class="nav-item is-active" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-path is-active" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on iOS</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page is-active" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../query/userprofile/userprofile_query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../sync/userprofile/userprofile_sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../backgroundfetch/userprofile/background-fetch.html">Background Fetch</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on Xamarin</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="xamarin/userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../query/userprofile/xamarin/userprofile_query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../sync/userprofile/xamarin/userprofile_sync.html">Sync</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on Android</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="android/userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+</div>
+</nav>
+<aside class="toc sidebar">
+  <div class="toc-menu"></div>
+</aside>
+<main class="article" data-ceiling="topbar">
+  <!-- No `View Latest` banner -->
+  <div class="article-header">
+<button class="nav-control"></button>
+<nav class="crumbs" aria-label="breadcrumbs">
+  <ul>
+    <li class="crumb"><a href="../index.html">User Profile Tutorial</a></li>
+    <li class="crumb">Getting Started on iOS</li>
+    <li class="crumb"><a href="userprofile_basic.html">Standalone</a></li>
+  </ul>
+</nav>
+<div class="tools" role="navigation">
+  <ul>
+    <li class="tool edit"><a href="https://github.com/couchbaselabs/userprofile-couchbase-mobile/edit/standalone/content/modules/userprofile/pages/userprofile_basic.adoc" title="Edit Page" target="_blank" rel="noopener">Edit</a></li>
+  </ul>
+</div>
+  </div>
+<article class="doc">
+<h1 class="page">User Profile Sample: Couchbase Lite Fundamentals</h1>
+<div id="preamble">
+<div class="sectionbody">
+<!-- toc disabled -->
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Couchbase Mobile brings the power of NoSQL to the edge. It is comprised of three components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Couchbase Lite</em>, an embedded, NoSQL JSON Document Style database for your mobile apps</p>
+</li>
+<li>
+<p><em>Sync Gateway</em>, an internet-facing synchronization mechanism that securely syncs data between mobile clients and server, and</p>
+</li>
+<li>
+<p><em>Couchbase Server</em>, a highly scalable, distributed NoSQL database platform</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Couchbase Mobile supports flexible deployment models. You can deploy</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Couchbase Lite as a standalone embedded database within your mobile apps or,</p>
+</li>
+<li>
+<p>Couchbase Lite enabled mobile clients with a Sync Gateway to sychronize data between your mobile clients or,</p>
+</li>
+<li>
+<p>Couchbase Lite enabled clients with a Sync Gateway to sync data between mobile clients and the Couchbase Server, which can persist data in the cloud (public or private)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This tutorial will walk you through a very basic example of how you can use <strong>Couchbase Lite 2.x in standalone mode</strong> within your Swift app. In this mode, Couchbase Lite will serve as a local, embedded data store within your iOS App and can be a replacement for SQLite or Core Data.</p>
+</div>
+<div class="paragraph">
+<p>You will learn the fundamentals of</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Database Operations</p>
+</li>
+<li>
+<p>Document CRUD Operations</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>You can learn more about Couchbase Mobile <a href="https://developer.couchbase.com/mobile">here</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This tutorial assumes familiarity with building swift apps with Xcode.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>iOS (Xcode 10+)
+Download latest version from the <a href="https://itunes.apple.com/us/app/xcode/id497799835?mt=12">Mac App Store</a></p>
+</li>
+<li>
+<p>git (Optional)
+This is required if you would prefer to pull the source code from GitHub repo.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a <a href="https://github.com">free github account</a> if you don&#8217;t already have one</p>
+</li>
+<li>
+<p>git can be downloaded from <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git-scm.org</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="app-overview"><a class="anchor" href="#app-overview"></a>App Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We will be working with a very simple app. It does one thing -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Allows users to log in and create or update his/her user profile information</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The user profile information is persisted as a Document in the local Couchbase Lite Database. So subsquently, when the user logs out and logs back in again, the profile information is loaded from the Database.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/couchbaselabs/userprofile-couchbase-mobile/standalone/content/modules/userprofile/assets/images/user_profile.gif" alt="App Overview">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installation"><a class="anchor" href="#installation"></a>Installation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="fetching-app-source-code"><a class="anchor" href="#fetching-app-source-code"></a>Fetching App Source Code</h3>
+<div class="sect3">
+<h4 id="option-1-git-clone"><a class="anchor" href="#option-1-git-clone"></a>Option 1 : Git Clone</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Clone the <strong><em>standalone</em></strong> branch of the <code>User Profile Demo</code> project from GitHub. Type the following command in your terminal</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  git clone -b standalone https://github.com/couchbaselabs/userprofile-couchbase-mobile.git</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="option-2-download-zip"><a class="anchor" href="#option-2-download-zip"></a>Option 2 : Download .zip</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Download the  <code>User Profile Demo</code> project from <a href="https://github.com/couchbaselabs/userprofile-couchbase-mobile/archive/standalone.zip">here</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-couchbase-lite-framework"><a class="anchor" href="#installing-couchbase-lite-framework"></a>Installing Couchbase Lite Framework</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Next, we will download the Couchbase Lite 2.0 framework. The Couchbase Lite iOS framework is <a href="https://developer.couchbase.com/documentation/mobile/2.0/couchbase-lite/swift.html">distributed</a> via Cocoapods, Carthage or you can download the pre-built framework. In our example, we will be downloading the pre-built version of the framework. For this, do the following</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  cd /path/to/UserProfileDemo/content/modules/userprofile/examples
+
+  sh install_10.sh</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s verify the installation</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="try-it-out"><a class="anchor" href="#try-it-out"></a>Try it Out</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <code>UserProfileDemo.xcodeproj</code>. The project would be located at <code>/path/to/UserProfileDemo/content/modules/userprofile/examples</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">open UserProfileDemo.xcodeproj</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and run the project using the <em>simulator</em> in Xcode. While you can run the app on a real device, we recommend the Simulator so you can see the debug logs in the output console.</p>
+</li>
+<li>
+<p>Verify that you see the login screen</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/user_profile_login.png" alt="User Profile Login Screen Image">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="data-model"><a class="anchor" href="#data-model"></a>Data Model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Couchbase Lite is a JSON Document Store. A Document is a logical collection of named fields and values.The values are any valid JSON types. In addition to the standard JSON types, Couchbase Lite supports <code>Date</code> and <code>Blob</code> data types.
+While it is not required or enforced, it is a recommended practice to include a <em>"type"</em> property that can serve as a namespace for related documents.</p>
+</div>
+<div class="sect2">
+<h3 id="the-user-profile-document"><a class="anchor" href="#the-user-profile-document"></a>The "User Profile" Document</h3>
+<div class="paragraph">
+<p>The app deals with a single Document with a <em>"type"</em> property of <em>"user"</em>.  The document ID is of the form <em>"user::&lt;email&gt;"</em>.
+An example of a document would be</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "type":"user",
+    "name":"Jane Doe",
+    "email":"jame.doe@earth.org",
+    "address":"101 Main Street",
+    "image":CBLBlob (image/jpg) <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Special <a href="https://developer.couchbase.com/documentation/mobile/2.0/couchbase-lite/swift.html#blobs"><code>Blob</code></a> data type that is associated with the profile image.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="userrecord"><a class="anchor" href="#userrecord"></a>UserRecord</h3>
+<div class="paragraph">
+<p>The <em>"user"</em> Document is encoded to a native struct named <em>UserRecord</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">let kUserRecordDocumentType = "user"
+typealias ExtendedData = [[String:Any]]
+struct UserRecord : CustomStringConvertible{
+    let type = kUserRecordDocumentType
+    var name:String?
+    var email:String?
+    var address:String?
+    var imageData:Data?
+    var extended:ExtendedData? // future
+
+    var description: String {
+        return "name = \(String(describing: name)), email = \(String(describing: email)), address = \(String(describing: address)), imageData = \(imageData)"
+    }
+
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="basic-database-operations"><a class="anchor" href="#basic-database-operations"></a>Basic Database Operations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section, we will do a code walkthrough of the basic Database operations</p>
+</div>
+<div class="sect2">
+<h3 id="create-open-a-database"><a class="anchor" href="#create-open-a-database"></a>Create / Open a Database</h3>
+<div class="paragraph">
+<p>When a user logs in, we create an empty Couchbase Lite Database for the user if one does not exist.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>DatabaseManager.swift</strong> file and locate the <code>openOrCreateDatabaseForUser()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    func openOrCreateDatabaseForUser(_ user:String, password:String, handler:(_ error:Error?)-&gt;Void) {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We create an instance of the <code>DatabaseConfiguration</code>. This is an optional step. In our case, we would like to override the default path of the Database. Every user has their own instance of the Database that is located in a folder corresponding to the user.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">            var options = DatabaseConfiguration()
+            guard let defaultDBPath = _applicationSupportDirectory else {
+                fatalError("Could not open Application Support Directory for app!")
+                return
+            }
+            // Create a folder for the logged in user if one does not exist
+            let userFolderUrl = defaultDBPath.appendingPathComponent(user, isDirectory: true)
+            let userFolderPath = userFolderUrl.path
+            let fileManager = FileManager.default
+            if !fileManager.fileExists(atPath: userFolderPath) {
+                try fileManager.createDirectory(atPath: userFolderPath,
+                                                withIntermediateDirectories: true,
+                                                attributes: nil)
+
+            }
+            // Set the folder path for the CBLite DB
+            options.directory = userFolderPath</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Then we create a local Couchbase Lite database named <strong><em>"userprofile"</em></strong> for the user. If a database already exists for the user, the existing version is returned.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">            // Create a new DB or get handle to existing DB at specified path
+            _db = try Database(name: kDBName, config: options)</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listening-to-database-changes"><a class="anchor" href="#listening-to-database-changes"></a>Listening to Database Changes</h3>
+<div class="paragraph">
+<p>You can be asynchornously notified of any change (add, delete, update) to the Database by registering a change listener with the Database. In our app, we are not doing anything special with the Database change notification other than logging the change. In a real world app, you would use this notification for instance, to update the UI.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>DatabaseManager.swift</strong> file and locate the <code>registerForDatabaseChanges()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    fileprivate func registerForDatabaseChanges() {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We register a change listener with the database. This is an optional step. We track the <code>ListenerToken</code> as it is needed for removing the listener.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">        // Add database change listener
+        dbChangeListenerToken = db?.addChangeListener({ [weak self](change) in
+            guard let `self` = self else {
+                return
+            }
+            for docId in change.documentIDs   {
+                if let docString = docId as? String {
+                    let doc = self._db?.document(withID: docString)
+                    if doc == nil {
+                        print("Document was deleted")
+                    }
+                    else {
+                        print("Document was added/updated")
+                    }
+                }
+            }
+        })</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="close-a-database"><a class="anchor" href="#close-a-database"></a>Close a Database</h3>
+<div class="paragraph">
+<p>When a user logs out, we close the Couchbase Lite Database associated with the user and deregister any database change listeners</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>DatabaseManager.swift</strong> file and locate the <code>closeDatabaseForCurrentUser()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    func closeDatabaseForCurrentUser() -&gt; Bool {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Closing the database is pretty straightforward</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">                try db.close()</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deregistering-for-database-changes"><a class="anchor" href="#deregistering-for-database-changes"></a>Deregistering for  Database Changes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>DatabaseManager.swift</strong> file and locate the <code>deregisterForDatabaseChanges()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    fileprivate func deregisterForDatabaseChanges() {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We stop listening to database changes by passing in the <code>ListenerToken</code> associated with the listener.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">        // Add database change listener
+        if let dbChangeListenerToken = self.dbChangeListenerToken {
+            db?.removeChangeListener(withToken: dbChangeListenerToken)
+        }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="try-it-out-2"><a class="anchor" href="#try-it-out-2"></a>Try It Out</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The app should be running in the simulator</p>
+</li>
+<li>
+<p>Log into the app with any email Id and password. Let&#8217;s use the values <em>"<a href="mailto:demo@example.com">demo@example.com</a>"</em> and <em>"password"</em> for user Id and password fields respectively. If this is the first time that the user is signing in, a new Database will be created. If not, the user&#8217;s existing database will be opened.</p>
+</li>
+<li>
+<p>Confirm that the console log output has a message similar to the one below. In my example, I am logging in with a user email Id of <em>"<a href="mailto:demo@example.com">demo@example.com</a>"</em>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Will open/create DB  at path Will open/create DB  at path /Users/priya.rajagopal/Library/Developer/CoreSimulator/Devices/E4E62394-9940-4AF8-92FC-41E3C794B216/data/Containers/Data/Application/65EAD047-B29A-400C-803F-F799BAE99CBA/Library/Application Support/demo@example.com</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>The above log message indicates the location of the Database for the user</p>
+</li>
+<li>
+<p>Open the folder in your Finder app and verify that a Database with name <em>"userprofile"</em> is exists for the user</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/db_location.png" alt="User Profile Database Location">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="document-operations"><a class="anchor" href="#document-operations"></a>Document Operations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once an instance of the Couchbase Lite Database is created/opened for the specific user, we can perform basic Document functions on the Database. In this section, we will walkthrough the code that describes basic Document operations</p>
+</div>
+<div class="sect2">
+<h3 id="reading-a-document"><a class="anchor" href="#reading-a-document"></a>Reading a Document</h3>
+<div class="paragraph">
+<p>Once the user logs in, the user is taken to the "Your Profile" screen. A request is made to load  <a href="#the-user-profile-document">The "User Profile" Document</a>  for the user. When the user logs in the very first time, there would be no <em>user profile</em> document for the user.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>UserPresenter.swift</strong> file and locate the <code>userProfileDocId</code> definition. This document Id is constructed by prefixing the term "user::" to the email Id of the user.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    lazy var userProfileDocId: String = {
+        let userId = dbMgr.currentUserCredentials?.user
+        return "user::\(userId ?? "")"
+    }()</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the <strong>UserPresenter.swift</strong> file, locate the <code>fetchRecordForCurrentUser()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    func fetchRecordForCurrentUser( handler:@escaping(_ records:UserRecord?, _ error:Error?)-&gt;Void) {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We try to fetch the document with specified <code>userProfileDocId</code> from the database.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">        guard let db = dbMgr.db else {
+            fatalError("db is not initialized at this point!")
+        }
+
+        var profile = UserRecord.init() <i class="conum" data-value="1"></i><b>(1)</b>
+        profile.email = self.dbMgr.currentUserCredentials?.user <i class="conum" data-value="2"></i><b>(2)</b>
+        self.associatedView?.dataStartedLoading()
+
+        // fetch document corresponding to the user Id
+        if let doc = db.document(withID: self.userProfileDocId)  { <i class="conum" data-value="3"></i><b>(3)</b>
+
+            profile.email  =  doc.string(forKey: UserRecordDocumentKeys.email.rawValue)
+            profile.address = doc.string(forKey:UserRecordDocumentKeys.address.rawValue)
+            profile.name =  doc.string(forKey: UserRecordDocumentKeys.name.rawValue)
+            profile.imageData = doc.blob(forKey:UserRecordDocumentKeys.image.rawValue)?.content <i class="conum" data-value="4"></i><b>(4)</b>
+
+        }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create an instance of <a href="#userrecord">UserRecord</a> object</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the <code>email</code> property of the UserRecord with the email Id of the logged in user. This value is not editable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Fetch a <strong>immutable</strong> copy of the Document from the Database</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If document exists and is fetched succesfully, we use appropriate type-getters to fetch the various members of the Document based on the property name. Specifically, note the support of the <code>getBlob</code> type to fetch the value of a property of type <code>Blob</code></td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-updating-a-document"><a class="anchor" href="#creating-updating-a-document"></a>Creating / Updating a Document</h3>
+<div class="paragraph">
+<p>A <a href="#the-user-profile-document">The "User Profile" Document</a> is created for the user when the user taps the "Done" button on the "Profile Screen".
+The function below applies whether you are creating a document or updating an existing version</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>UserPresenter.swift</strong> file and locate the <code>setRecordForCurrentUser()</code> method.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    func setRecordForCurrentUser( _ record:UserRecord?, handler:@escaping(_ error:Error?)-&gt;Void) {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We create a <strong>mutable</strong> instance of the Document. By default, all APIs in Couchbase Lite deal with immutable objects, thereby making them <strong>thread-safe</strong> by design. In order to mutate an object,  you must explicitly get a mutable copy of the object.
+Use appropriate type-setters to set the various properties of the Document</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">        mutableDoc.setString(record?.type, forKey: UserRecordDocumentKeys.type.rawValue)
+
+        if let email = record?.email {
+            mutableDoc.setString(email, forKey: UserRecordDocumentKeys.email.rawValue)
+        }
+        if let address = record?.address {
+            mutableDoc.setString(address, forKey: UserRecordDocumentKeys.address.rawValue)
+        }
+
+        if let name = record?.name {
+            mutableDoc.setString(name, forKey: UserRecordDocumentKeys.name.rawValue)
+        }
+
+        if let imageData = record?.imageData {
+            let blob = Blob.init(contentType: "image/jpeg", data: imageData)
+            mutableDoc.setBlob(blob, forKey: UserRecordDocumentKeys.image.rawValue)
+        } <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Specifically, note the support of the <code>setBlob</code> type to fetch the value of a property of type <code>Blob</code>.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Save the document</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">        do {
+            // This will create a document if it does not exist and overrite it if it exists
+            // Using default concurrency control policy of "writes always win"
+            try? db.saveDocument(mutableDoc)
+            handler(nil)
+        }
+        catch {
+            handler(error)
+        }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-document"><a class="anchor" href="#deleting-a-document"></a>Deleting a Document</h3>
+<div class="paragraph">
+<p>We don&#8217;t delete a Document in this sample app. However, deletion of a document is pretty straightforward and this is how you would do it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">if let doc = db.document(withID: idOfDocToRemove) {
+	try db.deleteDocument(doc)
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="try-it-out-3"><a class="anchor" href="#try-it-out-3"></a>Try It Out</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>You should have followed the steps discussed in the "Try It Out" section under <a href="#create-open-a-database">Create / Open a Database</a></p>
+</li>
+<li>
+<p>Enter a "name" for the user in the Text Entry box and Tap "Done"</p>
+</li>
+<li>
+<p>Confirm that you see an alert message "Succesfully Updated Profile". The first time, you update the profile screen, the Document will be created.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/doc_create.png" alt="User Profile Document Creation">
+</div>
+</div>
+</li>
+<li>
+<p>Now tap on the "Tap!" button and select an image from the Photo Album. Tap "Done".</p>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/couchbaselabs/userprofile-couchbase-mobile/standalone/content/modules/userprofile/assets/images/image_selection.gif" alt="Image Selection">
+</div>
+</div>
+</li>
+<li>
+<p>Confirm that you see an alert message "Succesfully Updated Profile". The Document will be updated this time.</p>
+</li>
+<li>
+<p>Tap "Log Off" and log out of the app</p>
+</li>
+<li>
+<p>Log back into the app with the same user email Id and password that you used earlier. In my example, I used <em>"<a href="mailto:demo@example.com">demo@example.com</a>"</em> and <em>"password"</em>. So I will log in with those credentials again.</p>
+</li>
+<li>
+<p>Confirm that you see the profile screen  with the <em>name</em> and <em>image</em> values that you set earlier.</p>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/couchbaselabs/userprofile-couchbase-mobile/standalone/content/modules/userprofile/assets/images/log_off_on.gif" alt="Log Off and Log Back On">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="learn-more"><a class="anchor" href="#learn-more"></a>Learn More</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Congratulations on completing this tutorial!</p>
+</div>
+<div class="paragraph">
+<p>This tutorial walked you through a very basic example of how to get up and running with Couchbase Lite as a local-only, standalone embedded data store in your iOS app. If you want to learn more about Couchbase Mobile 2.x, check out the following links.</p>
+</div>
+<div class="sect2">
+<h3 id="further-reading"><a class="anchor" href="#further-reading"></a>Further Reading</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://blog.couchbase.com/couchbase-mobile-2-0/">Introduction to Couchbase Mobile</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/couchbase-mobile-2-0/">Couchbase Mobile 2.0 Overview</a></p>
+</li>
+<li>
+<p><a href="https://developer.couchbase.com/documentation/mobile/2.0/couchbase-lite/swift.html#getting-started">Getting Started with Couchbase Lite in iOS</a></p>
+</li>
+<li>
+<p><a href="https://developer.couchbase.com/documentation/mobile/2.0/couchbase-lite/index.html">Couchbase Lite Reference Guide</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/category/couchbase-mobile/">Couchbase Mobile Blogs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.couchbase.com" class="icon">
+            <img src="../../../_/img/logo.svg" alt="Couchbase">
+          </a>
+        </div>
+        <div class="contact">
+          <p class="address">3250 Olcott Street
+Santa Clara, CA 95054
+United States</p>
+          <a href="https://www.couchbase.com/contact" class="btn white-btn">Contact Us</a>
+          <a class="tel" href="tel:1-650-417-7500">1-650-417-7500</a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Company</span></li>
+          <li><a href="https://www.couchbase.com/about">About</a></li>
+          <li><a href="https://www.couchbase.com/leadership">Leadership</a></li>
+          <li><a href="https://www.couchbase.com/news-and-press-releases">News &amp; Press</a></li>
+          <li><a href="https://www.couchbase.com/careers">Careers</a></li>
+          <li><a href="https://www.couchbase.com/resources/events">Events</a></li>
+          <li><a href="https://www.couchbase.com/contact">Contact Us</a></li>
+          <li><a href="https://www.couchbase.com/request-pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Support</span></li>
+          <li><a href="https://developer.couchbase.com" target="_blank" rel="noopener">Developer Portal</a></li>
+          <li><a href="https://docs.couchbase.com" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://forums.couchbase.com" target="_blank" rel="noopener">Forums</a></li>
+          <li><a href="https://www.couchbase.com/services">Professional Services</a></li>
+          <li><a href="https://support.couchbase.com" target="_blank" rel="noopener">Support Login</a></li>
+          <li><a href="https://learn.couchbase.com/store" target="_blank" rel="noopener">Training</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Quicklinks</span></li>
+          <li><a href="https://blog.couchbase.com" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.couchbase.com/downloads">Downloads</a></li>
+          <li><a href="https://www.couchbase.com/get-started-developing-nosql">Get Started</a></li>
+          <li><a href="https://learn.couchbase.com/store?utf8=%E2%9C%93&ss=1&ct=78327&commit=Filter" target="_blank" rel="noopener">Online Training</a></li>
+          <li><a href="https://www.couchbase.com/resources">Resources</a></li>
+          <li><a href="https://www.couchbase.com/nosql-resources/why-nosql">Why NoSQL</a></li>
+          <li><a href="https://www.couchbase.com/resources/security">Security</a></li>
+          <li><a href="https://www.couchbase.com/resources/gdpr">GDPR</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.facebook.com/Couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="26.363 116.363 560.215 560.215"><path d="m586.58 209.58c0-48.96-44.252-93.212-93.212-93.212h-373.79c-48.96 0-93.212 44.252-93.212 93.212v373.79c0 48.96 44.252 93.212 93.212 93.212h186.42v-211.85h-68.732v-93.212h68.732v-36.72c0-63.083 47.077-119.58 105.45-119.58h75.323v93.212h-75.323c-8.474 0-17.889 10.357-17.889 25.422v37.662h93.212v93.212h-93.212v211.85h99.803c48.96 0 93.212-44.252 93.212-93.212v-373.79z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="32.012 176.622 542.326 437.815"><path d="m574.34 227.46c-19.772 8.474-41.428 15.065-64.025 17.889 22.597-14.123 40.486-35.778 48.96-61.2-21.655 13.182-45.194 21.655-70.615 27.305-20.714-21.655-48.96-34.837-80.972-34.837-61.2 0-111.1 49.902-111.1 111.1 0 8.474 0.942 16.948 2.825 25.422-92.271-5.649-174.18-49.902-229.74-117.69-9.415 16.006-15.065 35.778-15.065 55.551 0 38.603 19.772 72.498 49.902 92.271-17.889-0.942-35.778-5.649-50.843-14.123v0.942c0 53.668 38.603 98.862 89.446 109.22-9.415 2.825-18.831 3.766-29.188 3.766-7.532 0-14.123-0.942-20.714-1.883 14.123 44.252 55.551 76.265 103.57 77.206-37.662 30.129-85.68 48.018-138.41 48.018-9.415 0-17.889-0.941-26.363-1.883 48.96 32.012 107.34 49.902 170.42 49.902 204.31 0 316.36-169.48 316.36-316.36v-14.123c21.656-14.125 40.487-33.897 55.551-56.494z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="31.071 119.188 539.537 540.443"><path d="m531.97 119.19h-461.35c-21.655 0-39.545 16.948-39.545 38.603v463.24c0 21.655 17.889 38.603 39.545 38.603h460.41c21.655 0 39.545-16.948 39.545-38.603v-463.24c0.942-21.656-16.947-38.603-38.603-38.603zm-337.07 451.94h-81.914v-243.86h81.914v243.86zm-40.486-276.81c-28.246 0-46.135-18.831-46.135-42.369s17.889-42.369 46.135-42.369 45.194 17.889 45.194 42.369c0.942 23.538-16.948 42.369-45.194 42.369zm335.19 276.81h-81.914v-129.93c0-32.954-12.24-55.551-41.428-55.551-22.597 0-35.778 15.065-41.428 30.129-1.883 5.649-2.825 12.24-2.825 19.772v136.52h-81.914s0.942-221.26 0-243.86h81.914v34.837c11.298-16.948 30.129-40.486 73.44-40.486 53.668 0 94.154 34.837 94.154 110.16l1e-3 138.41zm-168.54-208.08s0.941-0.941 0 0z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <span>2018 COUCHBASE All rights reserved.</span>
+      <a href="https://www.couchbase.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.couchbase.com/terms-of-use">Terms of Use</a>
+      <a href="https://www.couchbase.com/cookie-policy">Cookie Policy</a>
+      <a href="https://info.couchbase.com/unsubscribe-or-manage-preferences.html" target="_blank" rel="noopener">Marketing Preference Center</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

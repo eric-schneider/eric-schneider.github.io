@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Using Couchbase Lite with Recycler Views | Couchbase Docs</title>
+    <link rel="canonical" href="eric-schneider.github.io/mh-couchbase-cli/tutorials/university-lister/android.html">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MVPNN2"></script>
+    <link rel="schema.dcterms" href="https://purl.org/dc/terms/">
+    <meta name="dcterms.subject" content="tutorials">
+    <meta name="dcterms.identifier" content="master">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar" id="topbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://www.couchbase.com"><img src="../../_/img/logo.svg" alt="Couchbase"></a>
+        <button class="navbar-burger" data-target="topbar-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div id="topbar-menu" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown">
+            <a class="navbar-link" href="eric-schneider.github.io/mh-couchbase-cli">Docs</a>
+            <div class="navbar-dropdown explore">
+              <div class="title">Couchbase Documentation Overview</div>
+              <div class="cols">
+                <ul>
+                  <li class="heading"><a href="../../server/6.0/index.html">Server</a></li>
+                  <li><a href="../../server/6.0/n1ql/n1ql-language-reference/index.html">N1QL</a></li>
+                  <li><a href="../../server/6.0/fts/full-text-intro.html">Full Text Search</a></li>
+                  <li><a href="../../server/6.0/analytics/introduction.html">Analytics</a></li>
+                  <li><a href="../../server/6.0/eventing/eventing-overview.html">Eventing</a></li>
+                  <li><a href="../../operator/1.2/overview.html">Autonomous Operator</a></li>
+                </ul>
+                <ul>
+                  <li class="heading">Mobile</li>
+                  <li><a href="#">Lite</a></li>
+                  <li><a href="#">Sync Gateway</a></li>
+                </ul>
+                <ul class="two-cols">
+                  <li class="heading"><a href="../../server/6.0/sdk/overview.html">SDKs</a></li>
+                  <li><a href="#">C</a></li>
+                  <li><a href="#">.NET</a></li>
+                  <li><a href="#">Go</a></li>
+                  <li><a href="#">Java</a></li>
+                  <li><a href="#">Node.js</a></li>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Python</a></li>
+                  <li><a href="#">Scala</a></li>
+                </ul>
+                <ul>
+                  <li class="heading"><a href="../../server/6.0/connectors/intro.html">Connectors</a></li>
+                  <li><a href="../../elasticsearch-connector/4.0/index.html">Elasticsearch</a></li>
+                  <li><a href="../../server/6.0/connectors/hadoop-1.2/hadoop.html">Hadoop</a></li>
+                  <li><a href="../../kafka-connector/3.4/index.html">Kafka</a></li>
+                  <li><a href="../../spark-connector/2.4/index.html">Spark</a></li>
+                  <li><a href="../../talend-connector/index.html">Talend</a></li>
+                  <li><a href="../../server/6.0/connectors/odbc-jdbc-drivers.html">ODBC/JDBC</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-item">
+            <a class="navbar-link component" href="/tutorials/index.html"><span class="title">Tutorials</span></a>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="btn red-btn" href="https://www.couchbase.com/downloads">Downloads</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body container">
+<nav class="nav">
+<div class="nav-menu">
+<ul class="nav-list">
+  <li class="nav-item is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Couchbase Server</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Session Storage</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../session-storage/install.html">Configure Couchbase Cluster</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../session-storage/aspnet.html">ASP.NET Core</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../session-storage/java.html">Java</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../session-storage/udf.html">UDF</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">User Profile Storage</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../profile-store/install.html">Configure Couchbase Cluster</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../profile-store/java.html">Java</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../profile-store/dotnet.html">.Net</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../profile-store/building-indexes.html">Indexing</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-path is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Couchbase Mobile</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Travel Sample</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Swift</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/mvp-architecture.html">MVP Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Java</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/mvp-architecture.html">MVP Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">C#</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/mvvm-architecture.html">MVVM Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../userprofile-couchbase-mobile/standalone/userprofile/userprofile_basic.html">Getting Started on iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../userprofile-couchbase-mobile/standalone/userprofile/xamarin/userprofile_basic.html">Getting Started on Xamarin</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../userprofile-couchbase-mobile/standalone/userprofile/android/userprofile_basic.html">Getting Started on Android</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Xcode Playground</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../swift-playground/overview.html">Overview</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-path is-active" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Recycler Views with Live Queries</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page is-active" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build a Cordova Plugin</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-lister/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-lister/ios.html">iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-lister/android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build a React Native Module</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-finder/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-finder/ios.html">iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-finder/android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Todo App (Mobile 1.x)</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Design</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/design/security.html">Security</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Develop</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Swift</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/create-database.html">Create Database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/using-the-database.html">Using the Database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/adding-synchronization.html">Adding Synchronization</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/adding-security.html">Adding Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/integration.html">Integration</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build Your Own</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Tutorial Template</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../tutorial-template/sample.html">Basic Tutorial Template</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+</div>
+</nav>
+<aside class="toc sidebar">
+  <div class="toc-menu"></div>
+</aside>
+<main class="article" data-ceiling="topbar">
+  <div class="article-header">
+<button class="nav-control"></button>
+<nav class="crumbs" aria-label="breadcrumbs">
+  <ul>
+    <li class="crumb"><a href="../index.html">Tutorials</a></li>
+    <li class="crumb">Couchbase Mobile</li>
+    <li class="crumb">Recycler Views with Live Queries</li>
+    <li class="crumb"><a href="android.html">Android</a></li>
+  </ul>
+</nav>
+<div class="tools" role="navigation">
+  <ul>
+    <li class="tool edit"><a href="https://github.com/couchbaselabs/UniversityLister-Android/edit/master/content/modules/university-lister/pages/android.adoc" title="Edit Page" target="_blank" rel="noopener">Edit</a></li>
+  </ul>
+</div>
+  </div>
+<article class="doc">
+<h1 class="page">Using Couchbase Lite with Recycler Views</h1>
+<div id="preamble">
+<div class="sectionbody">
+<!-- toc disabled -->
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html">RecyclerView</a> widget is a popular option on the <a href="https://developer.android.com">Android</a> platform for efficiently displaying dynamic data collections.
+The data items feeding the RecyclerView may change as a result of user&#8217;s actions or with data fetched from the network.
+As the name indicates, RecyclerViews <em>recycle</em> the views that correspond to the items in the data sets.</p>
+</div>
+<div class="paragraph">
+<p>This tutorial will demonstrate how you can use</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://developer.couchbase.com/documentation/mobile/2.0/whatsnew.html">Couchbase Lite 2.0</a> as a data source for RecyclerViews in your Android application.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In this tutorial, we will be using <a href="https://developer.couchbase.com/documentation/mobile/2.0/couchbase-lite/index.html">Couchbase Lite</a> as a standalone, embedded data store within your mobile app.</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>You can learn more about Couchbase Mobile <a href="https://developer.couchbase.com/mobile">here</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Android Studio 2.3<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Latest Version Downloadable from <a href="https://developer.android.com/studio/">Android Developer Site</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>git (Optional)
+This is required if you would prefer to pull the source code from GitHub repo.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a <a href="https://github.com">free github account</a> if you don&#8217;t already have one</p>
+</li>
+<li>
+<p>git can be downloaded from <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git-scm.org</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Familiarity with the fundamentals of using Couchbase Lite on Android. If you need refresher, refer to our <a href="https://developer.couchbase.com/documentation/mobile/2.0/couchbase-lite/java.html">Getting Started with Android Java Guide</a>.</p>
+</li>
+<li>
+<p>Familiarity with the basics of <a href="https://developer.android.com">Android app development apps</a> and with  <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview">RecyclerViews</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installation"><a class="anchor" href="#installation"></a>Installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have two options to download the App Source Code</p>
+</div>
+<div class="sect2">
+<h3 id="option-1-git-clone"><a class="anchor" href="#option-1-git-clone"></a>Option 1 : Git Clone</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Clone the <strong><em>master</em></strong> branch of the <code>UniversityLister</code> project from GitHub. Type the following command in your terminal</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  git clone https://github.com/couchbaselabs/UniversityLister-Android.git</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="option-2-download-zip"><a class="anchor" href="#option-2-download-zip"></a>Option 2 : Download .zip</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Download the  <code>UniversityLister</code> project from <a href="https://github.com/couchbaselabs/UniversityLister-Android/archive/master.zip">here</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="app-overview"><a class="anchor" href="#app-overview"></a>App Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We will be working with a very simple "University Lister" app.</p>
+</div>
+<div class="paragraph">
+<p>The app does the following -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It displays a list of "university" items in a <code>Recyclerview</code> with <code>Couchbase Lite</code> as the data source.</p>
+</li>
+<li>
+<p>Every time a "University" entry is added to the Couchbase Lite database, the RecyclerView displaying the university items is automatically updated to include the newly added item</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/recycler_view_app.gif" alt="recycler view app"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="try-it-out"><a class="anchor" href="#try-it-out"></a>Try It Out</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Build and run the app in Android Studio.</p>
+</li>
+<li>
+<p>Tap on the "ADD UNIVERSITY" button.</p>
+</li>
+<li>
+<p>This will result in a new university item getting added to the RecyclerView.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s see how this works.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="app-design"><a class="anchor" href="#app-design"></a>App Design</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A typical design pattern for using Couchbase Lite as the data source for the RecyclerView in your app is shown below.</p>
+</div>
+<div class="paragraph">
+<p>This also corresponds to the way we have implemented it in the sample app.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/app_design.png" alt="app design"></span></p>
+</div>
+<div class="paragraph">
+<p>Here are the key elements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <em>RecyclerView</em> is instantiated by the <a href="https://developer.android.com/reference/android/app/Activity"><em>Activity</em></a> and contains the <em>Adapter</em> .</p>
+</li>
+<li>
+<p>The <a href="https://developer.android.com/reference/android/widget/Adapter"><em>Adapter</em></a> is responsible for binding the data items to the view using the <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.ViewHolder"><em>ViewHolder pattern</em></a>.</p>
+</li>
+<li>
+<p><em>Couchbase Lite</em> is the data source for the data items that is used for populating the views.</p>
+</li>
+<li>
+<p>The <em>Database Manager</em> which is a singleton class is used for initialization and management of Couchbase Lite.</p>
+</li>
+<li>
+<p>The Couchbase Lite <a href="https://developer.couchbase.com/documentation/mobile/2.0/guides/couchbase-lite/native-api/query/index.html#live-query">Query</a> API for interacting with the database.
+A Couchbase Lite Live Query allows an app to register for changes to the database that affect the results of the query using the <code>addChangeListener</code> call.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This is the sequence</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Activity uses the Couchbase Lite Live Query to query for data items in the database and a listener is registered to handle query data updates.</p>
+</li>
+<li>
+<p>Every time the database gets updated with data that affects the query results, the Activity is notified of the changes via the listener callback.</p>
+</li>
+<li>
+<p>After retrieving the data from the Couchbase Lite database, the <a href="">Adapter</a> is notified of the changes.</p>
+</li>
+<li>
+<p>The RecyclerView is then updated with the updated data set.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>NOTE</strong>: <em>How</em> the data gets into Couchbase Lite is not important in the context of this tutorial. In a real world app, the data in Couchbase Lite may be fetched from a remote server or may be updated as a result of the local user&#8217;s action. In our app, we manually insert a randomly created University document by clicking on the "ADD UNIVERSITY" button.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="initialization"><a class="anchor" href="#initialization"></a>Initialization</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>ListActivity.java</strong> file and locate the <code>onCreate</code> method. This is where all the initialization takes place.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    // Initialize couchbase lite database manager
+    dbMgr = new DatabaseManager(this); <i class="conum" data-value="1"></i><b>(1)</b>
+
+    // Set content layout
+    setContentView(R.layout.activity_list); <i class="conum" data-value="2"></i><b>(2)</b>
+
+
+    // Set toolbar
+    Toolbar toolbar = (Toolbar) findViewById(R.id.university_toolbar);
+    setSupportActionBar(toolbar);
+
+    // Get recycler view
+    RecyclerView recyclerView = (RecyclerView)findViewById(R.id.rvUniversities);
+    recyclerView.setAdapter(adapter); <i class="conum" data-value="3"></i><b>(3)</b>
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    // Asynchronously Load the data from local sample file
+    DataFetcher fetcher = new DataFetcher(this,this); <i class="conum" data-value="4"></i><b>(4)</b>
+    fetcher.execute();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>DatabaseManager</code> is instantiated. This is a singleton class that is responsible for creating/opening instance of Couchbase Lite</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The typical content layout initialization is handled here</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>RecyclerView</code> is configured with the <code>UniversityListAdapter</code> adapter and the appropriate Layout Manager.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>DataFetcher</code> is instantiated. The DataFetcher is an link:android asynctask[<code>AsyncTask</code>] that is responsible for loading sample university data from a file bundled with the app. Think of it as simulating an external source for the data. We invoke the <code>execute()</code> method on the AsyncTask. More on this in the next section. We</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="loading-sample-data"><a class="anchor" href="#loading-sample-data"></a>Loading Sample Data</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>DataFetcher.java</strong> file and locate the <code>doInBackground()</code> function
+During Activity Launch, the <code>DataFetcher</code> class loads the sample university data from a local file bundled with the app. The loading of data is done on a background thread using <code>AsyncTask</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Override
+protected List&lt;University&gt; doInBackground(Void... voids) {
+    String fileName = "university_sample.txt";
+    StringBuilder stringBuilder = new StringBuilder();
+    List&lt;University&gt; universities = null;
+    try {
+        // Load data from local sample data file
+        InputStream inputStream = mContext.getAssets().open(fileName); <i class="conum" data-value="1"></i><b>(1)</b>
+        // use Jackson library to map the JSON to List of University POJO
+        ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); <i class="conum" data-value="2"></i><b>(2)</b>
+        universities = Arrays.asList(mapper.readValue(inputStream, University[].class));
+        return universities;
+    } catch (IOException  e ) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
+@Override
+protected void onPostExecute(List&lt;University&gt; result) {
+    // Notify the IDataFetchResponse delegate (which in this case is ListActivity) of the availability of data
+    mDelegate.postResult(result);
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The sample data is loaded from the <em>university-sample.txt</em> file in the assets folder. The content is in JSON format.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Once the data is read, The JSON data is mapped to corresponding <code>University</code> POJO objects using the <a href="https://github.com/FasterXML/jackson">Jackson library</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>ListActivity</code> is then  notified of the completion of data load via the <code>IDataFetchResponse</code> interface.</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Note</strong>: The sample data is <em>not</em> saved into the Couchbase Lite database at this point. It is in an in-memory data structure called <code>sampleData</code> in the <code>ListActivity</code> class.
+We will see how this sample data is used a little later in the tutorial.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="loading-data-from-couchbase-lite-and-notifying-the-adapter"><a class="anchor" href="#loading-data-from-couchbase-lite-and-notifying-the-adapter"></a>Loading Data from Couchbase Lite And Notifying the Adapter</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>ListActivity.java</strong> file and locate to the <code>QueryForListOfUniversities()</code> method. This Activity sets up a "Live Query" to fetch the list of universities from the Couchbase Lite database. Initially, it will be empty.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void QueryForListOfUniversities() {
+    try {
+        // Create a liveQuery to fetch all documents from database
+        query = QueryBuilder.
+                select(SelectResult.all()).
+                from(DataSource.database(dbMgr.database)); <i class="conum" data-value="1"></i><b>(1)</b>
+
+        // Add a live query listener to continually monitor for changes
+        query.addChangeListener(new QueryChangeListener() { <i class="conum" data-value="2"></i><b>(2)</b>
+                @Override
+                    public void changed(QueryChange change) {
+                        ResultSet resultRows = change.getResults();
+                        Result row;
+                        List&lt;University&gt; universities = new ArrayList&lt;University&gt;();
+                        // Iterate over changed rows, corresponding documents and map to University POJO
+                        while ((row = resultRows.next()) != null) { <i class="conum" data-value="3"></i><b>(3)</b>
+                            ObjectMapper objectMapper = new ObjectMapper();
+                            // Ignore undeclared properties
+                            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+
+                            // Get dictionary value
+                            Dictionary valueMap = row.getDictionary(dbMgr.database.getName()); <i class="conum" data-value="4"></i><b>(4)</b>
+
+                            // Convert from dictionary to corresponding University object
+                            University university = objectMapper.convertValue(valueMap.toMap(),University.class);
+                            universities.add(university); <i class="conum" data-value="5"></i><b>(5)</b>
+                        }
+
+                        // Update the adapter with the newly added University documents
+                        adapter.setUniversities(universities); <i class="conum" data-value="6"></i><b>(6)</b>
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 5. Notify adapter of changed data
+                                adapter.notifyDataSetChanged(); <i class="conum" data-value="7"></i><b>(7)</b>
+                            }
+                        });
+
+                    }
+                }
+        );
+        // Run Query
+        query.execute(); <i class="conum" data-value="8"></i><b>(8)</b>
+    }
+    catch (IllegalArgumentException e) {
+
+    } catch (CouchbaseLiteException e) {
+        e.printStackTrace();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A Query is created ising the link:http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/ [Query API] to fetch all documents from Couchbase Lite database. Typically you will use a <code>where</code> clause to filter the subset of documents to be fetched. But in our case, the database only holds the university documents so we just retrieve all of it.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A query change listener is registered to listen to all database changes that impact the query. This makes the query "live". As documents are added to the Couchbase Lite database, the activity will be asynchronously notified of the additions.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>In the listener callback, iterate over result set</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>For every result, get the  <code>ReadOnlyDictionary</code> object correponding to the entry</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Convert from <code>ReadOnlyDictionary</code> type to University POJO using the <code>ObjectMapper</code> (from Jackson library)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Update the adapter with the changed documents</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Notify the adapter of the updated data set that will cause the RecyclerView to be reloaded with the updated data</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Run the Query</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="saving-to-couchbase-lite-and-triggering-database-change-updates"><a class="anchor" href="#saving-to-couchbase-lite-and-triggering-database-change-updates"></a>Saving to Couchbase Lite and Triggering Database Change Updates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <a href="#loading-sample-data">Loading Sample Data</a> section, we discussed how to load the sample university data  into an in-memory <code>sampleData</code> List data. This was intended to simulate the loading of data from an external source, like a web service for instance or a local user&#8217;s action.  Now, we discuss when and how that data is used.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>ListActivity.java</strong> file and locate the <code>fetchUniversityAndAddToDatabase()</code> method. The <code>fetchUniversityAndAddToDatabase()</code> method is invoked when the user taps on the "ADD UNIVERSITY" button in the app. In this method, we insert a data item from the sample data into Couchbase Lite.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void fetchUniversityAndAddToDatabase() {
+    Random r = new Random();
+    int index = r.nextInt(sampleData.size()-1);
+    try {
+        // Get university object at randomly selected index
+        University university = sampleData.get(index); <i class="conum" data-value="1"></i><b>(1)</b>
+
+        // Construct the document from university object
+        ObjectMapper objectMapper = new ObjectMapper(); <i class="conum" data-value="2"></i><b>(2)</b>
+
+        // Ignore undeclared properties
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        HashMap&lt;String,Object&gt; universityMap = objectMapper.convertValue(university,HashMap.class);
+        MutableDocument doc = new MutableDocument(universityMap);
+
+        // Save document to database.
+        dbMgr.database.save(doc); <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+    catch ( CouchbaseLiteException | NullPointerException e) {
+        e.printStackTrace();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A random entry from the <code>sampleData</code> List of <code>University</code> objects is selected</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>Universty</code> object is converted to Couchbase Lite <code>Document</code> using the <code>ObjectMapper</code> class of Jackson library</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>Document</code> is inserted into the database. This insertion triggers the Query listener to be invoked.</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="learn-more"><a class="anchor" href="#learn-more"></a>Learn More</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Congratulations on completing this tutorial!</p>
+</div>
+<div class="paragraph">
+<p>This tutorial walked you through an example of how to use Couchbase Lite database as an embedded data source for RecyclerViews within your Android app. We looked at a simple Query example. Check out the following links for further details on the Query API</p>
+</div>
+<div class="sect2">
+<h3 id="further-reading"><a class="anchor" href="#further-reading"></a>Further Reading</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/">Java API Reference</a></p>
+</li>
+<li>
+<p><a href="https://developer.couchbase.com/documentation/mobile/2.0/couchbase-lite/java.html">Getting Started with Couchbase Lite on Android</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/sql-for-json-query-interface-couchbase-mobile/">Fundamentals of the Couchbase Lite 2.0 Query API</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/querying-array-collections-couchbase-mobile/">Handling Arrays in Queries</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/full-text-search-couchbase-mobile-2-0/">Couchbase Lite 2.0 Full Text Search API</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/join-queries-couchbase-mobile/">Couchbase Lite 2.0 JOIN Query</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.couchbase.com" class="icon">
+            <img src="../../_/img/logo.svg" alt="Couchbase">
+          </a>
+        </div>
+        <div class="contact">
+          <p class="address">3250 Olcott Street
+Santa Clara, CA 95054
+United States</p>
+          <a href="https://www.couchbase.com/contact" class="btn white-btn">Contact Us</a>
+          <a class="tel" href="tel:1-650-417-7500">1-650-417-7500</a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Company</span></li>
+          <li><a href="https://www.couchbase.com/about">About</a></li>
+          <li><a href="https://www.couchbase.com/leadership">Leadership</a></li>
+          <li><a href="https://www.couchbase.com/news-and-press-releases">News &amp; Press</a></li>
+          <li><a href="https://www.couchbase.com/careers">Careers</a></li>
+          <li><a href="https://www.couchbase.com/resources/events">Events</a></li>
+          <li><a href="https://www.couchbase.com/contact">Contact Us</a></li>
+          <li><a href="https://www.couchbase.com/request-pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Support</span></li>
+          <li><a href="https://developer.couchbase.com" target="_blank" rel="noopener">Developer Portal</a></li>
+          <li><a href="https://docs.couchbase.com" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://forums.couchbase.com" target="_blank" rel="noopener">Forums</a></li>
+          <li><a href="https://www.couchbase.com/services">Professional Services</a></li>
+          <li><a href="https://support.couchbase.com" target="_blank" rel="noopener">Support Login</a></li>
+          <li><a href="https://learn.couchbase.com/store" target="_blank" rel="noopener">Training</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Quicklinks</span></li>
+          <li><a href="https://blog.couchbase.com" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.couchbase.com/downloads">Downloads</a></li>
+          <li><a href="https://www.couchbase.com/get-started-developing-nosql">Get Started</a></li>
+          <li><a href="https://learn.couchbase.com/store?utf8=%E2%9C%93&ss=1&ct=78327&commit=Filter" target="_blank" rel="noopener">Online Training</a></li>
+          <li><a href="https://www.couchbase.com/resources">Resources</a></li>
+          <li><a href="https://www.couchbase.com/nosql-resources/why-nosql">Why NoSQL</a></li>
+          <li><a href="https://www.couchbase.com/resources/security">Security</a></li>
+          <li><a href="https://www.couchbase.com/resources/gdpr">GDPR</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.facebook.com/Couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="26.363 116.363 560.215 560.215"><path d="m586.58 209.58c0-48.96-44.252-93.212-93.212-93.212h-373.79c-48.96 0-93.212 44.252-93.212 93.212v373.79c0 48.96 44.252 93.212 93.212 93.212h186.42v-211.85h-68.732v-93.212h68.732v-36.72c0-63.083 47.077-119.58 105.45-119.58h75.323v93.212h-75.323c-8.474 0-17.889 10.357-17.889 25.422v37.662h93.212v93.212h-93.212v211.85h99.803c48.96 0 93.212-44.252 93.212-93.212v-373.79z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="32.012 176.622 542.326 437.815"><path d="m574.34 227.46c-19.772 8.474-41.428 15.065-64.025 17.889 22.597-14.123 40.486-35.778 48.96-61.2-21.655 13.182-45.194 21.655-70.615 27.305-20.714-21.655-48.96-34.837-80.972-34.837-61.2 0-111.1 49.902-111.1 111.1 0 8.474 0.942 16.948 2.825 25.422-92.271-5.649-174.18-49.902-229.74-117.69-9.415 16.006-15.065 35.778-15.065 55.551 0 38.603 19.772 72.498 49.902 92.271-17.889-0.942-35.778-5.649-50.843-14.123v0.942c0 53.668 38.603 98.862 89.446 109.22-9.415 2.825-18.831 3.766-29.188 3.766-7.532 0-14.123-0.942-20.714-1.883 14.123 44.252 55.551 76.265 103.57 77.206-37.662 30.129-85.68 48.018-138.41 48.018-9.415 0-17.889-0.941-26.363-1.883 48.96 32.012 107.34 49.902 170.42 49.902 204.31 0 316.36-169.48 316.36-316.36v-14.123c21.656-14.125 40.487-33.897 55.551-56.494z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="31.071 119.188 539.537 540.443"><path d="m531.97 119.19h-461.35c-21.655 0-39.545 16.948-39.545 38.603v463.24c0 21.655 17.889 38.603 39.545 38.603h460.41c21.655 0 39.545-16.948 39.545-38.603v-463.24c0.942-21.656-16.947-38.603-38.603-38.603zm-337.07 451.94h-81.914v-243.86h81.914v243.86zm-40.486-276.81c-28.246 0-46.135-18.831-46.135-42.369s17.889-42.369 46.135-42.369 45.194 17.889 45.194 42.369c0.942 23.538-16.948 42.369-45.194 42.369zm335.19 276.81h-81.914v-129.93c0-32.954-12.24-55.551-41.428-55.551-22.597 0-35.778 15.065-41.428 30.129-1.883 5.649-2.825 12.24-2.825 19.772v136.52h-81.914s0.942-221.26 0-243.86h81.914v34.837c11.298-16.948 30.129-40.486 73.44-40.486 53.668 0 94.154 34.837 94.154 110.16l1e-3 138.41zm-168.54-208.08s0.941-0.941 0 0z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <span>2018 COUCHBASE All rights reserved.</span>
+      <a href="https://www.couchbase.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.couchbase.com/terms-of-use">Terms of Use</a>
+      <a href="https://www.couchbase.com/cookie-policy">Cookie Policy</a>
+      <a href="https://info.couchbase.com/unsubscribe-or-manage-preferences.html" target="_blank" rel="noopener">Marketing Preference Center</a>
+    </div>
+  </div>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

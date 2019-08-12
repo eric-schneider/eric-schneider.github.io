@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>User Profile Sample: Background App Refresh | Couchbase Docs</title>
+    <link rel="canonical" href="eric-schneider.github.io/mh-couchbase-cli/userprofile-couchbase-mobile/sync/index.html">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MVPNN2"></script>
+    <link rel="schema.dcterms" href="https://purl.org/dc/terms/">
+    <meta name="dcterms.subject" content="userprofile-couchbase-mobile">
+    <meta name="dcterms.identifier" content="backgroundfetch">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar" id="topbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://www.couchbase.com"><img src="../../../_/img/logo.svg" alt="Couchbase"></a>
+        <button class="navbar-burger" data-target="topbar-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div id="topbar-menu" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown">
+            <a class="navbar-link" href="eric-schneider.github.io/mh-couchbase-cli">Docs</a>
+            <div class="navbar-dropdown explore">
+              <div class="title">Couchbase Documentation Overview</div>
+              <div class="cols">
+                <ul>
+                  <li class="heading"><a href="../../../server/6.0/index.html">Server</a></li>
+                  <li><a href="../../../server/6.0/n1ql/n1ql-language-reference/index.html">N1QL</a></li>
+                  <li><a href="../../../server/6.0/fts/full-text-intro.html">Full Text Search</a></li>
+                  <li><a href="../../../server/6.0/analytics/introduction.html">Analytics</a></li>
+                  <li><a href="../../../server/6.0/eventing/eventing-overview.html">Eventing</a></li>
+                  <li><a href="../../../operator/1.2/overview.html">Autonomous Operator</a></li>
+                </ul>
+                <ul>
+                  <li class="heading">Mobile</li>
+                  <li><a href="#">Lite</a></li>
+                  <li><a href="#">Sync Gateway</a></li>
+                </ul>
+                <ul class="two-cols">
+                  <li class="heading"><a href="../../../server/6.0/sdk/overview.html">SDKs</a></li>
+                  <li><a href="#">C</a></li>
+                  <li><a href="#">.NET</a></li>
+                  <li><a href="#">Go</a></li>
+                  <li><a href="#">Java</a></li>
+                  <li><a href="#">Node.js</a></li>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Python</a></li>
+                  <li><a href="#">Scala</a></li>
+                </ul>
+                <ul>
+                  <li class="heading"><a href="../../../server/6.0/connectors/intro.html">Connectors</a></li>
+                  <li><a href="../../../elasticsearch-connector/4.0/index.html">Elasticsearch</a></li>
+                  <li><a href="../../../server/6.0/connectors/hadoop-1.2/hadoop.html">Hadoop</a></li>
+                  <li><a href="../../../kafka-connector/3.4/index.html">Kafka</a></li>
+                  <li><a href="../../../spark-connector/2.4/index.html">Spark</a></li>
+                  <li><a href="../../../talend-connector/index.html">Talend</a></li>
+                  <li><a href="../../../server/6.0/connectors/odbc-jdbc-drivers.html">ODBC/JDBC</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-item">
+            <a class="navbar-link component" href="/tutorials/index.html"><span class="title">Tutorials</span></a>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="btn red-btn" href="https://www.couchbase.com/downloads">Downloads</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body container">
+<nav class="nav">
+<div class="nav-menu">
+<ul class="nav-list">
+  <li class="nav-item is-active" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-path is-active" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on iOS</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../standalone/userprofile/userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../query/userprofile/userprofile_query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../sync/userprofile/userprofile_sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item is-current-page is-active" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="background-fetch.html">Background Fetch</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on Xamarin</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../standalone/userprofile/xamarin/userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../query/userprofile/xamarin/userprofile_query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../sync/userprofile/xamarin/userprofile_sync.html">Sync</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on Android</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../standalone/userprofile/android/userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+</div>
+</nav>
+<aside class="toc sidebar">
+  <div class="toc-menu"></div>
+</aside>
+<main class="article" data-ceiling="topbar">
+  <!-- No `View Latest` banner -->
+  <div class="article-header">
+<button class="nav-control"></button>
+<nav class="crumbs" aria-label="breadcrumbs">
+  <ul>
+    <li class="crumb"><a href="../index.html">User Profile Tutorial</a></li>
+    <li class="crumb">Getting Started on iOS</li>
+    <li class="crumb"><a href="background-fetch.html">Background Fetch</a></li>
+  </ul>
+</nav>
+<div class="tools" role="navigation">
+  <ul>
+    <li class="tool edit"><a href="https://github.com/couchbaselabs/userprofile-couchbase-mobile/edit/backgroundfetch/content/modules/userprofile/pages/background-fetch.adoc" title="Edit Page" target="_blank" rel="noopener">Edit</a></li>
+  </ul>
+</div>
+  </div>
+<article class="doc">
+<h1 class="page">User Profile Sample: Background App Refresh</h1>
+<div id="preamble">
+<div class="sectionbody">
+<!-- toc disabled -->
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The ability for a mobile app to run in the background is an important element of the life cycle of a mobile application. The ability to sync data while in the background would be useful in several scenarios. Background support is platform specific and is hence not built into Couchbase Lite. However, one can easily leverage the various platform specific backgrounding capabilities to perform data sync over Couchbase Mobile.</p>
+</div>
+<div class="paragraph">
+<p>This tutorial will demonstrate how to -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Configure your iOS app for Background Fetch support</p>
+</li>
+<li>
+<p>Setup your app to do a one-shot sync with Couchbase Sync Gateway while in the background</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We will be usiing a Swift App as an example of a Couchbase Lite enabled client.</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>You can learn more about the Sync Gateway <a href="https://developer.couchbase.com/documentation/mobile/2.0/guides/sync-gateway/index.html">here</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This tutorial assumes familiarity with building swift apps with Xcode and with Couchbase Lite.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You must have completed the "user profile" tutorial on <strong>sync</strong>. If you haven&#8217;t already done so, please complete the following tutorial first</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.couchbase.com/tutorials/userprofile-couchbase-mobile/sync/userprofile/userprofile_sync.html">Fundamentals of  Sync</a> using Couchbase Lite and Sync Gateway</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>iOS (Xcode 10+)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Download latest version from the <a href="https://itunes.apple.com/us/app/xcode/id497799835?mt=12">Mac App Store</a></p>
+</li>
+<li>
+<p>NOTE: If you are on an older version of Xcode that you must retain for your other development needs, you can make a copy of your existing version of Xcode and install Xcode 10. So you can have multiple versions of Xcode on your Mac.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>git (Optional)
+This is required if you would prefer to pull the source code from GitHub repo.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a <a href="https://github.com">free github account</a> if you don&#8217;t already have one</p>
+</li>
+<li>
+<p>git can be downloaded from <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git-scm.org</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>curl HTTP client</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You could use any HTTP client of your choice. But we will use <strong>curl</strong> in our tutorial. Download latest version from <a href="https://curl.haxx.se/download.html">curl website</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="system-overview"><a class="anchor" href="#system-overview"></a>System Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We will be working with a simple "User Profile" app which we introduced in the <a href="https://developer.couchbase.com/documentation/mobile/2.0/userprofile_basic.html">Fundamentals Tutorial</a> and extended to support data sync capabilities in the <a href="https://docs.couchbase.com/tutorials/userprofile-couchbase-mobile/sync/userprofile/userprofile_sync.html">Sync Tutorial</a>.</p>
+</div>
+<div class="paragraph">
+<p>In this tutorial, we will be extending that app to support data sync when in the background.</p>
+</div>
+<div class="paragraph">
+<p>The app does the following</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Allows users to log in and create or update his/her user profile information. The user profile view is automatically updated everytime the profile information changes in the underlying database</p>
+</li>
+<li>
+<p>The user profile information is synced with a remote Sync Gateway which then syncs it to other devices (subject to access control and routing configurations specified in the <code>sync function</code>)</p>
+</li>
+<li>
+<p>When the app is woken up in the <em>background</em>, it does a one-shot replication with the remote Sync Gateway</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="app-installation"><a class="anchor" href="#app-installation"></a>App Installation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="fetching-app-source-code"><a class="anchor" href="#fetching-app-source-code"></a>Fetching App Source Code</h3>
+<div class="paragraph">
+<p>You have two options</p>
+</div>
+<div class="sect3">
+<h4 id="option-1-git-clone"><a class="anchor" href="#option-1-git-clone"></a>Option 1 : Git Clone</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Clone the <em>backgroundfetch</em> branch of the <code>User Profile Demo</code> project from GitHub. Type the following command in your terminal</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  git clone -b backgroundfetch https://github.com/couchbaselabs/userprofile-couchbase-mobile.git</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="option-2-download-zip"><a class="anchor" href="#option-2-download-zip"></a>Option 2 : Download .zip</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Download the  <code>User Profile Demo</code> project from <a href="https://github.com/couchbaselabs/userprofile-couchbase-mobile/archive/backgroundfetch.zip">here</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-couchbase-lite-framework"><a class="anchor" href="#installing-couchbase-lite-framework"></a>Installing Couchbase Lite Framework</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Next, we will download the Couchbase Lite 2.x framework. The Couchbase Lite iOS framework is <a href="https://developer.couchbase.com/documentation/mobile/2.1/couchbase-lite/swift.html">distributed</a> via Cocoapods, Carthage or you can download the pre-built framework. In our example, we will be downloading the pre-built version of the framework. For this, type the following in the command terminal</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  cd /path/to/UserProfileDemo/content/modules/userprofile/examples
+
+  sh install_10.sh</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>let&#8217;s verify the installation</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="try-it-out"><a class="anchor" href="#try-it-out"></a>Try it Out</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <code>UserProfileDemo.xcodeproj</code>. The project would be located at <code>/path/to/UserProfileDemo/content/modules/userprofile/examples</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">open UserProfileDemo.xcodeproj</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and run the project in the simulator using Xcode</p>
+</li>
+<li>
+<p>Verify that you see the login screen</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/login_screen.png" alt="User Profile Login Screen Image">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-gateway-2-x-installation"><a class="anchor" href="#sync-gateway-2-x-installation"></a>Sync Gateway 2.x Installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Follow the steps outlined in the <a href="https://docs.couchbase.com/tutorials/userprofile-couchbase-mobile/sync/userprofile/userprofile_sync.html#sync-gateway-2-0-installation">Sync Tutorial</a> to install the Sync Gateway on localhost running in walrus mode.</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Note that the walrus must is a development-only mode used for testing/demonstration purposes. It must never be used in production.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s verify the installation</p>
+</div>
+<div class="sect2">
+<h3 id="try-it-out-2"><a class="anchor" href="#try-it-out-2"></a>Try it Out</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Open a browser and enter <code><a href="http://localhost:4984" class="bare">http://localhost:4984</a></code> in the address bar</p>
+</li>
+<li>
+<p>You should see a message similar one below</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">{"couchdb":"Welcome","vendor":{"name":"Couchbase Sync Gateway","version":"2.0"},"version":"Couchbase Sync Gateway/2.0.0(832;2d8a6c0)"}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="data-model"><a class="anchor" href="#data-model"></a>Data Model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are two documents - the "user profile" type document and "university" type document. We will use the same data model as discussed in <a href="https://docs.couchbase.com/tutorials/userprofile-couchbase-mobile/sync/userprofile/userprofile_sync.html#data-model">data model section</a> of the Sync tutorial.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuring-app-for-background-app-refresh"><a class="anchor" href="#configuring-app-for-background-app-refresh"></a>Configuring App for Background App Refresh</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>iOS supports several backgrounding models. One such option is Background App Refresh. According to <a href="https://developer.apple.com/documentation/uikit/core_app/managing_your_app_s_life_cycle/preparing_your_app_to_run_in_the_background/updating_your_app_with_background_app_refresh">Apple docs</a>, <em>Background App Refresh</em> lets your app run periodically in the background so that it can update its content. The iOS system uses its discretion to determine when to wake up and run your app, typically by learning your app usage over time. In other words, there is no guarantee that your app will have an opportunity to run in the background. Even when provided with the opportunity, the app gets a finite amount of time to run.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the "capabilities" tab in the <strong>UserProfileDemo.xcodeproj</strong> file. Note that "Background Fetch" is enabled under the "Background models" tab</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bg_modes.png" alt="Background Modes">
+</div>
+</div>
+</li>
+<li>
+<p>Open the <strong>AppDelegate.swift</strong> file and locate the <code>application:didFinishLaunchingWithOptions()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool {
+    // Override point for customization after application launch.
+    self.loadLoginViewController()
+UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+    return true
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Here we specify the periodicity at which the app should be woken up. We use a value of <em>UIApplicationBackgroundFetchIntervalMinimum</em> which is the smallest fetch interval supported by the system</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implementing-the-background-fetch-callback"><a class="anchor" href="#implementing-the-background-fetch-callback"></a>Implementing the Background Fetch callback</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>AppDelegate.swift</strong> file and locate the <code>application:performFetchWithCompletionHandler()</code> function. This callback function is invoked by the system everything the app is launched in the background.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">// Support for background fetch
+func application( _ application: UIApplication,
+                  performFetchWithCompletionHandler
+    completionHandler: @escaping (UIBackgroundFetchResult) -&gt; Void) {
+    print(#function)
+
+    // Do a one shot replication
+    self.cbMgr.startOneShotPullReplicationForCurrentUser { (status) in
+        completionHandler(.newData) <i class="conum" data-value="1"></i><b>(1)</b>
+
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Invoke function on to do a one-shot replication with the Sync Gateway. Everytime the app is launched, all pending changes with the remote Sync Gateway will be synched up</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implementing-the-one-shot-replication"><a class="anchor" href="#implementing-the-one-shot-replication"></a>Implementing the One-shot replication</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Setting up the app for one-shot replication is very similar to continuous replication that was discussed in the <a href="https://docs.couchbase.com/tutorials/userprofile-couchbase-mobile/sync/userprofile/userprofile_sync.html#starting-replication">Sync tutorial</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>DatabaseManager.swift</strong> file and locate the <code>startOneShotPullReplicationForCurrentUser()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">func startOneShotPullReplicationForCurrentUser(completionHandler:@escaping(_ doneStatus:Bool)-&gt;Void) {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Let&#8217;s examine the replicator configuration</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">let dbUrl = remoteUrl.appendingPathComponent(kDBName)
+let config = ReplicatorConfiguration.init(database: db, target: URLEndpoint.init(url:dbUrl))
+config.continuous =  false <i class="conum" data-value="1"></i><b>(1)</b>
+config.replicatorType = .pull <i class="conum" data-value="2"></i><b>(2)</b>
+config.authenticator =  BasicAuthenticator(username: user, password: password)</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The"continuous" mode is set to "false" in the Replicator configuration indicating that this is a one-shot replication. In one-shot mode, the replicator goes into idle state once all pending changes are synced</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The "replicationType" is set to pull-only in the Replicator configuration indicating that the app will only pull changes from remote client when in the background.</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The rest of the configuration is as in the continuous replication case.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exercises"><a class="anchor" href="#exercises"></a>Exercises</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before proceeding with the exercises in this section, complete the exercises in the <a href="https://docs.couchbase.com/tutorials/userprofile-couchbase-mobile/sync/userprofile/userprofile_sync.html#exercises">Sync tutorial</a> to verify that you can sync changes between the app and Sync Gateway with the app in the foreground.</p>
+</div>
+<div class="paragraph">
+<p>In the following exercise, we will observe how changes made on Sync Gateway are fetched by the iOS app in the background</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The app must be running in the simulator with the <em>xcode debugger attached</em>. This is important as we will use the xcode debugger for simulating background fetches.</p>
+</li>
+<li>
+<p>Push the app in the simulator to the background. Typically you can do it with the Shift-Cmd-H key combination</p>
+</li>
+<li>
+<p>Clear the debug console logs in xcode. This will make it easier to identify what goes on when the app is launched in the background</p>
+</li>
+<li>
+<p>Open the command terminal and issue the following <code>curl</code> command to get the user profile document on the Sync Gateway via <a href="">GET Document REST API</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X GET \
+  http://localhost:4985/userprofile/user::demo@example.com \
+  -H 'Accept: application/json' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json'</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Your response should look something like the response below. The exact contents depends on the user profile that you provided via your mobile app.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">{
+  "_attachments": {
+    "blob_/image": {
+      "content_type": "image/jpeg",
+      "digest": "sha1-9OHO0QIk+kREiOaoMlrEg/jU4zU=",
+      "length": 15110,
+      "revpos": 1,
+      "stub": true
+    }
+  },
+  "_id": "user::demo@example.com",
+  "_rev": "1-0b9e3efa5ec1b1596564c4db34ba28d4e618f9c5",
+  "address": "",
+  "email": "demo@example.com",
+  "image": {
+    "@type": "blob",
+    "content_type": "image/jpeg",
+    "digest": "sha1-9OHO0QIk+kREiOaoMlrEg/jU4zU=",
+    "length": 15110
+  },
+  "name": "",
+  "type": "user"
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the command terminal, issue the following command to update the user profile document on the Sync Gateway via <a href="">PUT Document REST API</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X PUT \
+  'http://localhost:4985/userprofile/user::demo@example.com?rev=1-0b9e3efa5ec1b1596564c4db34ba28d4e618f9c5' \
+  -H 'Accept: application/json' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "address": "101 Main Street",
+  "email": "demo@example.com",
+  "image": {
+    "@type": "blob",
+    "content_type": "image/jpeg",
+    "digest": "sha1-S8asPSgzA+F+fp8/2DdIy4K+0U8=",
+    "length": 14989
+  },
+  "name": "priya Rajagopal",
+  "type": "user",
+  "university": "British Institute in Paris, University of London"
+}'</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Launch the iOS app in the background. You will simulate this through the Xcode Debug menu to "Simulate Background Fetch"</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/simulate_bg_fetch.png" alt="Simulate Background Fetch">
+</div>
+</div>
+</li>
+<li>
+<p>Observe the console logs. You would see a set of messages indicating that the app has pulled the latest changes from the Sync Gateway</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bg_console_logs.png" alt="Background Fetch Logs">
+</div>
+</div>
+</li>
+<li>
+<p>Stop the Sync Gateway</p>
+</li>
+<li>
+<p>Launch the app in the foreground. The user profile doc that was synced in the background will be displayed.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/relaunch_app.png" alt="App Launched into foreground">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="learn-more"><a class="anchor" href="#learn-more"></a>Learn More</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Congratulations on completing this tutorial!</p>
+</div>
+<div class="paragraph">
+<p>This tutorial walked you through an example of how to synchronize data between Sync Gateway and Couchbase Lite enabled mobile app running in the background.</p>
+</div>
+<div class="paragraph">
+<p>Check out the following links for further details</p>
+</div>
+<div class="sect2">
+<h3 id="further-reading"><a class="anchor" href="#further-reading"></a>Further Reading</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://developer.apple.com/library/archive/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/BackgroundExecution/BackgroundExecution.html">Apple Backgrounding Support</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/data-replication-couchbase-mobile/">Overview of Replication Protocol 2.0</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.couchbase.com" class="icon">
+            <img src="../../../_/img/logo.svg" alt="Couchbase">
+          </a>
+        </div>
+        <div class="contact">
+          <p class="address">3250 Olcott Street
+Santa Clara, CA 95054
+United States</p>
+          <a href="https://www.couchbase.com/contact" class="btn white-btn">Contact Us</a>
+          <a class="tel" href="tel:1-650-417-7500">1-650-417-7500</a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Company</span></li>
+          <li><a href="https://www.couchbase.com/about">About</a></li>
+          <li><a href="https://www.couchbase.com/leadership">Leadership</a></li>
+          <li><a href="https://www.couchbase.com/news-and-press-releases">News &amp; Press</a></li>
+          <li><a href="https://www.couchbase.com/careers">Careers</a></li>
+          <li><a href="https://www.couchbase.com/resources/events">Events</a></li>
+          <li><a href="https://www.couchbase.com/contact">Contact Us</a></li>
+          <li><a href="https://www.couchbase.com/request-pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Support</span></li>
+          <li><a href="https://developer.couchbase.com" target="_blank" rel="noopener">Developer Portal</a></li>
+          <li><a href="https://docs.couchbase.com" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://forums.couchbase.com" target="_blank" rel="noopener">Forums</a></li>
+          <li><a href="https://www.couchbase.com/services">Professional Services</a></li>
+          <li><a href="https://support.couchbase.com" target="_blank" rel="noopener">Support Login</a></li>
+          <li><a href="https://learn.couchbase.com/store" target="_blank" rel="noopener">Training</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Quicklinks</span></li>
+          <li><a href="https://blog.couchbase.com" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.couchbase.com/downloads">Downloads</a></li>
+          <li><a href="https://www.couchbase.com/get-started-developing-nosql">Get Started</a></li>
+          <li><a href="https://learn.couchbase.com/store?utf8=%E2%9C%93&ss=1&ct=78327&commit=Filter" target="_blank" rel="noopener">Online Training</a></li>
+          <li><a href="https://www.couchbase.com/resources">Resources</a></li>
+          <li><a href="https://www.couchbase.com/nosql-resources/why-nosql">Why NoSQL</a></li>
+          <li><a href="https://www.couchbase.com/resources/security">Security</a></li>
+          <li><a href="https://www.couchbase.com/resources/gdpr">GDPR</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.facebook.com/Couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="26.363 116.363 560.215 560.215"><path d="m586.58 209.58c0-48.96-44.252-93.212-93.212-93.212h-373.79c-48.96 0-93.212 44.252-93.212 93.212v373.79c0 48.96 44.252 93.212 93.212 93.212h186.42v-211.85h-68.732v-93.212h68.732v-36.72c0-63.083 47.077-119.58 105.45-119.58h75.323v93.212h-75.323c-8.474 0-17.889 10.357-17.889 25.422v37.662h93.212v93.212h-93.212v211.85h99.803c48.96 0 93.212-44.252 93.212-93.212v-373.79z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="32.012 176.622 542.326 437.815"><path d="m574.34 227.46c-19.772 8.474-41.428 15.065-64.025 17.889 22.597-14.123 40.486-35.778 48.96-61.2-21.655 13.182-45.194 21.655-70.615 27.305-20.714-21.655-48.96-34.837-80.972-34.837-61.2 0-111.1 49.902-111.1 111.1 0 8.474 0.942 16.948 2.825 25.422-92.271-5.649-174.18-49.902-229.74-117.69-9.415 16.006-15.065 35.778-15.065 55.551 0 38.603 19.772 72.498 49.902 92.271-17.889-0.942-35.778-5.649-50.843-14.123v0.942c0 53.668 38.603 98.862 89.446 109.22-9.415 2.825-18.831 3.766-29.188 3.766-7.532 0-14.123-0.942-20.714-1.883 14.123 44.252 55.551 76.265 103.57 77.206-37.662 30.129-85.68 48.018-138.41 48.018-9.415 0-17.889-0.941-26.363-1.883 48.96 32.012 107.34 49.902 170.42 49.902 204.31 0 316.36-169.48 316.36-316.36v-14.123c21.656-14.125 40.487-33.897 55.551-56.494z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="31.071 119.188 539.537 540.443"><path d="m531.97 119.19h-461.35c-21.655 0-39.545 16.948-39.545 38.603v463.24c0 21.655 17.889 38.603 39.545 38.603h460.41c21.655 0 39.545-16.948 39.545-38.603v-463.24c0.942-21.656-16.947-38.603-38.603-38.603zm-337.07 451.94h-81.914v-243.86h81.914v243.86zm-40.486-276.81c-28.246 0-46.135-18.831-46.135-42.369s17.889-42.369 46.135-42.369 45.194 17.889 45.194 42.369c0.942 23.538-16.948 42.369-45.194 42.369zm335.19 276.81h-81.914v-129.93c0-32.954-12.24-55.551-41.428-55.551-22.597 0-35.778 15.065-41.428 30.129-1.883 5.649-2.825 12.24-2.825 19.772v136.52h-81.914s0.942-221.26 0-243.86h81.914v34.837c11.298-16.948 30.129-40.486 73.44-40.486 53.668 0 94.154 34.837 94.154 110.16l1e-3 138.41zm-168.54-208.08s0.941-0.941 0 0z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <span>2018 COUCHBASE All rights reserved.</span>
+      <a href="https://www.couchbase.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.couchbase.com/terms-of-use">Terms of Use</a>
+      <a href="https://www.couchbase.com/cookie-policy">Cookie Policy</a>
+      <a href="https://info.couchbase.com/unsubscribe-or-manage-preferences.html" target="_blank" rel="noopener">Marketing Preference Center</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

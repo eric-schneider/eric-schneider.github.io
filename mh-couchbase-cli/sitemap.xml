@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-elasticsearch-connector.xml</loc>
+</sitemap>
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-home.xml</loc>
+</sitemap>
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-kafka-connector.xml</loc>
+</sitemap>
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-operator.xml</loc>
+</sitemap>
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-server.xml</loc>
+</sitemap>
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-spark-connector.xml</loc>
+</sitemap>
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-talend-connector.xml</loc>
+</sitemap>
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-tutorials.xml</loc>
+</sitemap>
+<sitemap>
+<loc>eric-schneider.github.io/mh-couchbase-cli/sitemap-userprofile-couchbase-mobile.xml</loc>
+</sitemap>
+</sitemapindex>

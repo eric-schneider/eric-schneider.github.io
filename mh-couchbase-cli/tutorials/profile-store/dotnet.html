@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Using Couchbase Server to Build a User Profile Store | Couchbase Docs</title>
+    <link rel="canonical" href="eric-schneider.github.io/mh-couchbase-cli/tutorials/profile-store/dotnet.html">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MVPNN2"></script>
+    <link rel="schema.dcterms" href="https://purl.org/dc/terms/">
+    <meta name="dcterms.subject" content="tutorials">
+    <meta name="dcterms.identifier" content="master">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar" id="topbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://www.couchbase.com"><img src="../../_/img/logo.svg" alt="Couchbase"></a>
+        <button class="navbar-burger" data-target="topbar-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div id="topbar-menu" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown">
+            <a class="navbar-link" href="eric-schneider.github.io/mh-couchbase-cli">Docs</a>
+            <div class="navbar-dropdown explore">
+              <div class="title">Couchbase Documentation Overview</div>
+              <div class="cols">
+                <ul>
+                  <li class="heading"><a href="../../server/6.0/index.html">Server</a></li>
+                  <li><a href="../../server/6.0/n1ql/n1ql-language-reference/index.html">N1QL</a></li>
+                  <li><a href="../../server/6.0/fts/full-text-intro.html">Full Text Search</a></li>
+                  <li><a href="../../server/6.0/analytics/introduction.html">Analytics</a></li>
+                  <li><a href="../../server/6.0/eventing/eventing-overview.html">Eventing</a></li>
+                  <li><a href="../../operator/1.2/overview.html">Autonomous Operator</a></li>
+                </ul>
+                <ul>
+                  <li class="heading">Mobile</li>
+                  <li><a href="#">Lite</a></li>
+                  <li><a href="#">Sync Gateway</a></li>
+                </ul>
+                <ul class="two-cols">
+                  <li class="heading"><a href="../../server/6.0/sdk/overview.html">SDKs</a></li>
+                  <li><a href="#">C</a></li>
+                  <li><a href="#">.NET</a></li>
+                  <li><a href="#">Go</a></li>
+                  <li><a href="#">Java</a></li>
+                  <li><a href="#">Node.js</a></li>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Python</a></li>
+                  <li><a href="#">Scala</a></li>
+                </ul>
+                <ul>
+                  <li class="heading"><a href="../../server/6.0/connectors/intro.html">Connectors</a></li>
+                  <li><a href="../../elasticsearch-connector/4.0/index.html">Elasticsearch</a></li>
+                  <li><a href="../../server/6.0/connectors/hadoop-1.2/hadoop.html">Hadoop</a></li>
+                  <li><a href="../../kafka-connector/3.4/index.html">Kafka</a></li>
+                  <li><a href="../../spark-connector/2.4/index.html">Spark</a></li>
+                  <li><a href="../../talend-connector/index.html">Talend</a></li>
+                  <li><a href="../../server/6.0/connectors/odbc-jdbc-drivers.html">ODBC/JDBC</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-item">
+            <a class="navbar-link component" href="/tutorials/index.html"><span class="title">Tutorials</span></a>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="btn red-btn" href="https://www.couchbase.com/downloads">Downloads</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body container">
+<nav class="nav">
+<div class="nav-menu">
+<ul class="nav-list">
+  <li class="nav-item is-current-path is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Couchbase Server</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Session Storage</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../session-storage/install.html">Configure Couchbase Cluster</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../session-storage/aspnet.html">ASP.NET Core</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../session-storage/java.html">Java</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../session-storage/udf.html">UDF</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-path is-active" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">User Profile Storage</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="install.html">Configure Couchbase Cluster</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="java.html">Java</a>
+    </span>
+  </li>
+  <li class="nav-item is-current-page is-active" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="dotnet.html">.Net</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="building-indexes.html">Indexing</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Couchbase Mobile</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Travel Sample</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Swift</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/mvp-architecture.html">MVP Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/swift/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Java</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/mvp-architecture.html">MVP Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/java/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">C#</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/mvvm-architecture.html">MVVM Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../mobile-travel-sample/csharp/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../userprofile-couchbase-mobile/standalone/userprofile/userprofile_basic.html">Getting Started on iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../userprofile-couchbase-mobile/standalone/userprofile/xamarin/userprofile_basic.html">Getting Started on Xamarin</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../userprofile-couchbase-mobile/standalone/userprofile/android/userprofile_basic.html">Getting Started on Android</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Xcode Playground</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../swift-playground/overview.html">Overview</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Recycler Views with Live Queries</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../university-lister/android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build a Cordova Plugin</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-lister/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-lister/ios.html">iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-lister/android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build a React Native Module</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-finder/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-finder/ios.html">iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../hotel-finder/android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Todo App (Mobile 1.x)</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Design</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/design/security.html">Security</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Develop</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Swift</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/create-database.html">Create Database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/using-the-database.html">Using the Database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/adding-synchronization.html">Adding Synchronization</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/adding-security.html">Adding Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../todo-app/develop/swift/integration.html">Integration</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build Your Own</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Tutorial Template</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../tutorial-template/sample.html">Basic Tutorial Template</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+</div>
+</nav>
+<aside class="toc sidebar">
+  <div class="toc-menu"></div>
+</aside>
+<main class="article" data-ceiling="topbar">
+  <div class="article-header">
+<button class="nav-control"></button>
+<nav class="crumbs" aria-label="breadcrumbs">
+  <ul>
+    <li class="crumb"><a href="../index.html">Tutorials</a></li>
+    <li class="crumb">Couchbase Server</li>
+    <li class="crumb">User Profile Storage</li>
+    <li class="crumb"><a href="dotnet.html">.Net</a></li>
+  </ul>
+</nav>
+<div class="tools" role="navigation">
+  <ul>
+    <li class="tool edit"><a href="https://github.com/couchbaselabs/tutorials-contrib/edit/master/modules/profile-store/pages/dotnet.adoc" title="Edit Page" target="_blank" rel="noopener">Edit</a></li>
+  </ul>
+</div>
+  </div>
+<article class="doc">
+<h1 class="page">Using Couchbase Server to Build a User Profile Store</h1>
+<div class="sect1">
+<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This tutorial contains seven main sections:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#what-is-a-user-profile-store">What is a User Profile Store?</a> If you&#8217;re new to user profile stores, this section discusses the how and why.</p>
+</li>
+<li>
+<p><a href="#installing-couchbase">Installing Couchbase</a> Start here if you&#8217;ve never setup Couchbase before.</p>
+</li>
+<li>
+<p><a href="#how-to-create-a-simple-user-profile-store">How to Create a Simple User Profile Store</a> Once you have a Couchbase Cluster set up, this tutorial will show how get started.</p>
+</li>
+<li>
+<p><a href="#querying-the-database">Querying the Database</a>. In contrast to many other NoSQL database options, Couchbase has unique capabilities for querying and exploring your data.</p>
+</li>
+<li>
+<p><a href="#searching-users-with-full-text-search">Searching Users with Full-Text Search</a> You don&#8217;t need to push all your data to a third party tool just to implement an advanced search in your system. With CB FTS you can implement complex string matchings on natural-language texts directly from database.</p>
+</li>
+<li>
+<p><a href="#storing-user-events">Storing User Events</a> Storing events is essential to understand how users behave, in this section we will discuss one strategy to maximize the write/read throughput of your application.</p>
+</li>
+<li>
+<p><a href="#how-to-configure-cross-data-center-replication-xdcr">How to configure Cross Data Center Replication (XDCR)</a> In this section, we will show how to replicate your database in multiple datacenters.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="what-is-a-user-profile-store"><a class="anchor" href="#what-is-a-user-profile-store"></a>What is a User Profile Store?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One of the most common paradigms in software architecture is to centralize the code responsible for managing user&#8217;s data. With the increasing popularity of microservices, software architects started to create a single service to consolidate this task which is commonly referred to as a <strong>User Profile Store</strong>.</p>
+</div>
+<div class="sect2">
+<h3 id="what-is-stored-in-a-user-profile-store"><a class="anchor" href="#what-is-stored-in-a-user-profile-store"></a>What is stored in a User Profile Store?</h3>
+<div class="paragraph">
+<p>Any user-related data. The most common data stored in a User Profile Store are the user&#8217;s name, login, password, addresses, preferences, security roles, security groups, etc.</p>
+</div>
+<div class="paragraph">
+<p>Some more examples of data you might put in according to your use cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>User&#8217;s events</p>
+</li>
+<li>
+<p>Orders (for ecommerce);</p>
+</li>
+<li>
+<p>Medical history (for HealthCare);</p>
+</li>
+<li>
+<p>Transactions history (for Finance);</p>
+</li>
+<li>
+<p>Grades, certifications (for Education);</p>
+</li>
+<li>
+<p>Contracts, insurance policies;</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="why-couchbase-is-a-good-choice-for-a-user-profile-store"><a class="anchor" href="#why-couchbase-is-a-good-choice-for-a-user-profile-store"></a>Why Couchbase is a good choice for a User Profile Store?</h3>
+<div class="paragraph">
+<p>In the majority of the systems, the user is quite often the most frequently accessed data, as it underpins many other applications within organizations. Consequently, this part of the software should be carefully designed, as it will potentially impact the performance of the whole system.</p>
+</div>
+<div class="paragraph">
+<p>Some of the key non-functional requirements of a successful system are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Strong Consistency</strong>: Operations by key are strongly consistent, so you won&#8217;t get outdated data.</p>
+</li>
+<li>
+<p><strong>High read and write throughput</strong>: Couchbase Server has a memory-first architecture. Data can be retrieved with very low latency and writes are asynchronous by default.</p>
+</li>
+<li>
+<p><strong>Caching</strong>: Frequently accessed data is automatically cached, as Couchbase has a <a href="https://www.couchbase.com/caching">managed cache</a> on top of the database</p>
+</li>
+<li>
+<p><strong>A flexible data model</strong>: User data can vary a lot depending on the needs of different roles, levels, etc.</p>
+</li>
+<li>
+<p><strong>Easy and fast querying</strong>: with <a href="https://docs.couchbase.com/server/6.0/n1ql/n1ql-language-reference/index.html">N1QL</a>, you can query all your data with a powerful SQL-like language. In addition, you can also keep your indexes in memory with <a href="https://docs.couchbase.com/server/6.0/learn/services-and-indexes/indexes/storage-modes.html">Memory Optimized Indexes (MOI)</a></p>
+</li>
+<li>
+<p><strong>Natural-Language matching</strong>: with <a href="https://docs.couchbase.com/server/6.0/fts/full-text-intro.html">FTS</a> you can easily implement advanced searches on natural-language texts.</p>
+</li>
+<li>
+<p><strong>High Scalability</strong>: Couchbase makes it <a href="https://docs.couchbase.com/server/6.0/learn/services-and-indexes/services/services.html">easy to scale</a> horizontally, and it makes it easy to scale individual services vertically with multi-dimensional scaling (MDS)</p>
+</li>
+<li>
+<p><strong>High Availability</strong>: <a href="https://docs.couchbase.com/server/6.0/learn/buckets-memory-and-storage/vbuckets.html">No single point of failure</a>. Data can also be located in one or multiple data centers (<a href="https://docs.couchbase.com/server/6.0/learn/clusters-and-availability/xdcr-overview.html">XDCR</a>).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<h1 id="user-profile-store-step-by-step" class="sect0"><a class="anchor" href="#user-profile-store-step-by-step"></a>User Profile Store Step-by-step</h1>
+<div class="paragraph">
+<p>The rest of ths tutorial will walk you through the steps of using Couchbase to build a User Profile Store:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Installing and setting up Couchbase</p>
+</li>
+<li>
+<p>Configuring Couchbase for a user profile store</p>
+</li>
+<li>
+<p>Creating a simple Java application</p>
+</li>
+<li>
+<p>How to query the Database</p>
+</li>
+<li>
+<p>How to search natural-language text with CB FTS</p>
+</li>
+<li>
+<p>How to use reactive programming to improve your throughput</p>
+</li>
+<li>
+<p>How to distribute your data globally with XDCR</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installing-couchbase"><a class="anchor" href="#installing-couchbase"></a>Installing Couchbase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are a number of different ways to get started with Couchbase. Choose the method that&#8217;s easiest for you. Check out <a href="http://docs.couchbase.com/tutorials/session-storage-tutorial/install.html">How to Setup and Configure a Couchbase Cluster</a> to review the options.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setting-up-couchbase-server"><a class="anchor" href="#setting-up-couchbase-server"></a>Setting up Couchbase Server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You will need to start by accessing the Couchbase Server Console with a web browser on port 8091 (for example, http://localhost:8091). Once there, you will see a "Welcome" screen that will start to walk you through the process of setting up a new cluster. For complete details, check out the <a href="https://docs.couchbase.com/server/6.0/manage/manage-nodes/create-cluster.html">Create Cluster</a> documentation.</p>
+</div>
+<div class="paragraph">
+<p>Note that you can also set up Couchbase by using <a href="https://docs.couchbase.com/server/6.0/cli/cli-intro.html">command line tools</a> and/or <a href="https://docs.couchbase.com/server/6.0/rest-api/rest-intro.html">a REST API</a> instead of the UI. Using the UI for this tutorial will help you get comfortable with Couchbase, but in the long run you may want to script/automate cluster management using CLI/REST. If you are using the Kubernetes Operator, these settings can also be configured in a YAML file.</p>
+</div>
+<div class="sect2">
+<h3 id="creating-a-bucket"><a class="anchor" href="#creating-a-bucket"></a>Creating a bucket</h3>
+<div class="paragraph">
+<p>Couchbase clusters contain <a href="https://docs.couchbase.com/server/6.0/learn/buckets-memory-and-storage/buckets.html">buckets</a>, which are a collection of documents. Let&#8217;s create a new bucket called <strong>user_profile</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to <a href="http://localhost:8091" class="bare">http://localhost:8091</a> and log in with user and password</p>
+</li>
+<li>
+<p>Go to "Buckets" and click on "ADD BUCKET" in the top left corner of the page</p>
+</li>
+<li>
+<p>Add the bucket name and memory quota:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00101-add-bucket.png" alt="Add Bucket Pop up"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on "Add Bucket";</p>
+</li>
+<li>
+<p>Go to "Query" and create the following primary index:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-SQL hljs" data-lang="SQL">create primary index `primary_user_profile_index` on `user_profile` using GSI;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Then, go to "Security" and click on "ADD USER"</p>
+</li>
+<li>
+<p>Fill out the form with the following data:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00102-create-user.png" alt="Add Bucket Pop up"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Username:</strong> user_profile <br></p>
+</li>
+<li>
+<p><strong>Full Name:</strong> user_profile <br></p>
+</li>
+<li>
+<p><strong>Password:</strong> password <br></p>
+</li>
+<li>
+<p><strong>Verify Password:</strong> password<br></p>
+</li>
+<li>
+<p><strong>Roles:</strong> under "user_profile", select "Application Access"</p>
+</li>
+<li>
+<p>Finally, click on "Add User".</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For more details on how to create a bucket and all of the advanced settings, check out the <a href="https://docs.couchbase.com/server/6.0/manage/manage-buckets/create-bucket.html">Create Bucket</a> documentation.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-to-create-a-simple-user-profile-store"><a class="anchor" href="#how-to-create-a-simple-user-profile-store"></a>How to Create a Simple User Profile Store</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you are using Visual Studio, use File&#8594;New to create a new project. I&#8217;m going to create an ASP.NET Core Web Application project. It will just be an API project, and I&#8217;ll be using .NET Core 2.2.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00202-visual-studio-create.png" alt="Visual Studio creating a new project"></span></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>If that&#8217;s not your exact scenario, don&#8217;t worry. Much of the important code will look the same in other types of projects. You can also use command line dotnet and/or Visual Studio Code instead. This tutorial won&#8217;t focus on your choice of tools.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;d like to follow along, the full source code for this example project is <a href="https://github.com/couchbaselabs/tutorials-contrib/tree/master/modules/profile-store/examples/dotnet/UserProfileExample">available on GitHub</a>.</p>
+</div>
+<div class="paragraph">
+<p>Once you&#8217;ve created the application, let&#8217;s add a few packages to it with NuGet. First, add the Couchbase .NET SDK (<code>dotnet add package CouchbaseNetClient</code> if you&#8217;re using the command line). This package will give your application the ability to interact with the Couchbase cluster you created above. The next package is optional, but it will make some things easier: add the Couchbase.Extensions.DependencyInjection package (<code>dotnet add package Couchbase.Extensions.DependencyInjection</code>). This package will make it easy for the Couchbase SDK to be used throughout your .NET applications.</p>
+</div>
+<div class="paragraph">
+<p>Then, let&#8217;s create a simple entity called User:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">public class User
+{
+    public string Id { get; set; }
+    public string CountryCode { get; set; }
+    public string UserName { get; set; }
+    public string Password { get; set; }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With that class in mind, we can also create a very simple repository class. Right now, we only need two methods. One method to save a new User and one method to get a user by ID:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">public class UserRepository
+{
+    private readonly IBucket _bucket;
+
+    public UserRepository(IBucketProvider bucketProvider)
+    {
+        _bucket = bucketProvider.GetBucket("user_profile");
+    }
+
+    public User FindById(string id)
+    {
+        var result = _bucket.Get&lt;User&gt;(id);
+        var user = result.Value;
+        user.Id = id;
+        return user;
+    }
+
+    public void Save(User user)
+    {
+        _bucket.Upsert(user.Id, new
+        {
+            user.CountryCode,
+            user.Password,
+            user.UserName
+        });
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are following the repository pattern in your projects, this is a very simplified example of it. Some key things to point out:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Each Couchbase document has a key (also known as an ID) which is stored <em>outside</em> of the document itself. Therefore:</p>
+</li>
+<li>
+<p>The <code>Save</code> method is manually mapping the incoming <code>User</code> object in order to avoid storing a copy of the Id <em>inside</em> the document. This is also a safeguard in case the <code>User</code> object changes: you may not want to save every value.</p>
+</li>
+<li>
+<p>THe <code>FindById</code> method is doing some extra work to popular the <code>Id</code> field of the <code>User</code> object it is returning.</p>
+</li>
+<li>
+<p>To keep the tutorial simple, this code is all synchronous. Neither of these methods are doing any retrying or error handling. However, these are all concerns you should be aware of when working with any database, including Couchbase.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>One part of the above repository that may not be clear is the constructor and the <code>IBucket</code> object. Remember back to the <a href="https://github.com/couchbaselabs/Couchbase.Extensions/blob/master/docs/dependency-injection.md">Couchbase.Extensions.DependencyInjection package</a>. That&#8217;s what&#8217;s going to be responsible for supplying this class with an <code>IBucketProvider</code> instance. Let&#8217;s go over to Startup.cs, and add a line to the <code>ConfigureServices</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">services.AddCouchbase(Configuration.GetSection("Couchbase"));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This line is telling ASP.NET MVC Core two things:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add Couchbase as a service to ASP.NET MVC Core</p>
+</li>
+<li>
+<p>Where to look in the configuration file to create a Couchbase connection</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>And speaking of the configuration file, let&#8217;s add the Couchbase section to it now (based on how we configured it earlier):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug"
+    }
+  },
+  "AllowedHosts": "*",
+  "Couchbase": {
+    "Servers": [ "http://localhost:8091" ],
+    "Username": "user_profile",
+    "Password": "password"
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At this point, any class instantiated through regular ASP.NET Core dependency injection will be able to get a ready-to-use <code>IBucketProvider</code>.</p>
+</div>
+<div class="paragraph">
+<p>Now we&#8217;re able to actually create a very basic REST endpoint that will create a user, and then immediately retrieve it from the database. For example;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">[HttpGet]
+[Route("api/doSomething")]
+public IActionResult DoSomething()
+{
+    var user = new User();
+    user.Id = "user::" + Guid.NewGuid().ToString();
+    user.CountryCode = "DE";
+    user.Password = "letmein";
+    user.UserName = "Bilbo";
+
+    _userRepository.Save(user);
+
+    // read after write
+    var savedUser = _userRepository.FindById(user.Id);
+    return Ok(savedUser);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you call the above endpoint (e.g. http://localhost:5000/api/doSomething), a user will be created, saved to Couchbase, read immediately back out of Couchbase, and returned via HTTP.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Where did the <code>_userRepository</code> come from? Check out the <a href="https://github.com/couchbaselabs/tutorials-contrib/tree/master/modules/profile-store/examples/dotnet/UserProfileExample">GitHub repo for details</a>. The short story is that it also comes from dependency injection, also configured in Startup.cs.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The code above might look trivial for you, especially if you are coming from the relational world. But there is a lot going on under the hood:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Couchbase is <a href="https://docs.couchbase.com/server/6.0/learn/buckets-memory-and-storage/vbuckets.html#understanding-vbuckets">automatically sharding the data</a>, and this process is totally transparent for the developer.</p>
+</li>
+<li>
+<p>You can read after write.</p>
+</li>
+<li>
+<p>The document is automaticaly cached.</p>
+</li>
+<li>
+<p>Operations like findById and save use internally the Key-Value Store Engine, which is, from a 10,000 foot view, a big distributed hash map. This kind of structure is fast for reads and writes and as Couchbase already has a totally transparent manage cache internally, you will get a very good performance without any extra effort.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Even though we haven&#8217;t written a lot of code yet, we already achieved 3 of our initial Non-functional requirements:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Strong Consistenncy:</strong> - Core operations like Updates/Save/getById are strongly consistent.</p>
+</li>
+<li>
+<p><strong>High read and write throughput</strong> - Writes are asynchronous, reads by key uses internally the key value store, queries can use Memory Optimized Indexes (MOI)</p>
+</li>
+<li>
+<p><strong>Caching</strong> - Documents are automatically cached.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="querying-the-database"><a class="anchor" href="#querying-the-database"></a>Querying the Database</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s first expand our example to something closer to the real world by adding a few extra attributes (like firstName, middleName, lastName and securityRoles) and also a few entities (like Preference and Address). Here is the respective code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">public class User
+{
+    public User()
+    {
+        Type = "user";
+    }
+    public string Id { get; set; }
+    public string FirstName { get; set; }
+    public string MiddleName { get; set; }
+    public string LastName { get; set; }
+    public bool Enabled { get; set; }
+    public int TenantId { get; set; }
+    public string CountryCode { get; set; }
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public string SocialSecurityNumber { get; set; }
+    public List&lt;Telephone&gt; Telephones { get; set; }
+    public List&lt;Preference&gt; Preferences { get; set; }
+    public List&lt;Address&gt; Addresses { get; set; }
+    public List&lt;string&gt; SecurityRoles { get; set; }
+    public string Type { get; }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Even though we added some new attributes, our code has barely changed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No change is needed in our UserRepository.</p>
+</li>
+<li>
+<p>Arrays and nested entities will be handled automatically by Couchbase.</p>
+</li>
+<li>
+<p>No need to implement a Lazy/Eager behavior. There is no extra cost on bringing the whole document other than the size of the document itself.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here is how our current structure will look like on the database:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-JavaScript hljs" data-lang="JavaScript">{
+  "firstName": "Denis",
+  "lastName": "Rosa",
+  "enabled": true,
+  "tenantId" : 4,
+  "countryCode": "DE",
+  "username": "someUser",
+  "password": "letMeIn",
+  "securityRoles": ["USER", "ADMIN"],
+  "preferences": [
+    {
+      "name": "lang",
+      "value": "en"
+    },
+    {
+      "name": "currency",
+      "value": "EUR"
+    }
+  ],
+  "addresses": [
+    {
+      "name": "Home",
+      "street": "Marienplatz",
+      "number": "1",
+      "zipCode": "80913",
+      "city": "Munich",
+      "state": "Bayern",
+      "countryCode": "DE"
+    }
+  ],
+  "telephones": [
+      {
+          "name": "cell",
+          "number": "111-222-3333"
+      }
+  ]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Couchbase has no concept similar to tables in an RDBMS, all documents are analogous. Therefore, if you need to differentiate documents, you will need to add a property which will work as a document type. To do this, you could add a field like <code>type</code>.</p>
+</div>
+<div class="paragraph">
+<p>Couchbase has a SQL-like language called <a href="https://query-tutorial.couchbase.com/tutorial/#1">N1QL</a> which you can use to query the database. With .NET, you could also bring in <a href="https://github.com/couchbaselabs/Linq2Couchbase">Linq2Couchbase</a> if you&#8217;d rather write your queries in Linq. Ultimately, those Linq queries get translated into N1QL. Here&#8217;s an example of a few repository methods we could add using either N1QL directly or Linq2Couchbase:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">public List&lt;User&gt; ListTenantUsers(int tenantId, int offset, int limit)
+{
+    var n1ql = $@"Select meta().id as id, username, tenantId, firstName, lastname
+        from `{_bucket.Name}`
+        where type = 'user'
+        and tenantId = $tenantId
+        order by firstName asc
+        limit $limit
+        offset $offset";
+    var query = QueryRequest.Create(n1ql);
+    query.AddNamedParameter("tenantId", tenantId);
+    query.AddNamedParameter("limit", limit);
+    query.AddNamedParameter("offset", offset);
+
+    var results = _bucket.Query&lt;User&gt;(query);
+
+    return results.Rows;
+}
+
+public List&lt;User&gt; FindActiveUsersByFirstName(string firstName, bool enabled, string countryCode, int limit, int offset) {
+    var results = _bucketContext.Query&lt;User&gt;()
+        .Where(u =&gt; u.Type == "user")
+        .Where(u =&gt; u.FirstName.ToLower() == firstName.ToLower())
+        .Where(u =&gt; u.Enabled == enabled)
+        .Where(u =&gt; u.CountryCode == countryCode)
+        .Select(u =&gt; new { key = N1QlFunctions.Meta(u).Id, document = u })
+        .Skip(offset)
+        .Take(limit)
+        .ToList();
+    results.ForEach(r =&gt; r.document.Id = r.key);
+    return results.Select(r =&gt; r.document).ToList();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see in the code above, you can query the database in two different ways: writing N1QL queries directly against the Couchbase .NET SDK, or by using Linq with Linq2Couchbase.</p>
+</div>
+<div class="paragraph">
+<p>You can learn more about <a href="https://github.com/couchbaselabs/Linq2Couchbase">Linq2Couchbase on GitHub</a> and more about the <a href="https://docs.couchbase.com/dotnet-sdk/2.7/start-using-sdk.html">Couchbase .NET SDK in documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>One more important note about querying. When we were setting up the bucket earlier, we created a single index. That was a <strong>primary index</strong>. This index is fine for development or small sets of data. But as more users and other data is added to the bucket, this index will become slower and slower. The queries will basically have to scan every document in the bucket. For this reason, <a href="https://docs.couchbase.com/server/6.0/learn/services-and-indexes/indexes/indexing-and-query-perf.html">creating the right indexes</a> is critical.</p>
+</div>
+<div class="paragraph">
+<p>To avoid that, let&#8217;s create a couple of indexes to make the above two methods more performant. First, for the N1QL in the <code>ListTenantUsers</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-SQL hljs" data-lang="SQL">CREATE INDEX ix_listTenantUsers ON `user_profile`(`tenantId`) WHERE `type` = 'user';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will create an index when looking up the tenantId for user documents.</p>
+</div>
+<div class="paragraph">
+<p>For <code>FindActiveUsersByFirstName</code> it&#8217;s a little trickier, because the N1QL is generated, but if you <a href="https://docs.couchbase.com/dotnet-sdk/2.7/collecting-information-and-logging.html">enable logging the .NET SDK</a>, the generated N1QL will be output at the DEBUG level. Here&#8217;s an index that will improve performance for this query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-SQL hljs" data-lang="SQL">CREATE INDEX ix_findActiveUsersByFirstName ON `user_profile`(`countryCode`,`enabled`,lower(`firstName`)) WHERE `type` = 'user';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Creating the right indexes can be difficult. If you are having trouble creating the right index, here are two paths you can take to get help:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Starting in Couchbase Server 6.5, there is an index advisor that can automatically make index recommendations for you. To learn more about this, read the <a href="building-indexes.html" class="page">User Profile Indexing tutorial</a>. This tutorial uses the same type of data that you&#8217;ve already been creating if you&#8217;ve been following along with this User Profile Tutorial.</p>
+</li>
+<li>
+<p>Check out the <a href="https://forums.couchbase.com/c/n1ql">N1QL category on the Couchbase Forums</a>. You can post a question about N1QL queries or indexes, and the community there can often help you.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now that you know how to query your user profile store, let&#8217;s revisit our list of non-functional requirements:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Strong Consistenncy:</strong> - Core operations like Updates/Save/getById are strong consistent.</p>
+</li>
+<li>
+<p><strong>High read and write throughput</strong> - Writes are asynchronous,reads by key uses internally the key value store, queries can use Memory Optimized Indexes (MOI)</p>
+</li>
+<li>
+<p><strong>Caching</strong> - Documents are automatically cached.</p>
+</li>
+<li>
+<p><strong>Easy to query</strong> – via N1QL or Linq2Couchbase;</p>
+</li>
+<li>
+<p><strong>A flexible data model</strong> – No need to specify a schema, no need to change the database when a new column is added.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="searching-users-with-full-text-search"><a class="anchor" href="#searching-users-with-full-text-search"></a>Searching Users with Full-Text Search</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One of the important requirements in a User profile Store is to quickly search for a user or to quickly search through all the history of interactions with them. This feature could enable, for instance, a better post-sales experience in retail or a more accessible patient history in a health care system.</p>
+</div>
+<div class="paragraph">
+<p>For many years developers have been using pure SQL to implement these types of functionalities. However, this type of technology has proven to be inefficient to deal with language nuances and
+ limited in terms of performance.</p>
+</div>
+<div class="paragraph">
+<p>Searching for people&#8217;s name, for instance, is a tricky scenario, where the same name might have dozens of variations. In this session, let&#8217;s try to solve this issue by enhancing our users listing using Couchbase Full-Text Search on it. The goal is to implement a simple search that is able to return users called <strong>Allex</strong> or <strong>Alec</strong> when we search for <strong>Alex</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The first step is to create a Full-Text Search index via Search → Add Index, with the following parameters:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00203-create-index.png" alt="Create Index"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name:</strong> the name of the index</p>
+</li>
+<li>
+<p><strong>Bucket:</strong> The target bucket where your documents are stored</p>
+</li>
+<li>
+<p><strong>JSON type field:</strong> As we are using a <code>type</code> field to organize documents, our object type is the attribute called type"</p>
+</li>
+<li>
+<p><strong>Advanced → Store Dynamic Fields:</strong> Let&#8217;s also store our documents in the index.</p>
+</li>
+<li>
+<p><strong>Type Mappings:</strong> Uncheck the 'default' mapping, and add a new mapping for "user" (so this index will only search documents where type="user")</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Click on your index, type "Alex" and hit Search to check if your index was created correctly:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00204-index-search.png" alt="Index results"></span></p>
+</div>
+<div class="paragraph">
+<p>The results should be similar to the following:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00205-index-results-listing.png" alt="Index results Listing"></span></p>
+</div>
+<div class="paragraph">
+<p>You can read more about <a href="https://docs.couchbase.com/server/6.0/fts/fts-creating-indexes.html#specifying-fields">how to index only specific fields here</a>.</p>
+</div>
+<div class="paragraph">
+<p>Now that we already have our index in place, let&#8217;s see how we can make the same US users query using Couchbase FTS Engine:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">public List&lt;User&gt; FtsListActiveUsers(string firstName, bool enabled, string countryCode, int limit, int skip)
+{
+    var firstNameFuzzy = new MatchQuery(firstName).Fuzziness(1).Field("firstName");
+    var firstNameSimple = new MatchQuery(firstName).Field("firstName");
+    var nameQuery = new DisjunctionQuery(firstNameSimple, firstNameFuzzy);
+
+    var isEnabled = new BooleanFieldQuery(enabled).Field("enabled");
+    var countryFilter = new MatchQuery(countryCode).Field("countryCode");
+
+    var conj = new ConjunctionQuery(nameQuery, isEnabled, countryFilter);
+
+    var searchQuery = new SearchQuery();
+    searchQuery.Fields("id", "tenantId", "firstName", "lastName", "userName");
+    searchQuery.Index = "user_index";
+    searchQuery.Query = conj;
+    searchQuery.Skip(skip);
+    searchQuery.Limit(limit);
+
+    var result = _bucket.Query(searchQuery);
+    var users = new List&lt;User&gt;();
+    if (result != null &amp;&amp; !result.Errors.Any())
+    {
+        foreach (var hit in result.Hits)
+        {
+            var user = new User();
+            user.Id = hit.Id;
+            user.TenantId = int.Parse(hit.Fields["tenantId"].ToString());
+            user.FirstName = hit.Fields["firstName"];
+            user.LastName = hit.Fields["lastName"];
+            user.UserName = hit.Fields["userName"];
+            users.Add(user);
+        }
+    }
+
+    return users;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the code above, we start by creating a disjunction query using the user&#8217;s first name. The disjunction query is something similar to an "OR" operator in SQL.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">var firstNameFuzzy = new MatchQuery(firstName).Fuzziness(1).Field("firstName");
+var firstNameSimple = new MatchQuery(firstName).Field("firstName");
+var nameQuery = new DisjunctionQuery(firstNameSimple, firstNameFuzzy);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that <strong>firstNameSimple</strong> is an exact match of the target term, and firstNameFuzzy <a href="https://blog.couchbase.com/fuzzy-matching/">allows a match with a levenshtein distance of 1</a>. As an exact match will score higher than a fuzzy match, a combination of those two will allow you bring the exact matches first.</p>
+</div>
+<div class="paragraph">
+<p>Then, we filter by country and if the user is active:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">var isEnabled = new BooleanFieldQuery(enabled).Field("enabled");
+var countryFilter = new MatchQuery(countryCode).Field("countryCode");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And join all filters using a <strong>conjunction query</strong>, something similar to an "AND" operator in SQL.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">var conj = new ConjunctionQuery(nameQuery, isEnabled, countryFilter);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, we execute the query specifying which fields we want to be returned and parse the result:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">var searchQuery = new SearchQuery();
+searchQuery.Fields("id", "tenantId", "firstName", "lastName", "userName");
+searchQuery.Index = "user_index";
+searchQuery.Query = conj;
+searchQuery.Skip(skip);
+searchQuery.Limit(limit);
+
+var result = _bucket.Query(searchQuery);
+var users = new List&lt;User&gt;();
+if (result != null &amp;&amp; !result.Errors.Any())
+{
+    foreach (var hit in result.Hits)
+    {
+        var user = new User();
+        user.Id = hit.Id;
+        user.TenantId = int.Parse(hit.Fields["tenantId"].ToString());
+        user.FirstName = hit.Fields["firstName"];
+        user.LastName = hit.Fields["lastName"];
+        user.UserName = hit.Fields["userName"];
+        users.Add(user);
+    }
+}
+
+return users;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For instance, a search for the term <strong>Alex</strong> would return a result similar to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-JavaScript hljs" data-lang="JavaScript">[
+    {
+        "id": "b4e96470-9667-49d6-9689-b837c58deab9",
+        "firstName": "Alex",
+        "lastName": "Mueller",
+        "enabled": false,
+        "tenantId": 1,
+        "userName": "alex.mueller",
+        "type": "user"
+    },
+    {
+        "id": "e2d406d7-e411-42da-af3d-32d2c32d2b91",
+        "firstName": "Allex",
+        "lastName": "Kirlin",
+        "enabled": false,
+        "tenantId": 4,
+        "userName": "allex_kirlin",
+        "type": "user"
+    },
+    {
+        "id": "2439115f-560c-4860-b53a-dc988e807e04",
+        "firstName": "Alec",
+        "lastName": "Nienow",
+        "enabled": false,
+        "tenantId": 3,
+        "userName": "alex.nienow",
+        "type": "user"
+    }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The users will be automatically sorted by their score, but you can still <a href="https://docs.couchbase.com/server/6.0/fts/fts-sorting.html">sort the results by a specific field</a> if needed.</p>
+</div>
+<div class="paragraph">
+<p>Couchbase Full-Text Search should be the primary choice <a href="https://blog.couchbase.com/why-you-should-avoid-like-deep-dive-on-fts-part-1/">whenever you need to search for complex strings or any type of fuzzy matching</a>. You can read more about it <a href="https://docs.couchbase.com/server/6.0/fts/full-text-intro.html">in the documentation&#8217;s 'full text intro'</a>.</p>
+</div>
+<div class="paragraph">
+<p>Lastly, let&#8217;s add a new item to our list of non-functional requirements:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Strong Consistenncy:</strong> - Core operations like Updates/Save/getById are strong consistent.</p>
+</li>
+<li>
+<p><strong>High read and write throughput</strong> - Writes are asynchronous,reads by key uses internally the key value store, queries can use Memory Optimized Indexes (MOI)</p>
+</li>
+<li>
+<p><strong>Caching</strong> - Documents are automatically cached.</p>
+</li>
+<li>
+<p><strong>Easy to query</strong> – via N1QL or Linq2Couchbase;</p>
+</li>
+<li>
+<p><strong>A flexible data model</strong> – No need to specify a schema, no need to change the database when a new column is added.</p>
+</li>
+<li>
+<p><strong>Natural-Language matching</strong>: <a href="https://docs.couchbase.com/server/6.0/fts/full-text-intro.html">FTS</a> is a powerful search engine framework which allows you to query natural-language text at scale.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="storing-user-events"><a class="anchor" href="#storing-user-events"></a>Storing User Events</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So far, in our User Profile Store, we discussed about how to store basic data about our users without targeting any specific scenario. Just as a quick exercise, let&#8217;s imagine what else we could store in our application according to each use case:</p>
+</div>
+<div class="sect2">
+<h3 id="health-care"><a class="anchor" href="#health-care"></a>Health Care</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Results and images of medical exams.</p>
+</li>
+<li>
+<p>History of previous diseases</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="e-commerce"><a class="anchor" href="#e-commerce"></a>E-Commerce</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Credit Cards</p>
+</li>
+<li>
+<p>Recommendations</p>
+</li>
+<li>
+<p>Alerts</p>
+</li>
+<li>
+<p>Customer 360 data</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="finance"><a class="anchor" href="#finance"></a>Finance</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>User&#8217;s transactions history</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Even though the requirements of a User Profile Store might be very specific for each vertical, they all can benefit from a common use case: storing user events.</p>
+</div>
+<div class="paragraph">
+<p>Events are essential to understand how the user behaves and might feed several AI/Analytics systems to build predictions or recommendations. However, it will usually demand a high write/read throughput architecture.</p>
+</div>
+<div class="paragraph">
+<p>Up until now, all of the code has been synchronous. We can achieve better throughput by using an asynchronous approach. Fortunately, C# has <code>async/await</code> built right in, and the Couchbase .NET SDK also has asynchronous support. If you aren&#8217;t familiar with asynchronous programming in C#, I recommend you check out <a href="https://docs.microsoft.com/en-us/dotnet/csharp/async">Microsoft&#8217;s documentation</a> first.</p>
+</div>
+<div class="paragraph">
+<p>In our small use case, we will only need two methods:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>AddEventsAsync:</strong> Store new events asynchronously.</p>
+</li>
+<li>
+<p><strong>FindLatestUserEventsAsync:</strong> Return the latest N events by type.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">public async Task AddEventsAsync(List&lt;UserEvent&gt; events)
+{
+    var tasks = events.Select(e =&gt; _bucket.InsertAsync(e.Id, new
+    {
+        e.CreatedDate,
+        e.EventType,
+        e.UserId,
+        e.Type
+    }));
+    await Task.WhenAll(tasks);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This method can take one or more events as input (being able to take a collection of events is useful if you&#8217;re doing any kind of batching). The use of <code>_bucket.InsertAsync</code> should look fairly familiar, as it&#8217;s very similar to <code>_bucket.Insert</code> that was used earlier in this tutorial. But there are two things to note:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It is an <code>async</code> method. This means it returns a <code>Task</code>.</p>
+</li>
+<li>
+<p>Since we are handling a collection, I&#8217;m gathering up all the <code>Task`s using a `Select</code> and then <code>await`ing all of them with a `Task.WhenAll</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the <a href="https://github.com/couchbaselabs/tutorials-contrib/tree/master/modules/profile-store/examples/dotnet/UserProfileExample">sample code (available on GitHub)</a>, I use <code>AddEventsSync</code> primarily to populate sample data. However, for <code>FindLatestUserEventsAsync</code>, I created an HTTP endpoint:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">[HttpGet]
+[Route("api/findLatestUserEvents")]
+public async Task&lt;IActionResult&gt; FindLatestUserEvents(string userId, EventType? eventType, int limit = 50, int offset = 0)
+{
+    if(string.IsNullOrEmpty(userId))
+        return BadRequest("userId is required");
+    if(!eventType.HasValue)
+        return BadRequest("eventType is required");
+
+    var result = await _userRepository.FindLatestUserEvents(userId, eventType.Value, limit, offset);
+
+    return Ok(result);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that endpoint is also <code>async</code> and also returns a <code>Task</code>. From the very start, as the HTTP request comes in, the entire process is asynchronous. The <code>FindLatestUserEventsAsync</code> method is using N1QL directly:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C# hljs" data-lang="C#">public async Task&lt;List&lt;UserEvent&gt;&gt; FindLatestUserEvents(string userId, EventType eventType, int limit, int offset)
+{
+    var n1ql = $@"SELECT META(e).id, e.userId, e.createdDate, e.eventType
+                    FROM `{_bucket.Name}` e
+                    WHERE e.type = 'userEvent'
+                    AND e.eventType = $eventType
+                    AND e.userId = $userId
+                    LIMIT $limit
+                    OFFSET $offset";
+    var query = QueryRequest.Create(n1ql);
+    query.AddNamedParameter("eventType", eventType);
+    query.AddNamedParameter("userId", userId);
+    query.AddNamedParameter("limit", limit);
+    query.AddNamedParameter("offset", offset);
+
+    var result = await _bucket.QueryAsync&lt;UserEvent&gt;(query);
+
+    return result.Rows;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, note that the method is <code>async</code> and returns a <code>Task</code>. Unlike the previous example of using N1QL, this method is using <code>_bucket.QueryAsync</code>.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>This is a different query than earlier in the tutorial, which means we need to revisit indexing again. Create an index like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-SQL hljs" data-lang="SQL">CREATE INDEX ix_findLatestUserEvents ON `user_profile`(`userId`,`eventType`) WHERE `type` = 'userEvent'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>With the asynchronous architecture we have explained in this session, your application won&#8217;t need to wait for a response from the database. This approach can improve significantly your read/write throughput at scale.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-to-configure-cross-data-center-replication-xdcr"><a class="anchor" href="#how-to-configure-cross-data-center-replication-xdcr"></a>How to configure Cross Data Center Replication (XDCR)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://docs.couchbase.com/server/6.0/manage/manage-xdcr/xdcr-management-overview.html">Cross Data Center Replication</a> is one of the most appealing features in Couchbase, with it you can easily distribute and replicate your data globally using a secure and reliable protocols that can be paused and resumed at any time.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00501-xdcr.png" alt="XDCR"></span></p>
+</div>
+<div class="paragraph">
+<p>XDCR supports replication between clusters of different sizes, and it is configured on the bucket level (between buckets of two or more clusters). You can also configure the <a href="https://docs.couchbase.com/server/6.0/learn/clusters-and-availability/xdcr-overview.html#xdcr-direction-and-topology">direction of the replication</a>.</p>
+</div>
+<div class="paragraph">
+<p>In our User Profile Store example, we will have 2 datacenters: one in the US and the other in Europe. Therefore, if a user living in the USA travels to Europe, he will connect to our European Datacenter.</p>
+</div>
+<div class="paragraph">
+<p>The user should be able to log in and access his profile, but we won&#8217;t leverage his previous events/recommendations, as EU is a different market with different products, regulations, taxes, currencies, etc.</p>
+</div>
+<div class="paragraph">
+<p>In practice, we will need to replicate only the <strong>User</strong> to achieve this behavior. the rest of entities will be local to each cluster. To simulate this scenario, we will use two Couchbase instances, one running local and the second on docker, here is how to set up them:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Let&#8217;s start by setting up a second Couchbase instance. Feel free to choose where you want to run it, but the two machines should be able to talk to each other.</p>
+</li>
+<li>
+<p>Once you have created your new instance, go to <strong>Buckets→ ADD BUCKET</strong>, and then create a new bucket called <strong>user_profile</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00502-create-bucket.png" alt="Create Bucket"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Now let&#8217;s connect our EU cluster with our US one. Click on <strong>XDCR→ Add Remote Cluster</strong>:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00503-remote-cluster.png" alt="Remote Cluster"></span></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Cluster Name:</strong> Name of the cluster you are connecting to</p>
+</li>
+<li>
+<p><strong>IP/Hostname:</strong> IP address of one of the nodes of the remote cluster</p>
+</li>
+<li>
+<p><strong>Username/Password:</strong> username and password of the remote cluster</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on <strong>XDCR → Add Replication</strong>, and fill out the form like the following:</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00504-add-rep.png" alt="Add replication"></span></p>
+</div>
+<div class="paragraph">
+<p>Note that we have checked the option <strong>Enable advanced filtering</strong>. It will allow you to filter which documents should be replicated by applying a regex on the document id. In the case above, only documents with ids starting with <strong>"user::"</strong> will be replicated. As in our User Profile store, only the <strong>User</strong> has this prefix, it will be the only document type which will be replicated to other clusters. You can read more about it <a href="https://docs.couchbase.com/server/6.0/learn/clusters-and-availability/xdcr-filtering.html">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>The final result should be similar to the following:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00505-repl1.png" alt="Replication 1"></span></p>
+</div>
+<div class="paragraph">
+<p>The replication will start automatically and in a few seconds you will be able to see documents appearing in the EU Cluster:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/005051-eu-cluster.png" alt="EU Cluster"></span></p>
+</div>
+<div class="paragraph">
+<p>As we are filtering which documents should be replicated between clusters, the total number of documents will be different in both clusters:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/005052-us-cluster.png" alt="US Cluster"></span></p>
+</div>
+<div class="sect2">
+<h3 id="configuring-bidirectional-replication"><a class="anchor" href="#configuring-bidirectional-replication"></a>Configuring Bidirectional Replication</h3>
+<div class="paragraph">
+<p>In our current scenario, EU users also should be replicated to US. It will require us to do nearly the same configuration in our US cluster, but this time pointing the replication to the EU Cluster.</p>
+</div>
+<div class="paragraph">
+<p>As you might already guess, we need to first register our EU Cluster in our US Cluster:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00506-remote-rep.png" alt="Remote Repl"></span></p>
+</div>
+<div class="paragraph">
+<p>Finally, we can add the replication from EU to US:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00507-eu-replication.png" alt="EU Replication"></span></p>
+</div>
+<div class="paragraph">
+<p>Here is how your replication should look like:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/00508-repl-result2.png" alt="Replication EU to US"></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="disaster-recovery-with-xdcr"><a class="anchor" href="#disaster-recovery-with-xdcr"></a>Disaster Recovery with XDCR</h3>
+<div class="paragraph">
+<p>XDCR is also commonly used in disaster recovery plans (DRP). In this scenario, all you need to do is to set up a new Couchbase cluster in your DRP environment, then create a replication from your maib cluster to your DRP. On the top of it, you could still use the <a href="https://blog.couchbase.com/couchbase-high-availability-disaster-recovery-java-multi-cluster-aware-client/">multi-cluster aware (MCA) SDK</a> which can automatically redirect traffic to a different cluster according to a set of rules.</p>
+</div>
+<div class="paragraph">
+<p>With XDCR, the MCA SDK and all Couchbase internal features, like replication and <a href="https://docs.couchbase.com/server/6.0/learn/clusters-and-availability/automatic-failover.html">AutoFailover</a>, we can update our list of non-functional requirements:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Strong Consistency:</strong> - Core operations like Updates/Save/getById are strong consistent.</p>
+</li>
+<li>
+<p><strong>High read and write throughput</strong> - Writes are asynchronous,reads by key uses internally the key value store, queries can use Memory Optimized Indexes (MOI)</p>
+</li>
+<li>
+<p><strong>Caching</strong> - Documents are automatically cached.</p>
+</li>
+<li>
+<p><strong>Easy to query</strong> – via N1QL or Linq2Couchbase;</p>
+</li>
+<li>
+<p><strong>A flexible data model</strong> – No need to specify a schema, no need to change the database when a new column is added.</p>
+</li>
+<li>
+<p><strong>Natural-Language matching</strong>: <a href="https://docs.couchbase.com/server/6.0/fts/full-text-intro.html">FTS</a> is a powerful search engine framework which allows you to query natural-language text at scale.</p>
+</li>
+<li>
+<p><strong>High Availability</strong> - XDCR, MCA and <a href="https://docs.couchbase.com/server/6.0/learn/buckets-memory-and-storage/vbuckets.html">No single point of failure</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.couchbase.com" class="icon">
+            <img src="../../_/img/logo.svg" alt="Couchbase">
+          </a>
+        </div>
+        <div class="contact">
+          <p class="address">3250 Olcott Street
+Santa Clara, CA 95054
+United States</p>
+          <a href="https://www.couchbase.com/contact" class="btn white-btn">Contact Us</a>
+          <a class="tel" href="tel:1-650-417-7500">1-650-417-7500</a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Company</span></li>
+          <li><a href="https://www.couchbase.com/about">About</a></li>
+          <li><a href="https://www.couchbase.com/leadership">Leadership</a></li>
+          <li><a href="https://www.couchbase.com/news-and-press-releases">News &amp; Press</a></li>
+          <li><a href="https://www.couchbase.com/careers">Careers</a></li>
+          <li><a href="https://www.couchbase.com/resources/events">Events</a></li>
+          <li><a href="https://www.couchbase.com/contact">Contact Us</a></li>
+          <li><a href="https://www.couchbase.com/request-pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Support</span></li>
+          <li><a href="https://developer.couchbase.com" target="_blank" rel="noopener">Developer Portal</a></li>
+          <li><a href="https://docs.couchbase.com" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://forums.couchbase.com" target="_blank" rel="noopener">Forums</a></li>
+          <li><a href="https://www.couchbase.com/services">Professional Services</a></li>
+          <li><a href="https://support.couchbase.com" target="_blank" rel="noopener">Support Login</a></li>
+          <li><a href="https://learn.couchbase.com/store" target="_blank" rel="noopener">Training</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Quicklinks</span></li>
+          <li><a href="https://blog.couchbase.com" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.couchbase.com/downloads">Downloads</a></li>
+          <li><a href="https://www.couchbase.com/get-started-developing-nosql">Get Started</a></li>
+          <li><a href="https://learn.couchbase.com/store?utf8=%E2%9C%93&ss=1&ct=78327&commit=Filter" target="_blank" rel="noopener">Online Training</a></li>
+          <li><a href="https://www.couchbase.com/resources">Resources</a></li>
+          <li><a href="https://www.couchbase.com/nosql-resources/why-nosql">Why NoSQL</a></li>
+          <li><a href="https://www.couchbase.com/resources/security">Security</a></li>
+          <li><a href="https://www.couchbase.com/resources/gdpr">GDPR</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.facebook.com/Couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="26.363 116.363 560.215 560.215"><path d="m586.58 209.58c0-48.96-44.252-93.212-93.212-93.212h-373.79c-48.96 0-93.212 44.252-93.212 93.212v373.79c0 48.96 44.252 93.212 93.212 93.212h186.42v-211.85h-68.732v-93.212h68.732v-36.72c0-63.083 47.077-119.58 105.45-119.58h75.323v93.212h-75.323c-8.474 0-17.889 10.357-17.889 25.422v37.662h93.212v93.212h-93.212v211.85h99.803c48.96 0 93.212-44.252 93.212-93.212v-373.79z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="32.012 176.622 542.326 437.815"><path d="m574.34 227.46c-19.772 8.474-41.428 15.065-64.025 17.889 22.597-14.123 40.486-35.778 48.96-61.2-21.655 13.182-45.194 21.655-70.615 27.305-20.714-21.655-48.96-34.837-80.972-34.837-61.2 0-111.1 49.902-111.1 111.1 0 8.474 0.942 16.948 2.825 25.422-92.271-5.649-174.18-49.902-229.74-117.69-9.415 16.006-15.065 35.778-15.065 55.551 0 38.603 19.772 72.498 49.902 92.271-17.889-0.942-35.778-5.649-50.843-14.123v0.942c0 53.668 38.603 98.862 89.446 109.22-9.415 2.825-18.831 3.766-29.188 3.766-7.532 0-14.123-0.942-20.714-1.883 14.123 44.252 55.551 76.265 103.57 77.206-37.662 30.129-85.68 48.018-138.41 48.018-9.415 0-17.889-0.941-26.363-1.883 48.96 32.012 107.34 49.902 170.42 49.902 204.31 0 316.36-169.48 316.36-316.36v-14.123c21.656-14.125 40.487-33.897 55.551-56.494z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="31.071 119.188 539.537 540.443"><path d="m531.97 119.19h-461.35c-21.655 0-39.545 16.948-39.545 38.603v463.24c0 21.655 17.889 38.603 39.545 38.603h460.41c21.655 0 39.545-16.948 39.545-38.603v-463.24c0.942-21.656-16.947-38.603-38.603-38.603zm-337.07 451.94h-81.914v-243.86h81.914v243.86zm-40.486-276.81c-28.246 0-46.135-18.831-46.135-42.369s17.889-42.369 46.135-42.369 45.194 17.889 45.194 42.369c0.942 23.538-16.948 42.369-45.194 42.369zm335.19 276.81h-81.914v-129.93c0-32.954-12.24-55.551-41.428-55.551-22.597 0-35.778 15.065-41.428 30.129-1.883 5.649-2.825 12.24-2.825 19.772v136.52h-81.914s0.942-221.26 0-243.86h81.914v34.837c11.298-16.948 30.129-40.486 73.44-40.486 53.668 0 94.154 34.837 94.154 110.16l1e-3 138.41zm-168.54-208.08s0.941-0.941 0 0z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <span>2018 COUCHBASE All rights reserved.</span>
+      <a href="https://www.couchbase.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.couchbase.com/terms-of-use">Terms of Use</a>
+      <a href="https://www.couchbase.com/cookie-policy">Cookie Policy</a>
+      <a href="https://info.couchbase.com/unsubscribe-or-manage-preferences.html" target="_blank" rel="noopener">Marketing Preference Center</a>
+    </div>
+  </div>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

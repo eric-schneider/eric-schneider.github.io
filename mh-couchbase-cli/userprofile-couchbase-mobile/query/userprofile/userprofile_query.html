@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>User Profile Sample: Couchbase Lite Query Introduction | Couchbase Docs</title>
+    <link rel="canonical" href="eric-schneider.github.io/mh-couchbase-cli/userprofile-couchbase-mobile/sync/userprofile/userprofile_query.html">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MVPNN2"></script>
+    <link rel="schema.dcterms" href="https://purl.org/dc/terms/">
+    <meta name="dcterms.subject" content="userprofile-couchbase-mobile">
+    <meta name="dcterms.identifier" content="query">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar" id="topbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://www.couchbase.com"><img src="../../../_/img/logo.svg" alt="Couchbase"></a>
+        <button class="navbar-burger" data-target="topbar-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div id="topbar-menu" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown">
+            <a class="navbar-link" href="eric-schneider.github.io/mh-couchbase-cli">Docs</a>
+            <div class="navbar-dropdown explore">
+              <div class="title">Couchbase Documentation Overview</div>
+              <div class="cols">
+                <ul>
+                  <li class="heading"><a href="../../../server/6.0/index.html">Server</a></li>
+                  <li><a href="../../../server/6.0/n1ql/n1ql-language-reference/index.html">N1QL</a></li>
+                  <li><a href="../../../server/6.0/fts/full-text-intro.html">Full Text Search</a></li>
+                  <li><a href="../../../server/6.0/analytics/introduction.html">Analytics</a></li>
+                  <li><a href="../../../server/6.0/eventing/eventing-overview.html">Eventing</a></li>
+                  <li><a href="../../../operator/1.2/overview.html">Autonomous Operator</a></li>
+                </ul>
+                <ul>
+                  <li class="heading">Mobile</li>
+                  <li><a href="#">Lite</a></li>
+                  <li><a href="#">Sync Gateway</a></li>
+                </ul>
+                <ul class="two-cols">
+                  <li class="heading"><a href="../../../server/6.0/sdk/overview.html">SDKs</a></li>
+                  <li><a href="#">C</a></li>
+                  <li><a href="#">.NET</a></li>
+                  <li><a href="#">Go</a></li>
+                  <li><a href="#">Java</a></li>
+                  <li><a href="#">Node.js</a></li>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Python</a></li>
+                  <li><a href="#">Scala</a></li>
+                </ul>
+                <ul>
+                  <li class="heading"><a href="../../../server/6.0/connectors/intro.html">Connectors</a></li>
+                  <li><a href="../../../elasticsearch-connector/4.0/index.html">Elasticsearch</a></li>
+                  <li><a href="../../../server/6.0/connectors/hadoop-1.2/hadoop.html">Hadoop</a></li>
+                  <li><a href="../../../kafka-connector/3.4/index.html">Kafka</a></li>
+                  <li><a href="../../../spark-connector/2.4/index.html">Spark</a></li>
+                  <li><a href="../../../talend-connector/index.html">Talend</a></li>
+                  <li><a href="../../../server/6.0/connectors/odbc-jdbc-drivers.html">ODBC/JDBC</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-item">
+            <a class="navbar-link component" href="/tutorials/index.html"><span class="title">Tutorials</span></a>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="btn red-btn" href="https://www.couchbase.com/downloads">Downloads</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body container">
+<nav class="nav">
+<div class="nav-menu">
+<ul class="nav-list">
+  <li class="nav-item is-active" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-path is-active" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on iOS</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../standalone/userprofile/userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+  <li class="nav-item is-current-page is-active" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="userprofile_query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../sync/userprofile/userprofile_sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../backgroundfetch/userprofile/background-fetch.html">Background Fetch</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on Xamarin</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../standalone/userprofile/xamarin/userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="xamarin/userprofile_query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../sync/userprofile/xamarin/userprofile_sync.html">Sync</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Getting Started on Android</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../standalone/userprofile/android/userprofile_basic.html">Standalone</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+</div>
+</nav>
+<aside class="toc sidebar">
+  <div class="toc-menu"></div>
+</aside>
+<main class="article" data-ceiling="topbar">
+  <!-- No `View Latest` banner -->
+  <div class="article-header">
+<button class="nav-control"></button>
+<nav class="crumbs" aria-label="breadcrumbs">
+  <ul>
+    <li class="crumb"><a href="../index.html">User Profile Tutorial</a></li>
+    <li class="crumb">Getting Started on iOS</li>
+    <li class="crumb"><a href="userprofile_query.html">Query</a></li>
+  </ul>
+</nav>
+<div class="tools" role="navigation">
+  <ul>
+    <li class="tool edit"><a href="https://github.com/couchbaselabs/userprofile-couchbase-mobile/edit/query/content/modules/userprofile/pages/userprofile_query.adoc" title="Edit Page" target="_blank" rel="noopener">Edit</a></li>
+  </ul>
+</div>
+  </div>
+<article class="doc">
+<h1 class="page">User Profile Sample: Couchbase Lite Query Introduction</h1>
+<div id="preamble">
+<div class="sectionbody">
+<!-- toc disabled -->
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Couchbase Lite 2.0 brings powerful querying and Full-Text-Search(FTS) capabilties to the edge. The new query interface is based on <a href="https://www.couchbase.com/products/n1ql">N1QL</a>, Couchbase’s declarative query language that extends <a href="https://www.sqlite.org/index.html">SQL</a> for JSON. If you are familiar with SQL, you will feel right at home with the semantics of the new API.  The query API is designed using the <a href="https://en.wikipedia.org/wiki/Fluent_interface">Fluent API Design Pattern</a>, and it uses method cascading to read to like a Domain Specific Language (DSL). This makes the interface very intuitive and easy to understand.</p>
+</div>
+<div class="paragraph">
+<p>Couchbase Lite can be used as a standalone embedded database within your mobile app.</p>
+</div>
+<div class="paragraph">
+<p>This tutorial will walk through a simple swift app that will</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Demonstrate how you can bundle, load and use a  <strong><em>prebuilt</em></strong> instance of Couchbase Lite 2.0</p>
+</li>
+<li>
+<p>Introduce you to the basics of the <code>QueryBuilder</code> interface</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>You can learn more about Couchbase Mobile <a href="https://developer.couchbase.com/mobile">here</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This tutorial assumes familiarity with building swift apps with Xcode and with the basics of Couchbase Lite</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you are unfamiliar with the basics of Couchbase Lite, it is recommended that you walk through the <a href="https://developer.couchbase.com/documentation/mobile/2.0/userprofile_basic.html">Fundamentals Tutorial</a> on using Couchbase Lite 2.0 as a standalone database</p>
+</li>
+<li>
+<p>iOS (Xcode 9.3+)
+Download latest version from the <a href="https://itunes.apple.com/us/app/xcode/id497799835?mt=12">Mac App Store</a></p>
+</li>
+<li>
+<p>git (Optional)
+This is required if you would prefer to pull the source code from GitHub repo.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a <a href="https://github.com">free github account</a> if you don&#8217;t already have one</p>
+</li>
+<li>
+<p>git can be downloaded from <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git-scm.org</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="app-overview"><a class="anchor" href="#app-overview"></a>App Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We will be working with a very simple "User Profile" app. If you had walked through the <a href="https://developer.couchbase.com/documentation/mobile/2.0/userprofile_basic.html">Fundamentals tutorial</a>, you would quickly realize that this version extends the functionality introduced in the version introduced in that tutorial.</p>
+</div>
+<div class="paragraph">
+<p>This app does the following</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Allows users to log in and create or update his/her user profile information. You could do that in the <a href="https://developer.couchbase.com/documentation/mobile/2.0/userprofile_basic.html">Fundamentals tutorial</a></p>
+</li>
+<li>
+<p>As part of profile information, users can now selecting a "university" from a list of possible options</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The list of matching univerisities is queried (using the new Query API) from a local <em>prebuilt</em> "University" Couchbase Lite Database that is bundled in the app. The user profile information is persisted as a Document in the local Couchbase Lite Database. So subsquently, when the user logs out and logs back in again, the profile information is loaded from the Database.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/couchbaselabs/userprofile-couchbase-mobile/query/content/modules/userprofile/assets/images/university_app_overview.gif" alt="App Overview">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installation"><a class="anchor" href="#installation"></a>Installation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="fetching-app-source-code"><a class="anchor" href="#fetching-app-source-code"></a>Fetching App Source Code</h3>
+<div class="sect3">
+<h4 id="option-1-git-clone"><a class="anchor" href="#option-1-git-clone"></a>Option 1 : Git Clone</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Clone the <strong><em>query</em></strong> branch of the <code>User Profile Demo</code> project from GitHub. Type the following command in your terminal</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  git clone -b query https://github.com/couchbaselabs/userprofile-couchbase-mobile.git</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="option-2-download-zip"><a class="anchor" href="#option-2-download-zip"></a>Option 2 : Download .zip</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Download the  <code>User Profile Demo</code> project from <a href="https://github.com/couchbaselabs/userprofile-couchbase-mobile/archive/query.zip">here</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-couchbase-lite-framework"><a class="anchor" href="#installing-couchbase-lite-framework"></a>Installing Couchbase Lite Framework</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Next, we will download the Couchbase Lite 2.0 framework. The Couchbase Lite iOS framework is <a href="https://developer.couchbase.com/documentation/mobile/2.0/couchbase-lite/swift.html">distributed</a> via Cocoapods, Carthage or you can download the pre-built framework. In our example, we will be downloading the pre-built version of the framework. For this, do the following</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  cd /path/to/UserProfileDemo/content/modules/userprofile/examples
+
+  sh install_9.sh</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s verify the installation</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="try-it-out"><a class="anchor" href="#try-it-out"></a>Try it Out</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <code>UserProfileDemo.xcodeproj</code>. The project would be located at <code>/path/to/UserProfileDemo/content/modules/userprofile/examples</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">open UserProfileDemo.xcodeproj</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and run the project using the <em>simulator</em> in Xcode. While you can run the app on a real device, we recommend the Simulator so you can see the debug logs in the output console.</p>
+</li>
+<li>
+<p>Verify that you see the login screen</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/user_profile_login.png" alt="User Profile Login Screen Image">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="data-model"><a class="anchor" href="#data-model"></a>Data Model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Couchbase Lite is a JSON Document Store. A Document is a logical collection of named fields and values.The values are any valid JSON types. In addition to the standard JSON types, Couchbase Lite supports some special types like <code>Date</code> and <code>Blob</code>.
+While it is not required or enforced, it is a recommended practice to include a <em>"type"</em> property that can serve as a namespace for related.</p>
+</div>
+<div class="sect2">
+<h3 id="the-user-profile-document"><a class="anchor" href="#the-user-profile-document"></a>The "User Profile" Document</h3>
+<div class="paragraph">
+<p>The app deals with a single Document with a <em>"type"</em> property of <em>"user"</em>.  The document ID is of the form <em>"user::&lt;email&gt;"</em>.
+An example of a document would be</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "type":"user",
+    "name":"Jane Doe",
+    "email":"jame.doe@earth.org",
+    "address":"101 Main Street",
+    "image":CBLBlob (image/jpg),
+    "university":"Rensselaer Polytechnic"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="userrecord"><a class="anchor" href="#userrecord"></a>UserRecord</h3>
+<div class="paragraph">
+<p>The <em>"user"</em> Document is encoded to a native struct named <em>UserRecord</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">let kUserRecordDocumentType = "user"
+typealias ExtendedData = [[String:Any]]
+struct UserRecord : CustomStringConvertible{
+    let type = kUserRecordDocumentType
+    var name:String?
+    var email:String?
+    var address:String?
+    var imageData:Data?
+    var university:String?
+    var extended:ExtendedData? // future
+
+    var description: String {
+        return "name = \(String(describing: name)), email = \(String(describing: email)), address = \(String(describing: address)), imageData = \(imageData)"
+    }
+
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the-university-document"><a class="anchor" href="#the-university-document"></a>The "University" Document</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The app comes bundled with a collection of Documents of type <em>"university"</em>. Each Document represents a university.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "type":"university","web_pages": [
+      "http://www.rpi.edu/"
+    ],
+    "name": "Rensselaer Polytechnic Institute",
+    "alpha_two_code": "US",
+    "state-province": null,
+    "domains": [
+      "rpi.edu"
+    ],
+    "country": "United States"
+}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="universityrecord"><a class="anchor" href="#universityrecord"></a>UniversityRecord</h3>
+<div class="paragraph">
+<p>The <em>"university"</em> Document is encoded to a native struct named <em>UniversityRecord</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">typealias Universities = [UniversityRecord]
+// Native object
+struct UniversityRecord : CustomStringConvertible{
+
+    var alphaTwoCode:String?
+    var country:String?
+    var domains:[String]?
+    var name:String?
+    var webPages:[String]?
+
+    var description: String {
+        return "name = \(String(describing: name)), country = \(String(describing: country)), domains = \(String(describing: domains)), webPages = \(webPages), alphaTwoCode = \(String(describing: alphaTwoCode)) "
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using-a-prebuilt-database"><a class="anchor" href="#using-a-prebuilt-database"></a>Using a Prebuilt Database</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are several reasons why you may want to bundle your app with a prebuilt database. This would be suited for data that does not change or change that often, so you can avoid the bandwidth and latency involved in fetching/syncing this data from a remote server. This also improves the overall user experience by reducing the start-up time.</p>
+</div>
+<div class="paragraph">
+<p>In our app, the instance of Couchbase Lite that holds the pre-loaded <em>"university"</em> data is separate from the Couchbase Lite instance that holds <em>"user"</em> data hold the pre-loaded data.  A separate Couchbase Lite instance is not required. However, in our case, since there can be many users potentially using the app on a given device,  it makes more sense to keep it separate. This is to avoid duplication of pre-loaded data for every user.</p>
+</div>
+<div class="sect2">
+<h3 id="location-of-the-cblite-file"><a class="anchor" href="#location-of-the-cblite-file"></a>Location of the cblite file</h3>
+<div class="paragraph">
+<p>The pre-built database will be in the form of a <code>cblite</code> file. It should be be in your app project bundle</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the <code>UserProfileDemo.xcodeproj</code> project explorer, locate the <code>universities.cblite2</code> file</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cblite_location.png" alt="Prebuilt Database Location">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="loading-the-prebuilt-database"><a class="anchor" href="#loading-the-prebuilt-database"></a>Loading the Prebuilt Database</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>DatabaseManager.swift</strong> file and locate the <code>openPrebuiltDatabase()</code> function. The prebuilt database is common to all users of the app (on the device). So it will be loaded once and shared by all users on the device.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    func openPrebuiltDatabase(handler:(_ error:Error?)-&gt;Void) {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>First, we create an instance of <code>DatabaseConfiguration</code> object and specify the path where the database would be located</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">            var options = DatabaseConfiguration()
+            guard let universityFolderUrl = _applicationSupportDirectory else {
+                fatalError("Could not open Application Support Directory for app!")
+                return
+            }
+            let universityFolderPath = universityFolderUrl.path
+            let fileManager = FileManager.default
+            if !fileManager.fileExists(atPath: universityFolderPath) {
+                try fileManager.createDirectory(atPath: universityFolderPath,
+                                                withIntermediateDirectories: true,
+                                                attributes: nil)
+
+            }
+            // Set the folder path for the CBLite DB
+            options.directory = universityFolderPath</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Then we determine if the "universities" database already exists at the specified location. It would not be present if this is the first time we are using the app, in which case, we locate the <em>"universities.cblite"</em> resource in the App&#8217;s main bundle and we copy it over to the Database folder.</p>
+<div class="paragraph">
+<p>If the database is already present at the specified Database location, we simply open the database.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">            // Load the prebuilt "universities" database if it does not exist as the specified folder
+            if Database.exists(withName: kUniversityDBName, inDirectory: universityFolderPath) == false {
+                // Load prebuilt database from App Bundle and copy over to Applications support path
+                if let prebuiltPath = Bundle.main.path(forResource: kUniversityDBName, ofType: "cblite2") {
+                    try Database.copy(fromPath: prebuiltPath, toDatabase: "\(kUniversityDBName)", withConfig: options)
+
+                }
+                // Get handle to DB  specified path
+                _universitydb = try Database(name: kUniversityDBName, config: options)
+
+                // Create indexes to facilitate queries
+                try createUniversityDatabaseIndexes()
+
+            }
+            else
+            {
+                // Gets handle to existing DB at specified path
+                _universitydb = try Database(name: kUniversityDBName, config: options)
+
+            }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="indexing-the-prebuilt-database"><a class="anchor" href="#indexing-the-prebuilt-database"></a>Indexing the Prebuilt Database</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Creating indexes for non-FTS based queries is optional. However, in order to speed up queries, you can create indexes on the properties that you would query against. Indexing is handled eagerly.</p>
+</li>
+<li>
+<p>In the <strong>DatabaseManager.swift</strong> file, locate the <code>createUniversityDatabaseIndexes()</code> function. We create an index on the <code>name</code> and <code>location</code> properties of the documents in the <em>university</em> database.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    fileprivate func createUniversityDatabaseIndexes()throws {
+        // For searches on type property
+        try _universitydb?.createIndex(IndexBuilder.valueIndex(items:  ValueIndexItem.expression(Expression.property("name")),ValueIndexItem.expression(Expression.property("location"))), withName: "NameLocationIndex")
+
+    }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="closing-the-database"><a class="anchor" href="#closing-the-database"></a>Closing the Database</h3>
+<div class="paragraph">
+<p>When a user logs out, we close the Prebuilt Database along with other user-specific databases</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the <strong>DatabaseManager.swift</strong> file, locate the <code>closePrebuiltDatabase()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    func closePrebuiltDatabase() -&gt; Bool {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Closing the database is pretty straightforward</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">                try db.close()
+                try universitydb.close()</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="try-it-out-2"><a class="anchor" href="#try-it-out-2"></a>Try It Out</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The app should be running in the simulator</p>
+</li>
+<li>
+<p>Log into the app with any email Id and password. Let&#8217;s use the values <em>"<a href="mailto:demo@example.com">demo@example.com</a>"</em> and <em>"password"</em> for user Id and password fields respectively. If this is the first time that <em>any</em> user is signing in to the app, the pre-built database will be loaded from the App Bundle. In addition, new user-specific Database will be created / opened.</p>
+</li>
+<li>
+<p>Confirm that the console log output has a message similar to the one below. In my example, I am logging in with a user email Id of <em>"<a href="mailto:demo@example.com">demo@example.com</a>"</em>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Will open Prebuilt DB  at path /Users/priya.rajagopal/Library/Developer/CoreSimulator/Devices/E4E62394-9940-4AF8-92FC-41E3C794B216/data/Containers/Data/Application/A9425551-7F52-461D-B4F5-CC04315154D6/Library/Application Support
+
+2018-05-04 17:04:16.319360-0400 UserProfileDemo[54115:13479070] CouchbaseLite/2.0.0 (Swift; iOS 11.3; iPhone) Build/806 Commit/2f2a2097+CHANGES LiteCore/2.0.0 (806)
+
+2018-05-04 17:04:16.319721-0400 UserProfileDemo[54115:13479070] CouchbaseLite minimum log level is Verbose
+Will open/create DB  at path /Users/priya.rajagopal/Library/Developer/CoreSimulator/Devices/E4E62394-9940-4AF8-92FC-41E3C794B216/data/Containers/Data/Application/A9425551-7F52-461D-B4F5-CC04315154D6/Library/Application Support/demo@example.com</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>The above log message indicate the location of the Prebuilt database as well as the Database for the user. This would be within the <em>Application Support</em> folder.</p>
+</li>
+<li>
+<p>Open the folder in your Finder app and verify that a Database with name <em>"univerities"</em> exists along with a user specific Database with name <em>"userprofile"</em></p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/db_locations.png" alt="Database Locations">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exploring-the-query-api"><a class="anchor" href="#exploring-the-query-api"></a>Exploring the Query API</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Query API in Couchbase Lite 2.0 is extensive. In our app, we will be using the <code>QueryBuilder</code> API to make a simple <em>pattern matching</em> query using the <code>like</code> operator.</p>
+</div>
+<div class="sect2">
+<h3 id="fetching-university-document"><a class="anchor" href="#fetching-university-document"></a>Fetching University Document</h3>
+<div class="paragraph">
+<p>From the "Your Profile" screen, when the user taps on the "University" cell, a search screen is displayed where the user can enter the search criteria (name and optionally, the location) for the university. When the search criteria is entered, the local <em>"universities"</em> Database is queried for <a href="#the-university-document">The "University" Document</a> documents that match the specified search criteria.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the <strong>UniversityPresenter.swift</strong> file and locate the <code>fetchUniversityRecords()</code> function.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">    func fetchUniversitiesMatchingName( _ name:String,country countryStr:String?, handler:@escaping(_ universities:Universities?, _ error:Error?)-&gt;Void) {
+        do {</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We build the Query using the <code>QueryBuilder</code> API that will look for Documents that match the specified criteria.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">            var whereQueryExpr = Function.lower(Expression.property(UniversityDocumentKeys.name.rawValue))
+                .like(Expression.string("%\(name.lowercased())%")) <i class="conum" data-value="1"></i><b>(1)</b>
+
+            if let countryExpr = countryStr {
+                let countryQueryExpr = Function.lower(Expression.property(UniversityDocumentKeys.country.rawValue))
+                    .like(Expression.string("%\(countryExpr.lowercased())%"))<i class="conum" data-value="2"></i><b>(2)</b>
+
+                whereQueryExpr = whereQueryExpr.and(countryQueryExpr) <i class="conum" data-value="3"></i><b>(3)</b>
+            }
+
+            let universityQuery = QueryBuilder.select(SelectResult.all()) <i class="conum" data-value="4"></i><b>(4)</b>
+                .from(DataSource.database(db)) <i class="conum" data-value="5"></i><b>(5)</b>
+                .where(whereQueryExpr) <i class="conum" data-value="6"></i><b>(6)</b>
+
+            print(try? universityQuery.explain())</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Build a <code>QueryExpression</code> that uses the <code>like</code> operator to look for the specified <em>"name"</em> string in the <em>"name"</em> property. Notice couple of things here: (a) The use of <strong>wildcard "%" operator</strong> to denote that we are looking for the presence of the string anywhere in the <em>"name"</em> property and (b) The use of <code>Function.lowercase()</code> to convert the search string into lowercase equivalent. Since <code>like</code> operator does <em>case-senstive matching</em>, we convert the search string and the property value to lowercase equivalents and compare the two.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If the location criteria was specified in the search, then Build a <code>QueryExpression</code> that uses the <code>like</code> operator to look for the specified <em>"location"</em> string in the <em>"location"</em> property.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>SelectResult.all()</code> specifiees that we are interested in all properties in Documents that match the specified criteria</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>DataSource.database(db)</code> specified the Data Source</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>We include the <code>where</code> clause that is the logical ANDing of the QueryExpression in &lt;1&gt; and &lt;2&gt;</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>We run the Query by calling the <code>execute()</code> method on the Query that was constructed in the previous step</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">            var universities = Universities()
+
+            for result in try universityQuery.execute() {
+                if let university = result.dictionary(forKey: "universities"){
+
+                    var universityRecord = UniversityRecord() <i class="conum" data-value="1"></i><b>(1)</b>
+                    universityRecord.name =  university.string(forKey: UniversityDocumentKeys.name.rawValue) <i class="conum" data-value="2"></i><b>(2)</b>
+                    universityRecord.country  =  university.string(forKey: UniversityDocumentKeys.country.rawValue) <i class="conum" data-value="1"></i><b>(1)</b>
+                    universityRecord.webPages  =  university.array(forKey: UniversityDocumentKeys.webPages.rawValue)?.toArray() as? [String] <i class="conum" data-value="3"></i><b>(3)</b>
+
+                    universities.append(universityRecord)
+
+                }
+            }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create an instance of <a href="#universityrecord">UniversityRecord</a> type</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Use specific type getters to fetch property values. These <a href="#universityrecord">UniversityRecord</a> instance is populated with these property values.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Getters also available for <code>array</code> types. This returns a Couchbase Lite <code>ArrayObject</code> type. So you would have to use <code>toArray()</code> to convert the Couchbase Lite native array equivalent.</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="try-it-out-3"><a class="anchor" href="#try-it-out-3"></a>Try It Out</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>You should have followed the steps discussed in the "Try It Out" section under <a href="#loading-the-prebuilt-database">Loading the Prebuilt Database</a></p>
+</li>
+<li>
+<p>Tap on "University" table cell</p>
+</li>
+<li>
+<p>You should see a screen show that allows you enter the search criteria for the university</p>
+</li>
+<li>
+<p>Enter "Harv" for name . You can optionally enter "united states" for location</p>
+</li>
+<li>
+<p>Confirm that you see a list of universities that match the criteria</p>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/couchbaselabs/userprofile-couchbase-mobile/query/content/modules/userprofile/assets/images/university_list.gif" alt="University List">
+</div>
+</div>
+</li>
+<li>
+<p>Select a university</p>
+</li>
+<li>
+<p>Press "Done" button</p>
+</li>
+<li>
+<p>Confirm that the university you selected shows up in the University table cell</p>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/couchbaselabs/userprofile-couchbase-mobile/query/content/modules/userprofile/assets/images/university_selection.gif" alt="University Selection">
+</div>
+</div>
+</li>
+<li>
+<p>You can optionally fill in other entries in the User Profile screen</p>
+</li>
+<li>
+<p>Tap "Done" button</p>
+</li>
+<li>
+<p>Confirm that you see an alert message "Succesfully Updated Profile". The Document will be updated this time.</p>
+</li>
+<li>
+<p>Tap "Log Off" and log out of the app</p>
+</li>
+<li>
+<p>Log back into the app with the same user email Id and password that you used earlier. In my example, I used <em>"<a href="mailto:demo@example.com">demo@example.com</a>"</em> and <em>"password"</em>. So I will log in with those credentials again.</p>
+</li>
+<li>
+<p>Confirm that you see the profile screen  with the <em>university</em> value that you set earlier.</p>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/couchbaselabs/userprofile-couchbase-mobile/query/content/modules/userprofile/assets/images/profile_update.gif" alt="Log Off and Log Back On">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="learn-more"><a class="anchor" href="#learn-more"></a>Learn More</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Congratulations on completing this tutorial!</p>
+</div>
+<div class="paragraph">
+<p>This tutorial walked you through an example of how to use a pre-built Couchbase Lite database. We looked at a simple Query example. Check out the following links for further details on the Query API including a Xcode playground for testing the APIs.</p>
+</div>
+<div class="sect2">
+<h3 id="further-reading"><a class="anchor" href="#further-reading"></a>Further Reading</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://blog.couchbase.com/xcode-playground-couchbase-mobile/">Xcode Playground For Couchbase Lite 2.0</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/sql-for-json-query-interface-couchbase-mobile/">Fundamentals of the Couchbase Lite 2.0 Query API</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/querying-array-collections-couchbase-mobile/">Handling Arrays in Queries</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/full-text-search-couchbase-mobile-2-0/">Couchbase Lite 2.0 Full Text Search API</a></p>
+</li>
+<li>
+<p><a href="https://blog.couchbase.com/join-queries-couchbase-mobile/">Couchbase Lite 2.0 JOIN Query</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.couchbase.com" class="icon">
+            <img src="../../../_/img/logo.svg" alt="Couchbase">
+          </a>
+        </div>
+        <div class="contact">
+          <p class="address">3250 Olcott Street
+Santa Clara, CA 95054
+United States</p>
+          <a href="https://www.couchbase.com/contact" class="btn white-btn">Contact Us</a>
+          <a class="tel" href="tel:1-650-417-7500">1-650-417-7500</a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Company</span></li>
+          <li><a href="https://www.couchbase.com/about">About</a></li>
+          <li><a href="https://www.couchbase.com/leadership">Leadership</a></li>
+          <li><a href="https://www.couchbase.com/news-and-press-releases">News &amp; Press</a></li>
+          <li><a href="https://www.couchbase.com/careers">Careers</a></li>
+          <li><a href="https://www.couchbase.com/resources/events">Events</a></li>
+          <li><a href="https://www.couchbase.com/contact">Contact Us</a></li>
+          <li><a href="https://www.couchbase.com/request-pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Support</span></li>
+          <li><a href="https://developer.couchbase.com" target="_blank" rel="noopener">Developer Portal</a></li>
+          <li><a href="https://docs.couchbase.com" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://forums.couchbase.com" target="_blank" rel="noopener">Forums</a></li>
+          <li><a href="https://www.couchbase.com/services">Professional Services</a></li>
+          <li><a href="https://support.couchbase.com" target="_blank" rel="noopener">Support Login</a></li>
+          <li><a href="https://learn.couchbase.com/store" target="_blank" rel="noopener">Training</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Quicklinks</span></li>
+          <li><a href="https://blog.couchbase.com" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.couchbase.com/downloads">Downloads</a></li>
+          <li><a href="https://www.couchbase.com/get-started-developing-nosql">Get Started</a></li>
+          <li><a href="https://learn.couchbase.com/store?utf8=%E2%9C%93&ss=1&ct=78327&commit=Filter" target="_blank" rel="noopener">Online Training</a></li>
+          <li><a href="https://www.couchbase.com/resources">Resources</a></li>
+          <li><a href="https://www.couchbase.com/nosql-resources/why-nosql">Why NoSQL</a></li>
+          <li><a href="https://www.couchbase.com/resources/security">Security</a></li>
+          <li><a href="https://www.couchbase.com/resources/gdpr">GDPR</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.facebook.com/Couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="26.363 116.363 560.215 560.215"><path d="m586.58 209.58c0-48.96-44.252-93.212-93.212-93.212h-373.79c-48.96 0-93.212 44.252-93.212 93.212v373.79c0 48.96 44.252 93.212 93.212 93.212h186.42v-211.85h-68.732v-93.212h68.732v-36.72c0-63.083 47.077-119.58 105.45-119.58h75.323v93.212h-75.323c-8.474 0-17.889 10.357-17.889 25.422v37.662h93.212v93.212h-93.212v211.85h99.803c48.96 0 93.212-44.252 93.212-93.212v-373.79z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="32.012 176.622 542.326 437.815"><path d="m574.34 227.46c-19.772 8.474-41.428 15.065-64.025 17.889 22.597-14.123 40.486-35.778 48.96-61.2-21.655 13.182-45.194 21.655-70.615 27.305-20.714-21.655-48.96-34.837-80.972-34.837-61.2 0-111.1 49.902-111.1 111.1 0 8.474 0.942 16.948 2.825 25.422-92.271-5.649-174.18-49.902-229.74-117.69-9.415 16.006-15.065 35.778-15.065 55.551 0 38.603 19.772 72.498 49.902 92.271-17.889-0.942-35.778-5.649-50.843-14.123v0.942c0 53.668 38.603 98.862 89.446 109.22-9.415 2.825-18.831 3.766-29.188 3.766-7.532 0-14.123-0.942-20.714-1.883 14.123 44.252 55.551 76.265 103.57 77.206-37.662 30.129-85.68 48.018-138.41 48.018-9.415 0-17.889-0.941-26.363-1.883 48.96 32.012 107.34 49.902 170.42 49.902 204.31 0 316.36-169.48 316.36-316.36v-14.123c21.656-14.125 40.487-33.897 55.551-56.494z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="31.071 119.188 539.537 540.443"><path d="m531.97 119.19h-461.35c-21.655 0-39.545 16.948-39.545 38.603v463.24c0 21.655 17.889 38.603 39.545 38.603h460.41c21.655 0 39.545-16.948 39.545-38.603v-463.24c0.942-21.656-16.947-38.603-38.603-38.603zm-337.07 451.94h-81.914v-243.86h81.914v243.86zm-40.486-276.81c-28.246 0-46.135-18.831-46.135-42.369s17.889-42.369 46.135-42.369 45.194 17.889 45.194 42.369c0.942 23.538-16.948 42.369-45.194 42.369zm335.19 276.81h-81.914v-129.93c0-32.954-12.24-55.551-41.428-55.551-22.597 0-35.778 15.065-41.428 30.129-1.883 5.649-2.825 12.24-2.825 19.772v136.52h-81.914s0.942-221.26 0-243.86h81.914v34.837c11.298-16.948 30.129-40.486 73.44-40.486 53.668 0 94.154 34.837 94.154 110.16l1e-3 138.41zm-168.54-208.08s0.941-0.941 0 0z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <span>2018 COUCHBASE All rights reserved.</span>
+      <a href="https://www.couchbase.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.couchbase.com/terms-of-use">Terms of Use</a>
+      <a href="https://www.couchbase.com/cookie-policy">Cookie Policy</a>
+      <a href="https://info.couchbase.com/unsubscribe-or-manage-preferences.html" target="_blank" rel="noopener">Marketing Preference Center</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

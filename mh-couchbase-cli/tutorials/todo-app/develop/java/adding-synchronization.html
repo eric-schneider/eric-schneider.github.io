@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Adding Synchronization | Couchbase Docs</title>
+    <link rel="canonical" href="eric-schneider.github.io/mh-couchbase-cli/tutorials/todo-app/develop/java/adding-synchronization.html">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MVPNN2"></script>
+    <link rel="schema.dcterms" href="https://purl.org/dc/terms/">
+    <meta name="dcterms.subject" content="tutorials">
+    <meta name="dcterms.identifier" content="master">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar" id="topbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://www.couchbase.com"><img src="../../../../_/img/logo.svg" alt="Couchbase"></a>
+        <button class="navbar-burger" data-target="topbar-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div id="topbar-menu" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown">
+            <a class="navbar-link" href="eric-schneider.github.io/mh-couchbase-cli">Docs</a>
+            <div class="navbar-dropdown explore">
+              <div class="title">Couchbase Documentation Overview</div>
+              <div class="cols">
+                <ul>
+                  <li class="heading"><a href="../../../../server/6.0/index.html">Server</a></li>
+                  <li><a href="../../../../server/6.0/n1ql/n1ql-language-reference/index.html">N1QL</a></li>
+                  <li><a href="../../../../server/6.0/fts/full-text-intro.html">Full Text Search</a></li>
+                  <li><a href="../../../../server/6.0/analytics/introduction.html">Analytics</a></li>
+                  <li><a href="../../../../server/6.0/eventing/eventing-overview.html">Eventing</a></li>
+                  <li><a href="../../../../operator/1.2/overview.html">Autonomous Operator</a></li>
+                </ul>
+                <ul>
+                  <li class="heading">Mobile</li>
+                  <li><a href="#">Lite</a></li>
+                  <li><a href="#">Sync Gateway</a></li>
+                </ul>
+                <ul class="two-cols">
+                  <li class="heading"><a href="../../../../server/6.0/sdk/overview.html">SDKs</a></li>
+                  <li><a href="#">C</a></li>
+                  <li><a href="#">.NET</a></li>
+                  <li><a href="#">Go</a></li>
+                  <li><a href="#">Java</a></li>
+                  <li><a href="#">Node.js</a></li>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Python</a></li>
+                  <li><a href="#">Scala</a></li>
+                </ul>
+                <ul>
+                  <li class="heading"><a href="../../../../server/6.0/connectors/intro.html">Connectors</a></li>
+                  <li><a href="../../../../elasticsearch-connector/4.0/index.html">Elasticsearch</a></li>
+                  <li><a href="../../../../server/6.0/connectors/hadoop-1.2/hadoop.html">Hadoop</a></li>
+                  <li><a href="../../../../kafka-connector/3.4/index.html">Kafka</a></li>
+                  <li><a href="../../../../spark-connector/2.4/index.html">Spark</a></li>
+                  <li><a href="../../../../talend-connector/index.html">Talend</a></li>
+                  <li><a href="../../../../server/6.0/connectors/odbc-jdbc-drivers.html">ODBC/JDBC</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-item">
+            <a class="navbar-link component" href="/tutorials/index.html"><span class="title">Tutorials</span></a>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="btn red-btn" href="https://www.couchbase.com/downloads">Downloads</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body container">
+<nav class="nav">
+<div class="nav-menu">
+<ul class="nav-list">
+  <li class="nav-item is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Couchbase Server</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Session Storage</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../session-storage/install.html">Configure Couchbase Cluster</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../session-storage/aspnet.html">ASP.NET Core</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../session-storage/java.html">Java</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../session-storage/udf.html">UDF</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">User Profile Storage</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../profile-store/install.html">Configure Couchbase Cluster</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../profile-store/java.html">Java</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../profile-store/dotnet.html">.Net</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../profile-store/building-indexes.html">Indexing</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Couchbase Mobile</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Travel Sample</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Swift</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/develop/mvp-architecture.html">MVP Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/swift/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Java</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../../../mobile-travel-sample/java/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/develop/mvp-architecture.html">MVP Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/java/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">C#</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/installation/index.html">Backend Installation</a>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/installation/manual.html">Manual</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/installation/docker.html">Docker (Local)</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/installation/cloud.html">Cloud (RightScale)</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/installation/travel-mobile-app.html">Installation</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/develop/mvvm-architecture.html">MVVM Architecture</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/develop/the-basics.html">The Basics</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/develop/security.html">Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/develop/sync.html">Sync</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/develop/pre-built-database.html">Pre-built database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/develop/query.html">Query</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../mobile-travel-sample/csharp/develop/full-text-search.html">Full Text Search</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../../userprofile-couchbase-mobile/standalone/userprofile/userprofile_basic.html">Getting Started on iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../../userprofile-couchbase-mobile/standalone/userprofile/xamarin/userprofile_basic.html">Getting Started on Xamarin</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../../userprofile-couchbase-mobile/standalone/userprofile/android/userprofile_basic.html">Getting Started on Android</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Xcode Playground</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../swift-playground/overview.html">Overview</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Recycler Views with Live Queries</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../university-lister/android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build a Cordova Plugin</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../hotel-lister/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../hotel-lister/ios.html">iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../hotel-lister/android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build a React Native Module</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../hotel-finder/introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../hotel-finder/ios.html">iOS</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../hotel-finder/android.html">Android</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Todo App (Mobile 1.x)</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../introduction.html">Introduction</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Design</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../design/data-modeling.html">Data Modeling</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <a class="nav-link" href="../../design/security.html">Security</a>
+    </span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Develop</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Swift</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../swift/create-database.html">Create Database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../swift/using-the-database.html">Using the Database</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../swift/adding-synchronization.html">Adding Synchronization</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../swift/adding-security.html">Adding Security</a>
+    </span>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <span class="nav-line">
+    <a class="nav-link" href="../swift/integration.html">Integration</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-active" data-depth="0">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Build Your Own</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <span class="nav-line">
+    <button class="nav-toggle"></button>
+    <span class="nav-text">Tutorial Template</span>
+    </span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-line">
+    <a class="nav-link" href="../../../tutorial-template/sample.html">Basic Tutorial Template</a>
+    </span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+</div>
+</nav>
+<aside class="toc sidebar">
+  <div class="toc-menu"></div>
+</aside>
+<main class="article" data-ceiling="topbar">
+  <div class="article-header">
+<button class="nav-control"></button>
+<nav class="crumbs" aria-label="breadcrumbs">
+  <ul>
+    <li class="crumb"><a href="../../../index.html">Tutorials</a></li>
+    <li class="crumb"><a href="adding-synchronization.html">Adding Synchronization</a></li>
+  </ul>
+</nav>
+<div class="tools" role="navigation">
+  <ul>
+    <li class="tool edit"><a href="https://github.com/couchbaselabs/mobile-training-todo/edit/tutorials/content/modules/todo-app/pages/develop/java/adding-synchronization.adoc" title="Edit Page" target="_blank" rel="noopener">Edit</a></li>
+  </ul>
+</div>
+  </div>
+<article class="doc">
+<h1 class="page">Adding Synchronization</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this lesson you&#8217;ll be introduced to Sync Gateway, our secure web gateway.
+You&#8217;ll learn how to use Couchbase Lite&#8217;s synchronization APIs, set up Sync Gateway for synchronization with the cloud and other devices, and resolve data conflicts within your application.</p>
+</div>
+<div class="paragraph">
+<p><strong>TIP:</strong> To make things a bit more exciting, you may want to use the pre-built database containing a list of Groceries.
+Refer to the <a href="#">swift/create-database.adoc</a> lesson to learn how to use it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="install-sync-gateway"><a class="anchor" href="#install-sync-gateway"></a>Install Sync Gateway</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that your application runs smoothly on the device you are ready to introduce Sync Gateway.
+Create a new file called <strong>sync-gateway-config.json</strong> with the following.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">{
+  "interface": 4984,
+  "log": ["HTTP", "Auth"],
+  "databases": {
+    "todo": {
+      "server": "walrus:",
+      "users": {
+        "GUEST": {"disabled": false, "admin_channels": ["*"] }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>During development, you can set the <strong>server</strong> property to <strong>walrus:</strong> (also known as the Walrus mode) and it will keep the data in memory.
+Note that anytime you restart Sync Gateway in walrus mode, the database will be empty.</p>
+</div>
+<div class="paragraph">
+<p>By default, Sync Gateway doesn&#8217;t allow unauthenticated requests to be processed for security reasons.
+So you&#8217;re enabling the <strong>GUEST</strong> user which represents all the unauthenticated clients that will be synchronizing with your Sync Gateway instance.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+User authentication is covered in more detail in the <a href="#">swift/adding-security.adoc</a> lesson.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Sync Gateway is always listening on two ports:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>4984: the public port which will be used from the application.</p>
+</li>
+<li>
+<p>4985: the admin port used for administrative tasks (for security reasons, it&#8217;s only accessible on localhost).</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="try-it-out"><a class="anchor" href="#try-it-out"></a>Try it out</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile">Download Sync Gateway</a></p>
+</li>
+<li>
+<p>Unzip the file and locate the executable at <strong>bin/sync_gateway</strong> (macOS) or run the installer (Windows).</p>
+</li>
+<li>
+<p>Start Sync Gateway from the command-line in your project directory.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sync_gateway sync-gateway-config.json</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">PS  'C:\Program Files (x86)\Couchbase\sync_gateway.exe' sync-gateway-config.json</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The Sync Gateway service might be running on Windows which will prevent this command from succeeding with the message 'FATAL: Failed to start HTTP server on 127.0.0.1:4985: listen tcp 127.0.0.1:4985: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.' To get around this, stop the 'Couchbase Sync Gateway' service in 'services.msc'.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="add-synchronization"><a class="anchor" href="#add-synchronization"></a>Add synchronization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Typically, an application needs to send data to the server and receive it.
+In Couchbase Mobile, this is handled by replications which run on the device.
+A replication requires a Couchbase Lite database and a Sync Gateway URL, and synchronizes data between the two.
+They can be of two types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Push:</strong> The data is pushed from Couchbase Lite to Sync Gateway.</p>
+</li>
+<li>
+<p><strong>Pull:</strong> The data is pulled from Sync Gateway to Couchbase Lite.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are a few terminologies that designate the role of each database involved in a replications:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Source:</strong> The database where the data is read.</p>
+</li>
+<li>
+<p><strong>Target:</strong> The database where the data is written.</p>
+</li>
+<li>
+<p><strong>Local:</strong> The database that resides where the replication is running.</p>
+</li>
+<li>
+<p><strong>Remote:</strong> The database to which the replication is sending data.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following code starts a pull and push replication with progress notifications.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">// This code can be found in AppDelegate.swift
+// in the startReplication(withUsername:andPassword:)
+pusher = database.createPushReplication(kSyncGatewayUrl)
+pusher.continuous = true // Runs forever in the background
+NotificationCenter.default.addObserver(self, selector: #selector(replicationProgress(notification:)),
+                                        name: NSNotification.Name.cblReplicationChange, object: pusher)
+
+puller = database.createPullReplication(kSyncGatewayUrl)
+puller.continuous = true // Runs forever in the background
+NotificationCenter.default.addObserver(self, selector: #selector(replicationProgress(notification:)),
+                                        name: NSNotification.Name.cblReplicationChange, object: puller)
+
+if kLoginFlowEnabled {
+    let authenticator = CBLAuthenticator.basicAuthenticator(withName: username, password: password!)
+    pusher.authenticator = authenticator
+    puller.authenticator = authenticator
+}
+
+pusher.start()
+puller.start()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">// This code can be found in CoreApp.cs
+// in the StartReplication(string, string) method
+var authenticator = default(IAuthenticator);
+if(username != null  password != null) {
+    authenticator = AuthenticatorFactory.CreateBasicAuthenticator(username, password);
+}
+
+var db = AppWideManager.GetDatabase(username);
+var pusher = db.CreatePushReplication(SyncGatewayUrl);
+pusher.Continuous = true; // Runs forever in the background
+pusher.Authenticator = authenticator;
+
+
+var puller = db.CreatePullReplication(SyncGatewayUrl);
+puller.Continuous = true; // Runs forever in the background
+puller.Authenticator = authenticator;
+
+pusher.Start();
+puller.Start();
+
+_pusher = pusher;
+_puller = puller;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// This code can be found in Application.java
+// in the startReplication(String, String) method
+URL url = null;
+try {
+    url = new URL(mSyncGatewayUrl);
+} catch (MalformedURLException e) {
+    e.printStackTrace();
+}
+
+pusher = database.createPushReplication(url);
+pusher.setContinuous(true); // Runs forever in the background
+
+puller = database.createPullReplication(url);
+puller.setContinuous(true); // Runs forever in the background
+
+if (mLoginFlowEnabled) {
+    Authenticator authenticator = AuthenticatorFactory.createBasicAuthenticator(username, password);
+    pusher.setAuthenticator(authenticator);
+    puller.setAuthenticator(authenticator);
+}
+
+pusher.start();
+puller.start();</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="try-it-out-2"><a class="anchor" href="#try-it-out-2"></a>Try it out</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In <strong>AppDelegate.swift</strong>, set <code>kSyncGatewayUrl</code> to the URL of the Sync Gateway database (<a href="http://localhost:4984/todo/" class="bare">http://localhost:4984/todo/</a>).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">let kSyncGatewayUrl = URL(string: http://localhost:4984/todo/)!</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Set <code>kSyncEnabled</code> to <code>true</code> in <strong>AppDelegate.swift</strong>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">let kSyncEnabled = true</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and run.</p>
+</li>
+<li>
+<p>Open <a href="http://localhost:4985/_admin/db/todo" class="bare">http://localhost:4985/_admin/db/todo</a> in the browser and notice that all the documents are pushed to Sync Gateway! You may have more or less rows depending on how many documents are present in the Couchbase Lite database.</p>
+<div class="paragraph">
+<p><span class="image"><img src="../../_images/image19.png" alt="image19"></span></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In <strong>CoreApp.cs</strong> set <code>SyncGatewayUrl</code> to the URL of the Sync Gateway database (<a href="http://localhost:4984/todo/" class="bare">http://localhost:4984/todo/</a>).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">private static readonly Uri SyncGatewayUrl = new Uri(http://localhost:4984/todo/);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In <strong>CoreApp.cs</strong> in the <code>CreateHint()</code> method, change <code>SyncEnabled = false</code> to <code>SyncEnabled = true</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">var retVal = new CoreAppStartHint {
+    LoginEnabled = false,
+    EncryptionEnabled = false,
+    SyncEnabled = true, // Line to change is here
+    UsePrebuiltDB = false,
+    ConflictResolution = false,
+    Username = todo
+};
+
+return retVal;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and run.</p>
+</li>
+<li>
+<p>Open <a href="http://localhost:4985/_admin/db/todo" class="bare">http://localhost:4985/_admin/db/todo</a> in the browser and notice that all the documents are pushed to Sync Gateway! You may have more or less rows depending on how many documents are present in the Couchbase Lite database.</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In <strong>Application.java</strong>, set <code>mSyncGatewayUrl</code> to the URL of the Sync Gateway database (<a href="http://localhost:4984/todo/" class="bare">http://localhost:4984/todo/</a>).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private String mSyncGatewayUrl = http://10.0.2.2:4984/todo/;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For Android stock emulators, the hostname is <code>10.0.2.2</code>.</p>
+</div>
+</li>
+<li>
+<p>Set <code>mSyncEnabled</code> to <code>true</code> in <strong>Application.java</strong>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private Boolean mSyncEnabled = true;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and run.</p>
+</li>
+<li>
+<p>Open <a href="http://localhost:4985/_admin/db/todo" class="bare">http://localhost:4985/_admin/db/todo</a> in the browser and notice that all the documents are pushed to Sync Gateway! You may have more or less rows depending on how many documents are present in the Couchbase Lite database.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resolve-conflicts"><a class="anchor" href="#resolve-conflicts"></a>Resolve Conflicts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Due to the unpredictability of mobile connections it&#8217;s inevitable that more than one device will update the same document simultaneously.
+Couchbase Lite provides features to resolve these conflicts.
+The resolution rules are written by the developer to keep full control over which revision should be picked.
+The most common resolution methods are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Deletes always win:</strong> if one side deletes a document it will always stay deleted, even if the other side has made changes to it later on.</p>
+</li>
+<li>
+<p><strong>N-way merge:</strong> if both sides have updated different properties, the document will end up with the updates from both sides.</p>
+</li>
+<li>
+<p><strong>Last update wins:</strong> if both sides have updated the same property, the value will end up as the last one that was updated.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Revisions form a tree data structure and a conflict occurs when there are multiple branches in the revision tree.
+On the diagram below the conflict is resolved by deleting one branch of the tree (the branch starting at <strong>3-42cc</strong>). The other one is the active branch (i.e the winner) where further child revisions can be persisted (<strong>4-45cb</strong> and <strong>5-42bb</strong>).</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../../_images/image16.png" alt="400"></span></p>
+</div>
+<div class="sect2">
+<h3 id="detecting-conflicts"><a class="anchor" href="#detecting-conflicts"></a>Detecting conflicts</h3>
+<div class="paragraph">
+<p>To resolve conflicts you must first learn how to detect them.
+The code below uses an All Docs query which is an index of all the documents in the local database.
+The <strong>OnlyConflicts</strong> option is passed to report only the documents with conflicts and a <strong>LiveQuery</strong> is used to continuously monitor the database for changes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">// This code can be found in AppDelegate.swift
+// in the startConflictLiveQuery() method
+guard kConflictResolution else {
+    return
+}
+
+conflictsLiveQuery = database.createAllDocumentsQuery().asLive()
+conflictsLiveQuery!.allDocsMode = .onlyConflicts
+conflictsLiveQuery!.addObserver(self, forKeyPath: rows, options: .new, context: nil)
+conflictsLiveQuery!.start()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The query results are then posted to the application code using the KVO observer method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">// This code can be found in AppDelegate.swift
+// in the observeValue(forKeyPath:of:change:context:) method
+override func observeValue(forKeyPath keyPath: String?, of object: Any?,
+                            change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    if object as? NSObject == conflictsLiveQuery {
+        resolveConflicts()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">// This code can be found in CoreApp.cs
+// in the StartConflictLiveQuery() method
+_conflictsLiveQuery = Database.CreateAllDocumentsQuery().ToLiveQuery();
+_conflictsLiveQuery.AllDocsMode = AllDocsMode.OnlyConflicts;
+_conflictsLiveQuery.Changed += ResolveConflicts;
+
+_conflictsLiveQuery.Start();</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// This code can be found in Application.java
+// in the startConflictLiveQuery() method
+LiveQuery conflictsLiveQuery = database.createAllDocumentsQuery().toLiveQuery();
+conflictsLiveQuery.setAllDocsMode(Query.AllDocsMode.ONLY_CONFLICTS);
+conflictsLiveQuery.addChangeListener(new LiveQuery.ChangeListener() {
+    @Override
+    public void changed(LiveQuery.ChangeEvent event) {
+        resolveConflicts(event.getRows());
+    }
+});
+conflictsLiveQuery.start();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The query results are then posted to the application code using the change callback or change listener.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="automatic-conflict-resolution"><a class="anchor" href="#automatic-conflict-resolution"></a>Automatic conflict resolution</h3>
+<div class="paragraph">
+<p>Even if the conflict isn&#8217;t resolved, Couchbase Lite has to return something.
+It chooses one of the two conflicting revisions as the winner.
+The choice is deterministic, which means that every device that is faced with the same conflict will pick the same winner, without having to communicate.</p>
+</div>
+<div class="paragraph">
+<p>Shown below is a list document created with two conflicting revisions.
+After deleting the row, the text <strong>Text Changed</strong> appears which is the name of the second conflicting revision.
+The action of deleting a document only deletes the current revision and if there are conflicting revisions it will be promoted as the new current revision.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../../_images/image47.gif" alt="image47"></span></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+During development, the method <code>saveAllowingConflicts</code> is used to intentionally create a conflict.
+You can shake the device (<strong>^⌘Z</strong> on the simulator) to create a list conflict.
+The code is located in the <code>motionEnded(_:with:)</code> method of <strong>ListsViewController.swift</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="quoteblock">
+<blockquote>
+<strong>Note:</strong> During development, the method <code>Save(bool)</code> is used to intentionally create a conflict.
+You can press Ctrl+C to create a list conflict.
+The code is located in the <code>TestConflict()</code> method of <strong>TaskListsModel.cs</strong>.
+</blockquote>
+</div>
+<div class="paragraph">
+<p><strong>iOS</strong>
+<strong>Android</strong></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<strong>Note:</strong> During development, the method <code>save(boolean)</code> is used to intentionally create a conflict.
+You can long press the floating action button to create a list conflict.
+The code is located in the <code>createListConflict()</code> method of <strong>ListsActivity.java</strong>.
+</blockquote>
+</div>
+<div class="paragraph">
+<p>This can be surprising at first but it&#8217;s the strength of using a distributed database that defers the conflict resolution logic to the application.
+It&#8217;s your responsibility as the developer to ensure conflicts are resolved! Even if you decide to let Couchbase Lite pick the winner you must remove extraneous conflicting revisions to prevent the behaviour observed above.
+The code below removes all revisions except the current/winning one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">// This code can be found in AppDelegate.swift
+// in the resolveConflicts(revisions:withProps:andImage:) method
+database.inTransaction {
+    var i = 0
+    for rev in revs as! [CBLSavedRevision] {
+        let newRev = rev.createRevision()
+        if (i == 0) { // Default winning revision
+            newRev.userProperties = props
+            if rev.attachmentNamed(image) != image {
+                newRev.setAttachmentNamed(image, withContentType: image/jpg,
+                    content: image?.content)
+            }
+        } else {
+            newRev.isDeletion = true
+        }
+
+        do {
+            try newRev.saveAllowingConflict()
+        } catch let error as NSError {
+            NSLog(Cannot resolve conflicts with error: %@, error)
+            return false
+        }
+        i += 1
+    }
+    return true
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">// This code can be found in CoreApp.cs
+// in the ResolveConflicts(SavedRevision[], IDictionarystring, object, Attachment) method
+Database.RunInTransaction(() =
+{
+    var i = 0;
+    foreach(var rev in revs) {
+        var newRev = rev.CreateRevision();
+        if(i == 0) { // Default winning revision
+            newRev.SetUserProperties(props);
+            if(newRev.GetAttachment(image) != image) {
+                newRev.SetAttachment(image, image/jpg, image?.Content);
+            }
+        } else {
+            newRev.IsDeletion = true;
+        }
+
+        try {
+            newRev.Save(true);
+        } catch(Exception e) {
+            Debug.WriteLine($Cannot resolve conflicts with error: {e});
+            return false;
+        }
+
+        i += 1;
+    }
+
+    return true;
+});</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// This code can be found in Application.java
+// in the resolveConflicts(ListSavedRevision, MapString, Object, Attachment)
+private void resolveConflicts(final ListSavedRevision revs, final MapString, Object desiredProps, final Attachment desiredImage) {
+    database.runInTransaction(new TransactionalTask() {
+        @Override
+        public boolean run() {
+            int i = 0;
+            for (SavedRevision rev : revs) {
+                UnsavedRevision newRev = rev.createRevision(); // Create new revision
+                if (i == 0) { // That's the current/winning revision
+                    newRev.setUserProperties(desiredProps);
+                    if (desiredImage != null) {
+                        try {
+                            newRev.setAttachment(image, image/jpg, desiredImage.getContent());
+                        } catch (CouchbaseLiteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else { // That's a conflicting revision, delete it
+                    newRev.setIsDeletion(true);
+                }
+
+                try {
+                    newRev.save(true); // Persist the new revision
+                } catch (CouchbaseLiteException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                i++;
+            }
+            return true;
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="try-it-out-3"><a class="anchor" href="#try-it-out-3"></a>Try it out</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>To enable conflict resolution, set the <code>kConflictResolution</code> constant in <strong>AppDelegate.swift</strong> to <code>true</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-swift hljs" data-lang="swift">let kConflictResolution = true</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Perform the same actions and this time deleting the list conflict doesn&#8217;t reveal the subsequent conflicting revision anymore.</p>
+<div class="paragraph">
+<p><span class="image"><img src="../../_images/image48.gif" alt="image48" width="400"></span></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>To enable conflict resolution, change <code>ConflictResolution = false</code> to <code>ConflictResolution = true</code> in the <code>CreateHint()</code> method in <strong>CoreApp.cs</strong></p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c# var retVal = new CoreAppStartHint { LoginEnabled = false hljs" data-lang="c# var retVal = new CoreAppStartHint { LoginEnabled = false">return retVal; ```
+
+. Perform the same actions and this time deleting the list conflict doesn`'t reveal the subsequent conflicting revision anymore.
+
+
+// &lt;block class="wpf"/&gt;
+
+
+// &lt;img class="center-image" src="https://cl.ly/0o1z380g2w2w/image48w.gif"/&gt;
+
+
+// &lt;block class="xam"/&gt;
+
+*iOS*
+// &lt;img class="portrait" src="./img/image48.gif"/&gt;
+*Android*
+// &lt;img class="portrait" src="./img/image48xa.gif"/&gt;
+
+
+// &lt;block class="android"/&gt;
+
+
+. To enable conflict resolution, set the `mConflictResolution` constant in *Application.java* to ``true``.
++
+
+[source,java]
+----
+
+private Boolean mConflictResolution = true;
+----
+. Perform the same actions and this time deleting the list conflict doesn't reveal the subsequent conflicting revision anymore.
++
+// &lt;img class="portrait" src="https://cl.ly/1A0u402Z1t08/image48a.gif"/&gt;
+
+
+// &lt;block class="all"/&gt;
+
+
+=== N-way conflict resolution
+
+For task documents, you will follow the same steps as previously except this time the conflict resolution will merge the differences between the conflicting revisions into a new revision before removing them.
+This time, one revision changes the title of the task while the other revision marks it as completed.
+
+image:image67.gif[,400]
+
+NOTE: To see the same result, open any list and shake the device (**^⌘Z** on the simulator) to create a task conflict.
+The code is located in the `motionEnded(_:with:)` method of **TasksViewController.swift**.
+Be sure to disable conflict resolution to see the same result as the animation above.
+
+
+// &lt;block class="wpf"/&gt;
+
+
+// &lt;img src="https://cl.ly/451n2X1v1r0z/image67w.gif" class="center-image"/&gt;
+
+
+[quote]
+*Note:* To see the same result, open any list and press Ctrl+C to create a task conflict.
+The code is located in the `TestConflict()` method of **TasksModel.cs**.
+Be sure to disable conflict resolution to see the same result as the animation above.
+
+
+// &lt;block class="android"/&gt;
+
+
+// &lt;img src="https://cl.ly/1E1O0M1l333r/image67a.gif" class="portrait"/&gt;
+
+
+[quote]
+*Note:* To see the same result, open any list and long press the floating action button to create a task conflict.
+The code is located in the `createTaskConflict()` method of **TasksFragment.java**.
+Be sure to disable conflict resolution to see the same result as the animation above.
+
+
+// &lt;block class="all"/&gt;
+
+Similarly to the previous section, you will learn how to resolve conflicts, this time for task documents.
+In this case, the resolution code will *merge the
+      changes* (i.e n-way merge) of the conflicting revisions and promote the result as the current revision.
+
+[source]
+----
+
+// This code can be found in AppDelegate.swift
+// in the resolveConflicts() method
+let rows = conflictsLiveQuery?.rows
+while let row = rows?.nextRow() {
+    if let revs = row.conflictingRevisions, revs.count  1 {
+        let defaultWinning = revs[0]
+        let type = (defaultWinning[type] as? String) ??
+        switch type {
+        // TRAINING: Automatic conflict resolution
+        case task-list, task-list.user:
+            let props = defaultWinning.userProperties
+            let image = defaultWinning.attachmentNamed(image)
+            resolveConflicts(revisions: revs, withProps: props, andImage: image)
+        // TRAINING: N-way merge conflict resolution
+        case task:
+            let merged = nWayMergeConflicts(revs: revs)
+            resolveConflicts(revisions: revs, withProps: merged.props, andImage: merged.image)
+        default:
+            break
+        }
+    }
+}
+----
+
+
+// &lt;block class="net"/&gt;
+
+
+[source,c#]
+----
+
+// This code can be found in CoreApp.cs
+// in the ResolveConflicts() method
+var rows = _conflictsLiveQuery?.Rows;
+if(rows == null) {
+    return;
+}
+
+foreach(var row in rows) {
+    var conflicts = row.GetConflictingRevisions().ToArray();
+    if(conflicts.Length  1) {
+        var defaultWinning = conflicts[0];
+        var type = defaultWinning.GetProperty(type) as string ?? ;
+        switch(type) {
+            // TRAINING: Automatic conflict resolution
+            case task-list:
+            case task-list.user:
+                var props = defaultWinning.UserProperties;
+                var image = defaultWinning.GetAttachment(image);
+                ResolveConflicts(conflicts, props, image);
+                break;
+            // TRAINING: N-way merge conflict resolution
+            case task:
+                var merged = NWayMergeConflicts(conflicts);
+                ResolveConflicts(conflicts, merged.Item1, merged.Item2);
+                break;
+            default:
+                break;
+        }
+    }
+}
+----
+
+
+// &lt;block class="android"/&gt;
+
+
+[source,java]
+----
+
+// This code can be found in Application.java
+// in the resolveConflicts(QueryEnumerator) method
+for (QueryRow row : rows) {
+    ListSavedRevision revs = row.getConflictingRevisions();
+    if (revs.size()  1) {
+        SavedRevision defaultWinning = revs.get(0);
+        String type = (String) defaultWinning.getProperty(type);
+        switch (type) {
+            // TRAINING: Automatic conflict resolution
+            case task-list:
+            case task-list.user:
+                MapString, Object props = defaultWinning.getUserProperties();
+                Attachment image = defaultWinning.getAttachment(image);
+                resolveConflicts(revs, props, image);
+                break;
+            // TRAINING: N-way merge conflict resolution
+            case task:
+                ListObject mergedPropsAndImage = nWayMergeConflicts(revs);
+                resolveConflicts(revs, (MapString, Object) mergedPropsAndImage.get(0), (Attachment) mergedPropsAndImage.get(1));
+                break;
+        }
+    }
+}
+----
+
+Notice that for 'task' documents, the `nWayMergeConflicts()` method is called to merge the differences of conflicting revisions.
+The body of this method is too long to copy here but you can find it in the same file.
+
+==== Try it out
+
+. Enable conflict resolution.
++
+[source]
+----
+
+let kConflictResolution = true
+----
+. Build and run.
+. Create a task conflict using the shake gesture (or **^⌘Z**) and this time the row contains the updated text *and* is marked as completed.
++
+image:image03.png[,400]
+
+// &lt;block class="wpf"/&gt;
+
+
+. Enable conflict resolution
+
+```c# var retVal = new CoreAppStartHint { LoginEnabled = false, EncryptionEnabled = false, SyncEnabled = false, UsePrebuiltDB = false, ConflictResolution = true, // The line to change Username = todo };
+
+return retVal; ```
+
+. Build and run
+. Create a conflict by pressing 'Ctrl+C' and this time the row contains the updated text *and* is marked as completed.
++
+
+
+image::img/image03w.png[]
+
+
+// &lt;block class="xam"/&gt;
+
+
+. Enable conflict resolution
+
+```c# var retVal = new CoreAppStartHint { LoginEnabled = false, EncryptionEnabled = false, SyncEnabled = false, UsePrebuiltDB = false, ConflictResolution = true, // The line to change Username = todo };
+
+return retVal; ```
+
+. Build and run
+. Create a task conflict using the shake gesture and this time the row contains the updated text *and* is marked as completed.
+
+*iOS*image:img/image03.png[]**Android**
+
+
+// &lt;block class="android"/&gt;
+
+
+. Enable conflict resolution in **Application.java**.
++
+
+[source,java]
+----
+
+private Boolean mConflictResolution = true;
+----
+. Build and run.
+. Create a task conflict using the shake gesture and this time the row contains the updated text *and* is marked as completed.
++
+// &lt;image src="img/image03a.png" class="portrait"/&gt;
+
+
+// &lt;block class="all"/&gt;
+
+
+== Conclusion
+
+Well done! You've completed this lesson on enabling synchronization, detecting and resolving conflicts.
+In the next lesson you'll learn how to implement authentication and define access control rules in the Sync Function.
+Feel free to share your feedback, findings or ask any questions on the forums.</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.couchbase.com" class="icon">
+            <img src="../../../../_/img/logo.svg" alt="Couchbase">
+          </a>
+        </div>
+        <div class="contact">
+          <p class="address">3250 Olcott Street
+Santa Clara, CA 95054
+United States</p>
+          <a href="https://www.couchbase.com/contact" class="btn white-btn">Contact Us</a>
+          <a class="tel" href="tel:1-650-417-7500">1-650-417-7500</a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Company</span></li>
+          <li><a href="https://www.couchbase.com/about">About</a></li>
+          <li><a href="https://www.couchbase.com/leadership">Leadership</a></li>
+          <li><a href="https://www.couchbase.com/news-and-press-releases">News &amp; Press</a></li>
+          <li><a href="https://www.couchbase.com/careers">Careers</a></li>
+          <li><a href="https://www.couchbase.com/resources/events">Events</a></li>
+          <li><a href="https://www.couchbase.com/contact">Contact Us</a></li>
+          <li><a href="https://www.couchbase.com/request-pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Support</span></li>
+          <li><a href="https://developer.couchbase.com" target="_blank" rel="noopener">Developer Portal</a></li>
+          <li><a href="https://docs.couchbase.com" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://forums.couchbase.com" target="_blank" rel="noopener">Forums</a></li>
+          <li><a href="https://www.couchbase.com/services">Professional Services</a></li>
+          <li><a href="https://support.couchbase.com" target="_blank" rel="noopener">Support Login</a></li>
+          <li><a href="https://learn.couchbase.com/store" target="_blank" rel="noopener">Training</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><span class="heading">Quicklinks</span></li>
+          <li><a href="https://blog.couchbase.com" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.couchbase.com/downloads">Downloads</a></li>
+          <li><a href="https://www.couchbase.com/get-started-developing-nosql">Get Started</a></li>
+          <li><a href="https://learn.couchbase.com/store?utf8=%E2%9C%93&ss=1&ct=78327&commit=Filter" target="_blank" rel="noopener">Online Training</a></li>
+          <li><a href="https://www.couchbase.com/resources">Resources</a></li>
+          <li><a href="https://www.couchbase.com/nosql-resources/why-nosql">Why NoSQL</a></li>
+          <li><a href="https://www.couchbase.com/resources/security">Security</a></li>
+          <li><a href="https://www.couchbase.com/resources/gdpr">GDPR</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.facebook.com/Couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="26.363 116.363 560.215 560.215"><path d="m586.58 209.58c0-48.96-44.252-93.212-93.212-93.212h-373.79c-48.96 0-93.212 44.252-93.212 93.212v373.79c0 48.96 44.252 93.212 93.212 93.212h186.42v-211.85h-68.732v-93.212h68.732v-36.72c0-63.083 47.077-119.58 105.45-119.58h75.323v93.212h-75.323c-8.474 0-17.889 10.357-17.889 25.422v37.662h93.212v93.212h-93.212v211.85h99.803c48.96 0 93.212-44.252 93.212-93.212v-373.79z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="32.012 176.622 542.326 437.815"><path d="m574.34 227.46c-19.772 8.474-41.428 15.065-64.025 17.889 22.597-14.123 40.486-35.778 48.96-61.2-21.655 13.182-45.194 21.655-70.615 27.305-20.714-21.655-48.96-34.837-80.972-34.837-61.2 0-111.1 49.902-111.1 111.1 0 8.474 0.942 16.948 2.825 25.422-92.271-5.649-174.18-49.902-229.74-117.69-9.415 16.006-15.065 35.778-15.065 55.551 0 38.603 19.772 72.498 49.902 92.271-17.889-0.942-35.778-5.649-50.843-14.123v0.942c0 53.668 38.603 98.862 89.446 109.22-9.415 2.825-18.831 3.766-29.188 3.766-7.532 0-14.123-0.942-20.714-1.883 14.123 44.252 55.551 76.265 103.57 77.206-37.662 30.129-85.68 48.018-138.41 48.018-9.415 0-17.889-0.941-26.363-1.883 48.96 32.012 107.34 49.902 170.42 49.902 204.31 0 316.36-169.48 316.36-316.36v-14.123c21.656-14.125 40.487-33.897 55.551-56.494z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/couchbase" class="icon">
+              <svg width="50px" height="50px" viewBox="31.071 119.188 539.537 540.443"><path d="m531.97 119.19h-461.35c-21.655 0-39.545 16.948-39.545 38.603v463.24c0 21.655 17.889 38.603 39.545 38.603h460.41c21.655 0 39.545-16.948 39.545-38.603v-463.24c0.942-21.656-16.947-38.603-38.603-38.603zm-337.07 451.94h-81.914v-243.86h81.914v243.86zm-40.486-276.81c-28.246 0-46.135-18.831-46.135-42.369s17.889-42.369 46.135-42.369 45.194 17.889 45.194 42.369c0.942 23.538-16.948 42.369-45.194 42.369zm335.19 276.81h-81.914v-129.93c0-32.954-12.24-55.551-41.428-55.551-22.597 0-35.778 15.065-41.428 30.129-1.883 5.649-2.825 12.24-2.825 19.772v136.52h-81.914s0.942-221.26 0-243.86h81.914v34.837c11.298-16.948 30.129-40.486 73.44-40.486 53.668 0 94.154 34.837 94.154 110.16l1e-3 138.41zm-168.54-208.08s0.941-0.941 0 0z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <span>2018 COUCHBASE All rights reserved.</span>
+      <a href="https://www.couchbase.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.couchbase.com/terms-of-use">Terms of Use</a>
+      <a href="https://www.couchbase.com/cookie-policy">Cookie Policy</a>
+      <a href="https://info.couchbase.com/unsubscribe-or-manage-preferences.html" target="_blank" rel="noopener">Marketing Preference Center</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

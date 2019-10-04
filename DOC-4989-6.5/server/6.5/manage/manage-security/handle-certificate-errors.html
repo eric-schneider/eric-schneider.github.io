@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Handle Certificate Errors | Couchbase Docs</title>
+    <title>Certificate Error Handling | Couchbase Docs</title>
     <link rel="canonical" href="eric-schneider.github.io/DOC-4989-6.5/server/6.0/manage/manage-security/handle-certificate-errors.html">
     <link rel="stylesheet" href="../../../../_/css/site.css">
     <script>(window.dataLayer=window.dataLayer||[]).push({'gtm.start':+new Date(),event:'gtm.js'})</script>
@@ -1042,7 +1042,7 @@
   </li>
   <li class="nav-item is-current-page is-active" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="handle-certificate-errors.html">Handle Certificate Errors</a>
+    <a class="nav-link" href="handle-certificate-errors.html">Certificate Error Handling</a>
     </span>
   </li>
 </ul>
@@ -3783,7 +3783,7 @@
     <li class="crumb"><a href="security-management-overview.html">Manage Security</a></li>
     <li class="crumb"><a href="manage-authentication.html">Manage Authentication</a></li>
     <li class="crumb"><a href="manage-certificates.html">Manage Certificates</a></li>
-    <li class="crumb"><a href="handle-certificate-errors.html">Handle Certificate Errors</a></li>
+    <li class="crumb"><a href="handle-certificate-errors.html">Certificate Error Handling</a></li>
   </ul>
 </nav>
 <div class="tools" role="navigation">
@@ -3793,13 +3793,12 @@
 </div>
   </div>
 <article class="doc">
-<h1 class="page">Handle Certificate Errors</h1>
+<h1 class="page">Certificate Error Handling</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Specific errors can arise from use of X.509 certificates: these should be
-recognized and appropriately dealt with.
+Specific errors can arise from use of X.509 certificates: these should be recognized and appropriately dealt with.
 </blockquote>
 </div>
 </div>
@@ -3808,8 +3807,8 @@ recognized and appropriately dealt with.
 <h2 id="cluster-certificate-errors"><a class="anchor" href="#cluster-certificate-errors"></a>Cluster Certificate Errors</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following error messages may be encountered when configuring the cluster
-CA certificate:</p>
+<p>The following error messages may be encountered when configuring the cluster CA certificate.
+For examples of using the <code>openssl</code> command to generate and inspect certificates, see <a href="configure-server-certificates.html" class="page">Configure Server Certificates</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -3827,51 +3826,29 @@ CA certificate:</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Certificate should not be empty</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This error message can occur if the request body of the certificate is empty.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open the certificate file, and verify whether it is empty or not.
-The certificate file should be readable using openssl or via online SSL tools such as <a href="https://www.sslchecker.com/certdecoder" target="_blank" rel="noopener">sslchecker</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request body of the certificate is empty.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inspect the certificate file using the <code>openssl</code> command, and verify whether it is empty or not.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Certificate is not valid at this time</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This error message can occur if the certificate has expired, or is not yet valid.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Verify whether the certificate validity-dates (begins on, and expires on) are currently valid corresponding to the server clock time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The certificate either has expired, or is not yet valid.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inspect the certificate file using the <code>openssl</code> command, and verify whether the certificate&#8217;s validity-dates (<code>Not Before</code>, and <code>Not After</code>) are currently valid, in correspondence with server-clock time.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Malformed certificate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This error message can occur due to many reasons - an extra space in the certificate digest body, incorrect certificate format, and so on.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use a properly configured certificate, and make sure it’s readable, using <code>openssl</code>.
-It should look as follows: Certificate begins with</p>
-<p class="tableblock"><code>-----BEGIN CERTIFICATE-----</code></p>
-<p class="tableblock">and ends with</p>
-<p class="tableblock"><code>-----END CERTIFICATE-----</code></p>
-<p class="tableblock">on a new line with no spaces before or after.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The certificate contains incorrect content.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check the validity of the certificate, using <code>openssl</code>, and if necessary, create a new certificate.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Only one certificate per request is allowed</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Appears when the file contains more than one key or certificate.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open the <code>.pem</code> file, and make sure that it has only a single certificate digest (such as single <code>BEGIN CERTIFICATE,</code> <code>END CERTIFICATE</code> pragmas).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Encrypted certificates are not supported</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This error message can occur if you are trying to load a certificate that is encrypted.
-Verify by opening the certificate file.
-If you see something similar to the line shown below, you will know your certificate is encrypted.:</p>
-<p class="tableblock"><code>-----BEGIN RSA PRIVATE KEY-----</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Couchbase does not support encrypted certificates.
-Decrypt the certificate with <code>openssl</code> before loading the certificate in Couchbase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">openssl rsa -in privateKey.pem -out newPrivateKey.pem</code></pre>
-</div>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The file inappropriately contains more than one key or certificate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inspect the certificate, and recreate if necessary.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Invalid certificate type: ~s</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Appears when a header other than <code>BEGIN CERTIFICATE</code> has been found.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open the certificate file, and verify whether it is a valid certificate.
-The certificate file should be readable using <code>openssl</code> or via online SSL tools such as <a href="https://www.sslchecker.com/certdecoder" target="_blank" rel="noopener">sslchecker</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inspect the certificate, and verify its validity.
+Recreate the certificate if necessary</p></td>
 </tr>
 </tbody>
 </table>
@@ -3900,53 +3877,43 @@ certificate:</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Cluster CA needs to be set before setting node certificate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This error can occur when your cluster is still using the self-generated certificate, and you are attempting to configure a node certificate.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set up the cluster CA certificate before configuring the per node certificate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cluster root certificate has not been established.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set up the cluster CA certificate; then continue by creating the node certificate.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Incorrectly configured certificate chain.
-&lt;Error&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Denotes an invalid certificate in the chain file when configuring Couchbase.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Chain file should contain a sequence of PEM (base64) encoded X.509 certificates ordered from leaf to and including the intermediate certificate authorities.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Incorrectly configured certificate chain</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Denotes an invalid certificate in the chain file.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The chain file should contain a sequence of PEM (base64) encoded X.509 certificates, starting from the node certificate, and including all intermediate certificates that exist, in the order of signing.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Unable to read private key file &lt;Path&gt;.
-&lt;Error&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Error&gt;</code> is one of the file read errors.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure that you have copied an unencrypted version of the private key file to the inbox folder on the Couchbase node.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Unable to read private key file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The private key cannot be read.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure that the private key for the node certificate has been copied to the inbox folder of the current node.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Unable to read certificate chain file &lt;Path&gt;.
-&lt;Error&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Error&gt;</code> is one of the file read errors.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure that you have copied an unencrypted version of the chain file to the inbox folder on the Couchbase node.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Unable to read certificate chain file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The chain file cannot be read.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure that the private key for the node certificate has been copied to the inbox folder of the current node.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Invalid private key type: &lt;Type&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Invalid private key type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The private key has an unsupported header.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure that you use a valid private key file.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure that a valid private key file has been created and copied to the inbox of the current node.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Provided certificate doesn&#8217;t match provided private key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The certificate doesn&#8217;t recognize the message signed with a private key.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Be sure that you use a complete key pair</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Encrypted keys are not supported</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The private key is encrypted.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Couchbase does not support encrypted keys.
-You should decrypt the private key with OpenSSL before loading the certificate in Couchbase.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The certificate does not recognize the message signed with a private key.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Be sure that the mutually corresponding private key and chain file are being used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Provided private key contains incorrect number of entries</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The private key is a chain of entries.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The private key file should contain a single key digest.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The private key inappropriately contains more than one entry.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The private key file should contain only a single entry.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Malformed or unsupported private key format</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The private key cannot be used.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open the key file, and verify whether it is a valid private key.
-The certificate file should be readable using <code>openssl</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The private key cannot be used, due to an inappropriate format.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inspect the private key, verify whether it is valid; and recreate if necessary.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>File does not exist</code></p></td>
@@ -3955,8 +3922,20 @@ The certificate file should be readable using <code>openssl</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Missing permission for reading the file, or for searching one of the parent directories</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You don&#8217;t have the proper permissions to read the file or to search its parent directories.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Change the permissions to allow you to read the file.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current permissions do not permit the reading of the file or the searching of its parent directories.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Change the permissions to permit reading and searching.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Cannot validate certificate for <em>&lt;ip-address&gt;</em> because it doesn&#8217;t contain any IP SANs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The node certificate does not contain the required IP-address <em>Subject Alternative Name</em>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Recreate the node certificate, specifying the appropriate Subject Alternative Name.
+See <a href="configure-server-certificates.html" class="page">Configure Server Certificates</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Certificate is valid for <em>&lt;ip-address-1&gt;</em>, not &lt;ip-address-2&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The node certificate contains an incorrect IP-address <em>Subject Alternative Name</em>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Recreate the node certificate, specifying the the correct IP-address Subject Alternative Name.
+See <a href="configure-server-certificates.html" class="page">Configure Server Certificates</a>.</p></td>
 </tr>
 </tbody>
 </table>

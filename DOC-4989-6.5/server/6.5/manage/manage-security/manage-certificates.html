@@ -1042,7 +1042,7 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="handle-certificate-errors.html">Handle Certificate Errors</a>
+    <a class="nav-link" href="handle-certificate-errors.html">Certificate Error Handling</a>
     </span>
   </li>
 </ul>
@@ -3812,15 +3812,26 @@ The current section provides practical steps for:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><em>Configuring server certificates</em>: These reside on Couchbase Server-nodes, identify the cluster to networked clients, and support encrypted network communications.</p>
+<p><em>Configuring server certificates</em>: These reside on Couchbase Server-nodes, identify the cluster to networked clients, and support encrypted network communications.
+Procedures are provided to demonstrate how a cluster can be protected by means of <em>root</em> and <em>node</em> certificates; and how node certificates can themselves be created with additional security and efficiency, by the creation and use of <em>intermediate</em> certificates.
+See <a href="configure-server-certificates.html" class="page">Configure Server Certificates</a>.</p>
 </li>
 <li>
-<p><em>Configuring client certificates</em>: These can be used by networked clients to authenticate with Couchbase Server, and to support encrypted network communications.</p>
+<p><em>Configuring client certificates</em>: These can be used by networked clients to authenticate with Couchbase Server, and to support encrypted network communications.
+Certificate creation is demonstrated both with and without the use of intermediate certificates.
+The certificate-creation requirements specific to Java applications are demonstrated.
+Additionally, links are provided to other areas of the documentation, where the certificates in the current section can be used to establish secure <em>XDCR</em> communication between clusters; and to establish communication between a cluster and a Java client.
+See <a href="configure-client-certificates.html" class="page">Configure Client Certificates</a>.</p>
+</li>
+<li>
+<p><em>Handling client certificates</em>: Couchbase Server can be configured to accept or demand the presentation by clients of certificates for the purpose of authentication.
+Since client certificates contain a <em>username</em>, which can be represented in a number of different ways within the certificate content, Couchbase Server must be configured to identify the appropriate representation, and so extract the specified username.
+Full instructions for accomplishing this with the UI, the CLI, and the REST API are provided: see <a href="enable-client-certificate-handling.html" class="page">Enable Client-Certificate Handling</a>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Additionally, procedures are provided for the rotating of server certificates, to ensure optimal security; the enablement of client-certificate handling on the current cluster; and the handling of errors related to certificate management.</p>
+<p>Additionally, procedures are provided for <a href="rotate-server-certificates.html" class="page">Certificate Rotation</a>, to ensure optimal security; and <a href="handle-certificate-errors.html" class="page">Certificate Error Handling</a>.</p>
 </div>
 </div>
 </div>

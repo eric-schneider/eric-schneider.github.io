@@ -1042,7 +1042,7 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="../manage/manage-security/handle-certificate-errors.html">Handle Certificate Errors</a>
+    <a class="nav-link" href="../manage/manage-security/handle-certificate-errors.html">Certificate Error Handling</a>
     </span>
   </li>
 </ul>
@@ -3858,14 +3858,21 @@ If the data is not compressed, it will be compressed first and then backed up wh
 <ul>
 <li>
 <p>The Search Service now uses port 9130 / 19130 for node-to-node traffic.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The Search Service also no longer uses an encrypted port unless <a href="../learn/clusters-and-availability/node-to-node-encryption.html" class="page">node-to-node encryption</a> is enabled.</p>
 <div class="paragraph">
-<p>The Search Service also no longer uses an encrypted port unless <a href="../learn/clusters-and-availability/node-to-node-encryption.html" class="page">node-to-node encryption</a> is enabled.
-In Couchbase Server 6.0 Enterprise Edition, the Search Service explicitly required encrypted port 18094 for <a href="../learn/services-and-indexes/services/search-service.html" class="page">scatter-gather</a> operations between nodes running the Search Service (even if you were still using unencrypted port 8094 for client-to-node traffic).
+<p>In Couchbase Server 6.0 Enterprise Edition, the Search Service explicitly required encrypted port 18094 for <a href="../learn/services-and-indexes/services/search-service.html" class="page">scatter-gather</a> operations between nodes running the Search Service (even if you were still using unencrypted port 8094 for client-to-node traffic).
 Starting in Couchbase Server 6.5, the Search Service uses gRPC over port 9130 / 19130 for all node-to-node traffic, and no longer uses an encrypted port for intra-cluster communication unless <a href="../learn/clusters-and-availability/node-to-node-encryption.html" class="page">node-to-node encryption</a> is enabled.</p>
 </div>
 </li>
+</ul>
+</div>
+</li>
 <li>
-<p>The amount of required ports in the 21100-21299 range has been drastically reduced, and are effectively replaced by the following ports for purposes of cluster management traffic and communication:</p>
+<p>The 21100-21299 range of cluster and data management ports is no longer required.
+Instead, the following ports are now required for cluster management:</p>
 <div class="ulist">
 <ul>
 <li>

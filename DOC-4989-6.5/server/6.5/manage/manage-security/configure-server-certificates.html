@@ -1042,7 +1042,7 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="handle-certificate-errors.html">Handle Certificate Errors</a>
+    <a class="nav-link" href="handle-certificate-errors.html">Certificate Error Handling</a>
     </span>
   </li>
 </ul>
@@ -4068,18 +4068,14 @@ The values of <code>keyUsage</code> are <code>digitalSignature</code>, specifyin
 <div class="content">
 <pre>cp ./server.ext ./server.ext.tmp
 
-echo "subjectAltName = DNS:node2.cb.com,IP:10.143.192.102" \
+echo "subjectAltName = IP:10.143.192.102" \
 &gt;&gt; ./server.ext.tmp</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This customized extensions file is to be used to authenticate a single node, whose DNS name of the server-node is <code>node2.cb.com</code>, and its IP address is <code>10.143.192.102</code>.
-If experimentation is being performed locally, the <code>/etc/hosts</code> file for the local machine should contain a line such as the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>10.143.192.102  node2.cb.com</pre>
-</div>
+<p>This customized extensions file is to be used to authenticate a single node, whose IP address is <code>10.143.192.102</code>.
+Note that if the DNS naming-convention is used by the cluster, the node&#8217;s DNS name might be specified instead: for example, <code>DNS:node2.cb.com</code>.
+If the node is not identified appropriately in the certificate, authentication fails.</p>
 </div>
 <div class="paragraph">
 <p>The creation of the customized extensions file should occur once for each node, with each customized extensions file containing only those extensions that apply to the current node.</p>
@@ -4407,17 +4403,17 @@ The <code>keyUsage</code> value <code>digitalSignature</code> specifies that the
 </li>
 <li>
 <p>Add node-specific information for each node, in turn.
-Although the current example features a single-node cluster, this step would be repeated for each node in the cluster, if the cluster contained multiple nodes: in each case, the node-specific information (here, DNS name and IP address) being different.</p>
+Although the current example features a single-node cluster, this step would be repeated for each node in the cluster, if the cluster contained multiple nodes: in each case, the node-specific information (here, the node&#8217;s IP address) being different.</p>
 <div class="listingblock">
 <div class="content">
 <pre>cp server.ext temp.ext
 
-echo 'subjectAltName = DNS:node2.cb.com,IP:10.143.192.102' &gt;&gt; temp.ext</pre>
+echo 'subjectAltName = IP:10.143.192.102' &gt;&gt; temp.ext</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>This creates <code>temp.ext</code> as an extension file that will be used for one node only.
-The file specifies the DNS name and IP address specific to the node.</p>
+The file specifies the IP address specific to the node.</p>
 </div>
 </li>
 <li>
@@ -4514,30 +4510,6 @@ For steps to prepare a certificate supportive of a Java client, see <a href="con
 <div class="paragraph">
 <p>Note that access by means of a client certificate must be specifically enabled, on the cluster that is to be accessed: see <a href="#client-certificate-enablement">Client Certificate Enablement</a>, below.</p>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="client-certificate-enablement"><a class="anchor" href="#client-certificate-enablement"></a>Client-Certificate Enablement</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>As well as using its own certificates to authenticate with clients, Couchbase Server may also allow clients' use of their own certificates; whereby they authenticate themselves with Couchbase Server.
-The handling of client certificates by the server must be explicitly enabled.
-For information on enablement options and identity encodings, see <a href="../../learn/security/certificates.html#client-certificates" class="page">Client Certificates</a>.
-For an introduction to the user interface provided by Couchbase Web Console, see <a href="manage-security-settings.html#client-certificate-security-screen-display" class="page">Client Certificate</a>.
-For information on performing enablement with Couchbase Web Console, the CLI, and the REST API, see
-<a href="enable-client-certificate-handling.html" class="page">Enable Client-Certificate Handling</a>.</p>
-</div>
-<div class="paragraph">
-<p>The REST API might be used to enable client-certificate handling as follows:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>curl -u Administrator:password -v -X POST \
-http://10.143.192.102:8091/settings/clientCertAuth \
--d '{"state": "enable","prefixes": [{"path": \
-"subject.cn","prefix": "","delimiter": ""}]}'</pre>
 </div>
 </div>
 </div>

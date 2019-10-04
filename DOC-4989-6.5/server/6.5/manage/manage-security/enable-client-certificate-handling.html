@@ -1042,7 +1042,7 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="handle-certificate-errors.html">Handle Certificate Errors</a>
+    <a class="nav-link" href="handle-certificate-errors.html">Certificate Error Handling</a>
     </span>
   </li>
 </ul>
@@ -3798,8 +3798,7 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-Couchbase Server can be enabled to support certificate-based
-authentication by networked clients.
+Couchbase Server can be enabled to support certificate-based client authentication.
 </blockquote>
 </div>
 </div>
@@ -3808,9 +3807,8 @@ authentication by networked clients.
 <h2 id="certificate-based-client-authentication"><a class="anchor" href="#certificate-based-client-authentication"></a>Certificate-Based Client Authentication</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Couchbase clients can be authenticated by means of X.509 certificates, but
-only after client-certificate handling has been explicitly enabled. This
-can be accomplished with the UI, the CLI, or the REST API.</p>
+<p>Couchbase Server-clients can be authenticated by means of X.509 certificates: client-certificate handling must be explicitly enabled.
+Enablement can be accomplished with the <a href="#enable-client-certificate-handling-with-the-ui">UI</a>, the <a href="#enable-client-certificate-handling-with-the-cli">CLI</a>, and the <a href="#enable-client-certificate-handling-with-the-rest-api">REST API</a>.</p>
 </div>
 </div>
 </div>
@@ -3823,8 +3821,7 @@ can be accomplished with the UI, the CLI, or the REST API.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Access Couchbase Web Console, and left-click on the <strong class="ui">Security</strong> tab, in
-the vertical navigation-bar, at the left-hand side of the Dashboard:</p>
+<p>Access Couchbase Web Console, and left-click on the <strong class="ui">Security</strong> tab, in the vertical navigation-bar, at the left-hand side of the Dashboard:</p>
 <div id="security-tab-with-hand-cursor" class="imageblock text-left">
 <div class="content">
 <img src="../_images/manage-security/securityTabWithHandCursor.png" alt="securityTabWithHandCursor" width="110">
@@ -3843,9 +3840,7 @@ the vertical navigation-bar, at the left-hand side of the Dashboard:</p>
 </div>
 </li>
 <li>
-<p>To manage client certificate
-handling, left-click on the <strong>Client Certificate</strong> tab, on the upper,
-horizontal control bar:</p>
+<p>To manage client certificate handling, left-click on the <strong>Client Certificate</strong> tab, on the upper, horizontal control bar:</p>
 <div id="client-certificate-tab" class="imageblock text-left">
 <div class="content">
 <img src="../_images/manage-security/clientCertificateTab.png" alt="clientCertificateTab" width="210">
@@ -3860,47 +3855,56 @@ horizontal control bar:</p>
 </div>
 </div>
 </li>
+</ol>
+</div>
+<div id="client-certificate-enablement-values" class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Specify whether certificates are enabled, and if so, whether manadatory. The
-<strong>Require Client Certificate</strong> panel provides three options, as radio buttons.
+<p>Specify whether certificates are enabled, and if so, whether manadatory. The <strong>Require Client Certificate</strong> panel provides three options, as radio buttons.
 These are:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Disable</strong>:  Disables client based certificate authentication.
+<p><strong>Disable</strong>:  Disables client certificate-based authentication.
 This is the default value.</p>
 </li>
 <li>
-<p><strong>Enable</strong>:  When enabled, if the client presents a certificate,
-then that certificate is used to authenticate.
-If authentication fails, then access is denied.
-However, if the client does not present a certificate, the certificate based
-authentication will be bypassed.</p>
+<p><strong>Enable</strong>: Enables client certificate-based authentication.
+When enabled, if the client presents a certificate, Couchbase Server attempts to extract a username from the certificate, and then to authenticate based on the extracted username.
+If the client does not present a certificate, the certificate-based authentication-process is not triggered; and the client is expected to authenticate by some other means.</p>
 </li>
 <li>
-<p><strong>mandatory</strong>: The client must present a valid certificate in order to
-gain access to Couchbase buckets.</p>
-<div class="paragraph">
-<p>Note, if you are using XDCR, <strong>do not</strong> use the <code>mandatory</code> state.</p>
-</div>
+<p><strong>mandatory</strong>: Specifies that all clients <em>must</em> present a certificate, in order to authenticate.
+No other form of client-authentication is handled over the secure connection.
+Note that imposing this level of security likely requires the additional measure of disabling non-secure console access: see <a href="manage-console-access.html" class="page">Manage Console Access</a>.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>In order to identify the client-certificates that will be presented for
-authentication, specify one or more appropriate combinations of <strong>Path</strong>,
-<strong>Prefix</strong>, and <strong>Delimiter</strong>. For an explanation of these values, see
-<a href="../../learn/security/certificates.html#identity-encoding-in-client-certificates" class="page">Identity
-Encoding in Client Certificates</a>.</p>
-</li>
-<li>
-<p>Left-click on the <strong>Save</strong> button, to save the settings.</p>
-</li>
-</ol>
+<p>If <strong>Require Client Certificate</strong> has been set to either <strong>Enable</strong> or <strong>Mandatory</strong>, establish how the username within each client certificate is to be determined.</p>
+<div class="paragraph">
+<p>Each certificate is expected to provide a <em>username</em> as part of its content.
+Frequently, the username is specified as the certificate&#8217;s <em>Subject Common Name</em>; but it may also be expressed as a <em>Subject Alternative Name</em>.
+These certificate-configuration options are described in detail in <a href="../../learn/security/certificates.html#identity-encoding-in-client-certificates" class="page">Specifying Usernames for Client-Certificate Authentication</a>; and practical examples of their use are provided in <a href="configure-client-certificates.html" class="page">Configure Client Certificates</a>.
+The administrator who configures client-certificate handling on Couchbase Server is expected to anticipate what forms of username-specification are likely to occur in the certificates used by client applications, and to decide how they should be handled.</p>
 </div>
 <div class="paragraph">
-<p>Client certificates will now be handled in accordance with your specification.</p>
+<p>To enable Couchbase Server to identify the usernames embedded in client certificates, specify one or more appropriate combinations of <strong>Path</strong>, <strong>Prefix</strong>, and <strong>Delimiter</strong>.
+Add and delete rows as appropriate, by left-clicking on the <strong>+</strong> and <strong>-</strong> buttons.
+Note that the default option is <strong>subject.cn</strong>, which indicates that the <em>Subject Common Name</em> within the certificate will be considered a username.</p>
+</div>
+<div class="paragraph">
+<p>For an explanation of <strong>Path</strong>, <strong>Prefix</strong>, and <strong>Delimiter</strong> values, see
+<a href="../../learn/security/certificates.html#identity-encoding-in-client-certificates" class="page">Specifying Usernames for Client-Certificate Authentication</a>.
+Note that <strong>Prefix</strong> and <strong>Delimiter</strong> are optional; and their fields can therefore be left blank.</p>
+</div>
+</li>
+<li>
+<p>Left-click on the <strong>Save</strong> button, to save settings.
+Client certificates will now be handled in accordance with your specification.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -3908,153 +3912,164 @@ Encoding in Client Certificates</a>.</p>
 <h2 id="enable-client-certificate-handling-with-the-cli"><a class="anchor" href="#enable-client-certificate-handling-with-the-cli"></a>Enable Client-Certificate Handling with the CLI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Use the <code class="cmd">couchbase-cli</code> <a href="../../cli/cbcli/couchbase-cli-ssl-manage.html#couchbaseclisslmanage1.idm68744912" class="page">ssl-manage</a> command:</p>
+<p>To use the Couchbase CLI to enable and configure client-certificate handling, use the <a href="../../cli/cbcli/couchbase-cli-ssl-manage.html" class="page">ssl-manage</a> command.
+The value assigned to the <code>--set-client-auth</code> parameter of this command should be a JSON document that lists the <em>enablement state</em> and the <em>path-prefix-delimiter</em> combinations for client-certificate handling.
+The document may appear as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>couchbase-cli ssl-manage &lt;options&gt;</pre>
+<pre>{
+  "state": "enable",
+  "prefixes": [
+    {
+      "path": "san.uri",
+      "prefix": "www.",
+      "delimiter": "."
+    },
+    {
+      "path": "san.email",
+      "prefix": "",
+      "delimiter": "@"
+    }
+  ]
+}</pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 22.4719%;">
-<col style="width: 22.4719%;">
-<col style="width: 55.0562%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Options</th>
-<th class="tableblock halign-left valign-top">Value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--set-client-auth-state</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">disable | enable | mandatory</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Enable or disable the SSL client certificate authentication.</p>
+<div class="paragraph">
+<p>The value of <code>state</code> can be <code>enable</code>, <code>disable</code>, or <code>mandatory</code>.
+See the <a href="#client-certificate-enablement-values">definitions</a> provided above.
+Each of the elements specified in the <code>prefixes</code> array must be a tuple of three key-value pairs, whose respective keys are <code>path</code>, <code>prefix</code>, and <code>delimiter</code>.
+Each tuple thus specifies an element in the client certificate that is to be extracted and used as a username for authentication:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code class="param">disable</code>: Disables client based certificate authentication.
-This is the default value.</p>
+<p><em>path</em> can be one of the following values: "subject.cn", "san.uri", "san.email", "san.dns".</p>
 </li>
 <li>
-<p><code class="param">enable</code>:  When enabled, if the client presents a certificate,
-then that certificate is used to authenticate.
-If authentication fails, then access is denied.
-However, if the client does not present a certificate, the certificate based
-authentication will be bypassed.</p>
+<p><em>prefix</em> specifies the client certificate prefix value.</p>
 </li>
 <li>
-<p><code class="param">mandatory</code>: The client must present a valid certificate in order to
-gain access to Couchbase buckets.
-If using XDCR, <strong>do not</strong> use the <code class="param">mandatory</code> state for X.509 Certificate
-Authentication.</p>
+<p><em>delimiters</em> is a list of characters that can individually be treated as a delimiter.</p>
 </li>
 </ul>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--set-client-auth-path</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">subject.cn | san.uri | san.dnsname | san.email</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set SSL client certificate type value.
-This field will be used to extract the user name from the certificate.
-Currently, only the fields specified in the values column are supported.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--set-client-auth-prefix</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">set_client_auth_prefix</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set SSL client certificate prefix value.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--set-client-auth-delimiter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">set_client_auth_delimiter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set SSL client certificate delimiter value.
-The delimiter can either be a string or a character.
-The parsing of the certificate for the user name ends when the delimiter value
-is found.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--client-auth</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Show SSL client certificate authentication value.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>After setting up the server side for client authentication, you should also
-assign the users to some roles on the server side.
-To do so:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="paragraph">
+<p>Note the following constraints when specifying multiple tuples:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p>Create a user with authentication source (domain) 'Couchbase'.</p>
+<p>A maximum of 10 {path, prefix,delimiters} tuples can be specified in the <code>prefixes</code> array.</p>
 </li>
 <li>
-<p>Ensure that this user is an internally managed user with a strong password.
-While the password is not used as part of the certificate based authentication,
-it is required if the user is trying to access the resources through the web console.</p>
+<p>No two tuples can have the same <code>path</code> and <code>prefix</code> fields.</p>
 </li>
-</ol>
+<li>
+<p>All the fields in the tuple must be specified.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the document is saved as a local file, the command can be executed as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/opt/couchbase/bin/couchbase-cli ssl-manage -c 10.143.192.102 \
+-u Administrator -p password \
+--set-client-auth ./client-auth-settings.json</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To check the results, use the same command with the <code>--client-auth</code> option:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/opt/couchbase/bin/couchbase-cli ssl-manage -c 10.143.192.102 \
+-u Administrator -p password \
+--client-auth</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If successful, the command returns the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{
+  "prefixes": [
+    {
+      "delimiter": ".",
+      "path": "san.uri",
+      "prefix": "www."
+    },
+    {
+      "delimiter": "@",
+      "path": "san.email",
+      "prefix": ""
+    }
+  ],
+  "state": "enable"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This confirms that the settings have been successfully updated.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="enable-client-certificate-handling-with-the-rest-api"><a class="anchor" href="#enable-client-certificate-handling-with-the-rest-api"></a>Enable Client-Certificate Handling with the REST API</h2>
 <div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Create a data file containing the payload for your certificate authentication settings.
-For example, <code>cb-certauth-setting.json</code>:</p>
+<div class="paragraph">
+<p>Couchbase Server client-certificate handling can be enabled with the REST API, using the <code>POST /settings/clientCertAuth</code> http method and URI.
+The call requires creation of a JSON document that lists the <em>enablement state</em> and the <em>path-prefix-delimiter</em> combinations for client-certificate handling; as described above in <a href="#enable-client-certificate-handling-with-the-cli">Enable Client-Certificate Handling with the CLI</a>.</p>
+</div>
+<div class="paragraph">
+<p>Enter the following:</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre>{
-	"state": "enable",
-	"prefixes": [{
-			"path": "san.uri",
-			"prefix": "www.",
-			"delimiter": "."
-		},
-		{
-			"path": "san.email",
-			"prefix": "couchbase.",
-			"delimiter": "."
-		}
-	]
-}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Run the following command to enable x.509 certificate authentication on the server.</p>
-<div class="listingblock">
-<div class="content">
-<pre>curl -H "Content-Type: application/json" --data-binary @cb-certauth-setting.json http://Administrator:password@127.0.0.1:8091/settings/clientCertAuth</pre>
-</div>
-</div>
-</li>
-<li>
-<p>To retrieve the client certificate authentication settings, run the following command:</p>
-<div class="listingblock">
-<div class="content">
-<pre>curl -X GET  Administrator:password@localhost:8091/settings/clientCertAuth</pre>
+<pre>curl -v -X POST http://10.143.192.102:8091/settings/clientCertAuth \
+--data-binary @client-auth-settings.json \
+-u Administrator:password</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This returns the following:</p>
+<p>If successful, the call returns a <code>200 OK</code> message.
+To check the resulting configuration, use the <code>GET /settings/clientCertAuth</code> http method and URI, as follows.
+Note that this example is piped to the <a href="https://stedolan.github.io/jq/">jq</a> command, to optimize readability.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>{"state":"enable","prefixes":[{"delimiter":".","path":"san.uri","prefix":"www."},{"delimiter":".","path":"san.email","prefix":"couchbase."}]}</pre>
+<pre>curl -u Administrator:password -v -X GET \
+http://10.143.192.102:8091/settings/clientCertAuth \
+-u Administrator:password | jq</pre>
 </div>
 </div>
-</li>
-</ol>
+<div class="paragraph">
+<p>If successful, the call returns the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{
+  "state": "enable",
+  "prefixes": [
+    {
+      "delimiter": ".",
+      "path": "san.uri",
+      "prefix": "www."
+    },
+    {
+      "delimiter": "@",
+      "path": "san.email",
+      "prefix": ""
+    }
+  ]
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This confirms that the settings have been successfully updated.</p>
 </div>
 </div>
 </div>

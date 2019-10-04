@@ -3614,12 +3614,12 @@ Refer to <a href="#">xdcr-reference:xdcr-advanced-settings.adoc</a> for more inf
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Node-to-node</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Unencrypted</strong>: 4369, 8091-8094, 9100-9105, 9110-9118, 9120-9122, 9999, 11209-11210, 21100-21299</p>
-<p class="tableblock"><strong>Encrypted</strong>: 11207, 18091-18094</p></td>
+<p class="tableblock"><strong>Encrypted</strong>: 11207, 18091-18094 <sup class="footnote" id="_footnote_fts-encryption">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Client-to-node</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Unencrypted</strong>: 8091-8096, 9140 <sup class="footnote" id="_footnote_eventing-debug-port">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>, 11210, 11211</p>
-<p class="tableblock"><strong>Encrypted</strong>: 11207, 18091-18096 <sup class="footnote" id="_footnote_analytics-encrypted-port">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Unencrypted</strong>: 8091-8096, 9140 <sup class="footnote" id="_footnote_fn-eventing-debug-port">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>, 11210, 11211</p>
+<p class="tableblock"><strong>Encrypted</strong>: 11207, 18091-18096 <sup class="footnote" id="_footnote_fn-analytics-encrypted-port">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>XDCR (cluster-to-cluster)</em></p></td>
@@ -3709,7 +3709,7 @@ These are expected to execute locally on a node and so do not require external a
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>epmd</code> <sup class="footnote" id="_footnote_fn-cannot-remap">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>epmd</code> <sup class="footnote" id="_footnote_fn-cannot-remap">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4369</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Erlang Port Mapper Daemon</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
@@ -3744,12 +3744,12 @@ These are expected to execute locally on a node and so do not require external a
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fts_http_port</code> / <code>fts_ssl_port</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8094 / 18094</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Search Service REST/HTTP traffic</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> if one has been specified.]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbas_http_port</code> / <code>cbas_ssl_port</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbas_http_port</code> / <code>cbas_ssl_port</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8095 / 18095</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Analytics service REST/HTTP traffic</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
@@ -3853,7 +3853,7 @@ These are expected to execute locally on a node and so do not require external a
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbas_cluster_port</code> <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbas_cluster_port</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">9115</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Analytics service</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
@@ -3887,7 +3887,8 @@ These are expected to execute locally on a node and so do not require external a
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbas_auth_port</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">9119</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Analytics service (node-local only)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Analytics service</p>
+<p class="tableblock">(node-local only)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
@@ -3917,7 +3918,7 @@ These are expected to execute locally on a node and so do not require external a
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>debugPort</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>debugPort</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">9140</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Eventing Service Debugger</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
@@ -3927,7 +3928,8 @@ These are expected to execute locally on a node and so do not require external a
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>xdcr_rest_port</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">9998</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">XDCR REST port (node-local only)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XDCR REST port</p>
+<p class="tableblock">(node-local only)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
@@ -3957,7 +3959,7 @@ These are expected to execute locally on a node and so do not require external a
 <td class="tableblock halign-left valign-top"><p class="tableblock">Version 2</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>moxi_port</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> <sup class="footnote" id="_footnote_fn-moxi">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup>, and the ability to create a bucket with a Moxi port was <a href="#">5.5@release-notes:relnotes.adoc#deprecation-550</a>. Starting in version 6.5, support for port-based buckets is <a href="../../6.5/release-notes/relnotes.html#changes-in-behavior-650" class="page">completely removed</a>. Attempts to upgrade to version 6.5 or later will fail during rebalance if a port-based bucket is present in the cluster. Use <a href="../cli/cbcli/couchbase-cli-bucket-edit.html" class="page">`bucket-edit --remove-bucket-port`</a> in the CLI to remove the port from each bucket, and consider using <a href="install-client-server.html" class="page">client-side Moxi</a>.]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>moxi_port</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> <sup class="footnote" id="_footnote_fn-moxi">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11211</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Moxi port</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
@@ -3965,9 +3967,10 @@ These are expected to execute locally on a node and so do not require external a
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>moxi_port_internal</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>moxi_port_internal</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11213</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Moxi port (node-local only)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Moxi port</p>
+<p class="tableblock">(node-local only)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
@@ -4055,22 +4058,19 @@ Refer to <a href="#table-ports-detailed">Table 2</a> for details about default p
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnotedef_1">
-<a href="#_footnoteref_1">1</a>. The Eventing Service Debugger port (<code>debugPort</code>) is an internal port and is not supported for external access outside of the cluster. You should only use this port in your development environments.
+<a href="#_footnoteref_1">1</a>. In Couchbase Server 6.0 Enterprise Edition, the Search Service explicitly requires encrypted port 18094 (<code>fts_ssl_port</code>) for scatter-gather operations between nodes that are running the Search Service (even if you&#8217;re still using unencrypted port 8094 for client-to-node traffic). The node-to-node traffic uses the HTTP/2 protocol and is encrypted with either the auto-generated certificate from installation, or with a <a href="../learn/security/certificates.html" class="page">custom node certificate</a> if one has been specified.
 </div>
 <div class="footnote" id="_footnotedef_2">
-<a href="#_footnoteref_2">2</a>. The Analytics Service encrypted port (18095) is not currently used, but is reserved for future use.
+<a href="#_footnoteref_2">2</a>. The Eventing Service Debugger port (9140, <code>debugPort</code>) is an internal port and is not supported for external access outside of the cluster. You should only use this port in your development environments.
 </div>
 <div class="footnote" id="_footnotedef_3">
-<a href="#_footnoteref_3">3</a>. This port cannot be remapped.
+<a href="#_footnoteref_3">3</a>. The Analytics Service encrypted port (18095) is not currently used, but is reserved for future use.
 </div>
 <div class="footnote" id="_footnotedef_4">
-<a href="#_footnoteref_4">4</a>. In Couchbase Server 6.0 Enterprise Edition, the Search Service explicitly requires encrypted port 18094 (`fts_ssl_port`) for scatter-gather operations between nodes that are running the Search Service (even if you&#8217;re still using unencrypted port 8094 for client-to-node traffic). The node-to-node traffic uses the HTTP/2 protocol and is encrypted with either the auto-generated certificate from installation, or with a xref:learn:security/certificates.adoc[custom node certificate
+<a href="#_footnoteref_4">4</a>. This port cannot be remapped.
 </div>
 <div class="footnote" id="_footnotedef_5">
-<a href="#_footnoteref_5">5</a>. In version 5.5 Beta, this port was named <code>cbas_hyracks_console_port</code>.
-</div>
-<div class="footnote" id="_footnotedef_6">
-<a href="#_footnoteref_6">6</a>. Support for server-side Moxi was xref:5.0@release-notes:relnotes.adoc#release-500[deprecated in version 5.0
+<a href="#_footnoteref_5">5</a>. Support for server-side Moxi was <a href="#">5.0@release-notes:relnotes.adoc#release-500</a>, and the ability to create a bucket with a Moxi port was <a href="#">5.5@release-notes:relnotes.adoc#deprecation-550</a>. Support for port-based buckets will be completely removed in a future release. Attempts to upgrade to a release that doesn&#8217;t support port-based buckets will fail during rebalance if a port-based bucket is present in the cluster. Use <a href="../cli/cbcli/couchbase-cli-bucket-edit.html" class="page"><code>bucket-edit --remove-bucket-port</code></a> in the CLI to remove the port from each bucket, and consider using <a href="install-client-server.html" class="page">client-side Moxi</a>.
 </div>
 </div>
 </article>

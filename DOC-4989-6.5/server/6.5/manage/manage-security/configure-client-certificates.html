@@ -1042,7 +1042,7 @@
   </li>
   <li class="nav-item" data-depth="4">
     <span class="nav-line">
-    <a class="nav-link" href="handle-certificate-errors.html">Handle Certificate Errors</a>
+    <a class="nav-link" href="handle-certificate-errors.html">Certificate Error Handling</a>
     </span>
   </li>
 </ul>
@@ -3916,7 +3916,7 @@ Further constraints can be added for individual clients, as necessary.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This creates the private key <code>travel-sample.key</code>, and saves it in the <code>client</code> directory.</p>
+<p>This creates the private key <code>travel-sample.key</code>.</p>
 </div>
 </li>
 <li>
@@ -3929,25 +3929,38 @@ Further constraints can be added for individual clients, as necessary.</p>
 <div class="paragraph">
 <p>The client&#8217;s private key, <code>travel-sample.key</code> is provided as input for the signing request.
 The <em>Common Name</em> provided as <code>Subject</code> for the certificate is specified as <code>clientuser</code>, which is the name of the server-defined user to be authenticated by the client.
-The output request-file, <code>travel-sample.csr</code>, is saved in the <code>client</code> directory.</p>
+The output request-file, <code>travel-sample.csr</code> is saved in the current directory.</p>
 </div>
 </li>
 <li>
-<p>Customize a client extensions file, with constraints specific to a particular client.</p>
+<p>Optionally, customize a client extensions file, to identify a <em>username</em> to be authenticated.</p>
 <div class="paragraph">
-<p>The following addition allows a client to be restricted to authenticating with a server that has the stated DNS and IP identifiers.</p>
+<p>As described in <a href="../../learn/security/certificates.html#identity-encoding-in-client-certificates" class="page">Specifying Usernames for Client-Certificate Authentication</a>, a client certificate should contain a username, against which authentication can be performed on Couchbase Server.
+The server&#8217;s default handling assumes that the <em>Subject Common Name</em> specifies the username.
+However, a <em>Subject Alternative Name</em> might be used; either in addition, or as an alternative.</p>
+</div>
+<div class="paragraph">
+<p>The following <code>subjectAltName</code> statement allows an email address to be specified as the basis for the username.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>cp ./client.ext ./client.ext.tmp
 
-echo "subjectAltName = DNS:node2.cb.com,IP:10.143.192.102" \
+echo "subjectAltName = email:john.smith@mail.com" \
 &gt;&gt; ./client.ext.tmp</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>If Couchbase Server is configured to search for an email address to be used as a username (as described in <a href="../../learn/security/certificates.html#identity-encoding-in-client-certificates" class="page">Specifying Usernames for Client-Certificate Authentication</a> and <a href="enable-client-certificate-handling.html" class="page">Enable Client-Certificate Handling</a>), the user <code>john.smith</code> will be submitted for authentication.</p>
+</div>
+<div class="paragraph">
+<p>If this extension is <em>not</em> added, and Couchbase Server client-certificate handling is left at its default, the <em>Common Name</em> (which was specified as <code>clientuser</code>, when the client-certificate signing-request was generated) will continue to be used as the username.</p>
+</div>
 </li>
 <li>
-<p>Create the client certificate, specifying extensions by means of the customized extensions file.</p>
+<p>Create the client certificate.
+In this example, the customized extensions file, <code>client.ext.tmp</code>, is used.
+However, if no email address or other Subject Alternative Name has been added, the generic client-extensions file, <code>client.ext</code>, can be used instead.</p>
 <div class="listingblock">
 <div class="content">
 <pre>openssl x509 -CA ../ca.pem -CAkey ../ca.key \
@@ -3956,10 +3969,7 @@ echo "subjectAltName = DNS:node2.cb.com,IP:10.143.192.102" \
 </div>
 </div>
 <div class="paragraph">
-<p>The root certificate for the cluster, and its corresponding private key, <code>ca.pem</code> and <code>ca.key</code> are specified as inputs for certificate generation, so establishing the root certificate&#8217;s authority, within the client certificate.</p>
-</div>
-<div class="paragraph">
-<p>The <code>client.ext.tmp</code> is specified as the value of the <code>extfile</code> flag.
+<p>The root certificate for the cluster, and its corresponding private key, <code>ca.pem</code> and <code>ca.key</code> are specified as inputs for certificate generation, so establishing the root certificate&#8217;s authority, within the client certificate.
 The output file, <code>travel-sample.pem</code>, is the client certificate, and is saved in <code>clientdir</code>.</p>
 </div>
 <div class="paragraph">

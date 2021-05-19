@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Autoscaling Couchbase Stateless Services | Couchbase Docs</title>
+<link rel="canonical" href="https://eric-schneider.github.io/K8S-2017/operator/2.2/tutorial-autoscale.html">
+<link rel="stylesheet" href="../../_/css/site.css">
+<script src="../../_/js/vendor/jquery.js"></script>
+<link rel="schema.dcterms" href="https://purl.org/dc/terms/">
+<meta name="dcterms.subject" content="operator">
+<meta name="dcterms.identifier" content="2.2">
+<meta name="generator" content="Antora 3.0.0-alpha.3">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+</head>
+<body class="article">
+<header class="header fixed-top">
+  <div class="header-top-row">
+      <div class="container">
+          <nav class="navbar navbar-expand-md flex-nowrap justify-content-between navbar-new-top">
+              <ul class="navbar-brand-list">
+                <li class="brand-logo">
+                  <a class="navbar-brand" href="https://www.couchbase.com">
+                    <img src="../../_/img/couchbase-logo.svg" alt="Couchbase" />
+                  </a>
+                </li>
+                <li>
+                  <a class="navbar-brand cb-documentation" href="https://docs.couchbase.com">
+                    <img src="../../_/img/cb-documentation.svg" alt="Couchbase Documentation" class="cb-docs" />
+                    <img src="../../_/img/cb-docs-hover.svg" alt="Couchbase Documentation" class="hide cb-hover-docs" />
+                  </a>
+                </li>
+              </ul>
+              <button class="navbar-burger" data-target="topbar-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+
+          </nav>
+      </div>
+  </div>
+  <div class="header-bottom-row" id="topbar-menu">
+    <div class="container">
+        <nav  class="navbar navbar-new-bottom">
+
+              <div class="navbar-collapse collapse" id="navbar2">
+                <ul class="navbar-nav w-100 justify-content-start">
+                  <li class="nav-item">
+                    <a href="https://eric-schneider.github.io/K8S-2017/home/index.html" class="nav-link">
+                      <i class="fas fa-home"></i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../../home/server.html">
+                      Server
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../../home/mobile.html">
+                      Mobile
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../../home/cloud.html">
+                      Cloud
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../../home/sdk.html">
+                      SDKs
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      Tutorials
+                      <span class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="primary-action">
+                <a href="https://cloud.couchbase.com/sign-up" class="free-trial-link" onclick="(window.dataLayer=window.dataLayer||[]).push({'event':'customEvent', 'category':'CTA', 'action':'Button Click',  'label':'Free Trial'});" >
+                  <i class="fas fa-cloud"></i>
+                  Free Trial
+                </a>
+                <a class="btn btn-primary try-btn"  onclick="(window.dataLayer=window.dataLayer||[]).push({'event':'customEvent', 'category':'CTA', 'action':'Button Click',  'label':'Download'});" href="https://www.couchbase.com/downloads">
+                  Downloads
+                </a>
+              </div>
+
+        </nav>
+    </div>
+   </div>
+</header>
+<div class="body container">
+<nav class="nav">
+<div class="left-sidebar-menu">
+<div class="version-control-box">
+<div class="component-frame">
+<div class="frame-icon">
+<img src="../../_/img/server-icon.png" alt="">
+</div>
+<div class="frame-body">
+<h4 class="title"><span class="">Autonomous Operator</span></h4>
+<a class="frame-link component" href="overview.html"> <span class="version">2.2</span></a>
+</div>
+</div>
+</div>
+<div class="nav-menu">
+<ul class="nav-list">
+<li class="nav-item " data-depth="0">
+
+<span class="nav-line "  data-depth="0">
+<span class="in-toggle" data-depth="0"></span>
+<span class="nav-text ">Introduction</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="overview.html">Introduction</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="whats-new.html">What&#8217;s New?</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="best-practices.html">Guidelines and Best Practices</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="prerequisite-and-setup.html">Prerequisites and System Requirements</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="prerequisite-cloud.html">Public Cloud Prerequisites</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="install-kubernetes.html">Install the Operator on Kubernetes</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="install-openshift.html">Install the Operator on OpenShift</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item " data-depth="0">
+
+<span class="nav-line "  data-depth="0">
+<span class="in-toggle" data-depth="0"></span>
+<span class="nav-text ">Learn</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Kubernetes Concepts</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-kubernetes-networking.html">Kubernetes Networking</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-persistent-volumes.html">Persistent Volumes</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-kubernetes-upgrade.html">Kubernetes Automated Upgrade</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Operator Concepts</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-operator.html">Operator Architecture</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-operator-logging.html">Operator Logging</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Couchbase Cluster Concepts</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-label-selection.html">Couchbase Resource Label Selection</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-rbac.html">Couchbase Resource RBAC</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-user-rbac.html">Couchbase User RBAC</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-memory-allocation.html">Couchbase Memory Allocation</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-mds.html">Couchbase Multi-Dimensional Scaling</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-scheduling.html">Couchbase Scheduling and Isolation</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-sizing.html">Couchbase Sizing</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-vertical-scaling.html">Couchbase Cluster Vertical Scaling</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<span class="in-toggle" data-depth="2"></span>
+<a class="nav-link" href="concept-couchbase-autoscaling.html">Couchbase Cluster Autoscaling</a>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="concept-couchbase-autoscaling-best-practices.html">Auto-scaling Best Practices</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-couchbase-networking.html">Couchbase Networking</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-tls.html">Couchbase TLS</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-credential-rotation.html">Couchbase Credential Rotation</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-server-groups.html">Couchbase Server Groups</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-upgrade.html">Couchbase Upgrades</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-hibernation.html">Couchbase Cluster Hibernation</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-couchbase-logging.html">Couchbase Logging</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="concept-backup.html">Couchbase Backup and Restore</a>
+</span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="nav-item " data-depth="0">
+
+<span class="nav-line "  data-depth="0">
+<span class="in-toggle" data-depth="0"></span>
+<span class="nav-text ">Manage</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Operator</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="howto-operator-upgrade.html">Upgrade the Operator</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="howto-manage-operator-logging.html">Manage Operator Logging</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="howto-roll-your-own.html">Create Your Own Operator Images</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Couchbase Cluster</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<span class="in-toggle" data-depth="2"></span>
+<span class="nav-text ">Lifecycle</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-couchbase-create.html">Create a Couchbase Deployment</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-couchbase-update.html">Modify a Couchbase Deployment</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-couchbase-upgrade.html">Upgrade a Couchbase Deployment</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-couchbase-delete.html">Delete a Couchbase Deployment</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-couchbase-scale.html">Scale a Couchbase Deployment</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<span class="in-toggle" data-depth="2"></span>
+<span class="nav-text ">Configure</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-persistent-volumes.html">Configure Persistent Volumes</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-persistent-volume-resize.html">Resize Persistent Volumes</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-backup.html">Configure Backup &amp; Restore</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-mds.html">Configure Multi-Dimensional Scaling</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-xdcr.html">Configure XDCR</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-public-networking.html">Configure Public Networking</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-nodeport-networking.html">Configure Node Port Networking</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-server-groups.html">Configure Server Groups</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-admin-password-rotation.html">Rotate the Administrator Password</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-tls.html">Configure TLS</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-tls-client-certificates.html">Configure Client Certificate Authentication</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-tls-rotation.html">Rotate TLS Certificates</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-prometheus.html">Configure Prometheus Metrics Collection</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-manage-couchbase-logging.html">Manage Couchbase Logging</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-couchbase-log-forwarding.html">Configure Log Forwarding</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-non-root-install.html">Configure Non-Root Installs</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<span class="in-toggle" data-depth="2"></span>
+<span class="nav-text ">Connect</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-ui.html">Access the Couchbase User Interface</a>
+</span>
+</li>
+<li class="nav-item " data-depth="3">
+
+<span class="nav-line "  data-depth="3">
+<a class="nav-link" href="howto-client-sdks.html">Configure Client SDKs</a>
+</span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Kubernetes</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="howto-storage-class.html">Create a Lazy Bound Storage Class</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Helm</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="helm-setup-guide.html">Helm Deployment</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="helm-managing-guide.html">Helm Management</a>
+</span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="nav-item " data-depth="0">
+
+<span class="nav-line "  data-depth="0">
+<span class="in-toggle" data-depth="0"></span>
+<span class="nav-text ">Reference</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Resource Types</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="reference-resources.html">Resource Documentation</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbaseautoscaler.html">CouchbaseAutoscaler Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbasebackuprestore.html">CouchbaseBackupRestore Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbasebackup.html">CouchbaseBackup Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbasebucket.html">CouchbaseBucket Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbasecluster.html">CouchbaseCluster Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbaseephemeralbucket.html">CouchbaseEphemeralBucket Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbasegroup.html">CouchbaseGroup Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbasememcachedbucket.html">CouchbaseMemcachedBucket Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbasereplication.html">CouchbaseReplication Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbaserolebinding.html">CouchbaseRoleBinding Resource</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="resource/couchbaseuser.html">CouchbaseUser Resource</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Operator</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="reference-admission-cli.html">Dynamic Admission Controller Deployment Settings</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="reference-admission-rbac.html">Dynamic Admission Controller RBAC Settings</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="reference-operator-configuration.html">Operator Deployment Settings</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="reference-operator-rbac.html">Operator RBAC Settings</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="reference-operator-logging.html">Operator Logging</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Couchbase Cluster</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="reference-couchbasecluster-events.html"><code>CouchbaseCluster</code> Events</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="reference-couchbasecluster-services.html"><code>CouchbaseCluster</code> Services</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Helm</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="helm-couchbase-config.html">Couchbase Helm Chart Specification</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Tools</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="tools/cbopcfg.html">cbopcfg</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="tools/cbopinfo.html">cbopinfo</a>
+</span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="nav-item is-current-path is-active is-active-depth-2  " data-depth="0">
+
+<span class="nav-line "  data-depth="0">
+<span class="in-toggle" data-depth="0"></span>
+<span class="nav-text ">Tutorials</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">Sync Gateway</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="tutorial-sync-gateway.html">Connecting Sync-Gateway to a Couchbase Cluster</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="tutorial-sync-gateway-clients.html">Exposing Sync-Gateway to Couchbase Lite Clients</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="tutorial-sync-gateway-manage.html">Managing Sync Gateway Cluster </a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<span class="in-toggle" data-depth="1"></span>
+<span class="nav-text ">TLS</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="tutorial-tls.html">Creating TLS Certificates</a>
+</span>
+</li>
+<li class="nav-item " data-depth="2">
+
+<span class="nav-line "  data-depth="2">
+<a class="nav-link" href="tutorial-cert-manager.html">Using a Certificate Manager</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-remote-dns.html">Inter-Kubernetes Networking with Forwarded DNS</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-public-addressability.html">Public Networking with External DNS</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-velero-backup.html">Backup with VMware Velero</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-prometheus.html">Quick Start with Prometheus Monitoring</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-rbac-auth.html">Authenticating with Couchbase and LDAP</a>
+</span>
+</li>
+<li class="nav-item is-current-page is-active is-active-depth-2  " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-autoscale.html">Autoscaling Couchbase Stateless Services</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-metering.html">Metering Couchbase Resources In OpenShift</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-metering-kubernetes.html">Metering Couchbase Resources In Kubernetes</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-couchbase-log-forwarding.html">Forwarding Couchbase Logs with Fluent Bit</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-aks.html">Installing AKS</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-eks.html">Installing EKS</a>
+</span>
+</li>
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="tutorial-gke.html">Installing GKE</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item " data-depth="0">
+
+<span class="nav-line "  data-depth="0">
+<span class="in-toggle" data-depth="0"></span>
+<span class="nav-text ">Release Notes</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="release-notes.html">Release Notes</a>
+</span>
+</li>
+</ul>
+</li>
+<li class="nav-item " data-depth="0">
+
+<span class="nav-line "  data-depth="0">
+<span class="in-toggle" data-depth="0"></span>
+<span class="nav-text ">Cloud-Native Database</span>
+</span>
+<ul class="nav-list">
+<li class="nav-item  is-inactive " data-depth="1">
+
+<span class="nav-line "  data-depth="1">
+<a class="nav-link" href="#cloud-native-database::index.adoc">Go to Cloud-Native Database Documentation</a>
+</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<a href="#" class="menu-expand-toggle"> <span>Navigation</span> <i class="fas fa-times-circle"></i> <i class="fas fa-chevron-circle-left"></i></a>
+</div></nav>
+<aside class="toc sidebar">
+  <div class="sidebar-box">
+    <div class="tools" role="navigation">
+<ul>
+<li class="tool edit"><a href="file:///Users/ericschneider/repos/couchbase-operator/docs/user/modules/ROOT/pages/tutorial-autoscale.adoc" title="Edit Page" target="_blank" rel="noopener">Edit on GitHub</a></li>
+</ul>
+</div>
+    <div class="toc-menu"></div>
+    <div class="is-this-helpful-box">
+      <h4> Is this page helpful?</h4>
+      <div class="btn-row">
+        <a href="#" class="like-btn helpful-btn" id="yesBtn" data-page-rating="like" >
+                <i class="far fa-thumbs-up"></i>
+            Yes
+
+            </a>
+        <a href="#" class="dislike-btn helpful-btn" id="noBtn"  data-page-rating="dislike"> <i class="far fa-thumbs-down"></i> No</a>
+      </div>
+      <div class="any-feedback">
+        <a href="#" class="btn any-feedback-btn" id="myCustomTrigger">Leave Additional Feedback? </a>
+      </div>
+      <div class="dialog-box" id="dialogBox">
+        <form>
+            <div class="form-group " id="additionalFeedbackBox">
+              <textarea class="input-control feed-back-msg" rows="8" placeholder="Any Additonal Feedback?"></textarea>
+
+              <div class="action-btn-row ">
+                <a href="#" class="skip-btn" id="skipBtnMsg">Skip</a>
+                  <button class="submit-btn btn blue-btn disabled" > Submit  </button>
+                  <a href="#" class="info-btn"><i class="fas fa-info-circle"></i></a>
+              </div>
+
+
+            </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<div class="feedback-modal modal-popup">
+  <div class="modal-popup-dialogue">
+    <div class="popup-header">
+      <a href="#" class="close-popup"><i class="fa fa-times"></i></a>
+    </div>
+    <div class="popup-content">
+      <p>
+        Please use the form below to provide your feedback. Because your feedback is valuable to us,
+         the information you submit in this form is recorded in our issue tracking system (JIRA), which is publicly available.
+        You can track the status of your feedback using the ticket number displayed in the dialog once you submit the form.
+      </p>
+    </div>
+  </div>
+</div>
+
+<main class="article" data-ceiling="topbar">
+<div class="article-header">
+<nav class="crumbs" aria-label="breadcrumbs">
+<ul>
+<li class="crumb"><a href="overview.html">Autonomous Operator</a></li>
+<li class="crumb">Tutorials</li>
+<li class="crumb"><a href="tutorial-autoscale.html">Autoscaling Couchbase Stateless Services</a></li>
+</ul>
+</nav>
+</div>
+<article class="doc">
+<div class="page-heading-title">
+<h1 class="page">Autoscaling Couchbase Stateless Services</h1>
+</div>
+<div class="contributor-list-box">
+<span class="last-commit-date" id="commitdate">    </span>
+<ul id="contributorList"></ul>
+<span  id="otherContributor"> + </span>
+</div><div id="preamble">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<blockquote>
+A tutorial for autoscaling a Couchbase cluster according to changes on observable metrics.
+</blockquote>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Tutorials are accurate at the time of writing but rely heavily on third party software.
+Tutorials are provided to demonstrate how a particular problem may be solved.
+Use of third party software is not supported by Couchbase.
+For further help in the event of a problem, contact the relevant software maintainer.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This tutorial describes how to use the Autonomous Operator for autoscaling the stateless Couchbase query service in order to reduce request latency.
+You will learn more about how the Kubernetes Horizontal Pod Autoscaler initiates a request to scale the Couchbase query service in order to maintain desired performance thresholds.</p>
+</div>
+<div class="sect2">
+<h3 id="required"><a class="anchor" href="#required"></a>Required</h3>
+<div class="paragraph">
+<p>The following is required to follow the steps of this tutorial:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://helm.sh/docs/intro/install/">Helm version 3.1</a> or higher is required to install dependencies.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once helm in installed run the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ helm repo add couchbase https://couchbase-partners.github.io/helm-charts/
+$ helm repo update</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installing-couchbase"><a class="anchor" href="#installing-couchbase"></a>Installing Couchbase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Autoscaling is only supported by Couchbase clusters with stateless server configurations.
+A server configuration is considered stateless when the following conditions are met:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>All buckets are defined as ephemeral buckets using the <code>CouchbaseEphemeralBucket</code> resource.</p>
+</li>
+<li>
+<p>At least one group of servers is configured to run only the <code>query</code> service.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The helm chart can be used to quickly get started with installing a Couchbase which meets the stateless service requirements.
+Create the following override values to use with the Operator Helm Chart:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ cat &lt;&lt; EOF &gt;&gt; autoscale_values.yaml
+---
+cluster:
+  enablePreviewScaling: false <i class="conum" data-value="1"></i><b>(1)</b>
+  name:
+  monitoring:
+    prometheus:
+      enabled: true  <i class="conum" data-value="2"></i><b>(2)</b>
+  servers:
+    default:
+      size: 3
+      services:
+        - data
+        - index
+    query:
+      size: 2
+      autoscaleEnabled: true <i class="conum" data-value="3"></i><b>(3)</b>
+      services:
+        - query
+    search:
+      size: 2
+      services:
+        - search
+        - analytics
+        - eventing
+users:
+  developer:
+    password: password
+    authDomain: local
+    roles:
+      - name: admin
+
+buckets:
+  default:
+    name: travel-sample
+    kind: CouchbaseEphemeralBucket <i class="conum" data-value="4"></i><b>(4)</b>
+    evictionPolicy: nruEviction
+EOF</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Install the Operator Chart with autoscale enabled:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ helm install -f autoscale_values.yaml scale couchbase/couchbase-operator</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>enablePreviewScaling</code> is disabled here, restricting autoscaling functionality to service running the query service.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Prometheus monitoring is enabled to allow the Horizontal Pod Autoscaler to monitor Couchbase metrics.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>autoscaleEnabled</code> is set to true to allow autoscaling of the associated Couchbase servers.
+The Couchbase servers within this configuration are stateless since they contains only the query service.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>All buckets must be ephemeral in order for autoscaling to be performed on the enabled servers.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In order to autoscale stateful services such as data and index, along with non-ephemeral buckets, <code>enablePreviewScaling</code> must be set to <code>true</code>.
+Also be aware that this configuration is unsupported, see <a href="concept-couchbase-autoscaling.html" class="page">Couchbase Autoscaling</a> conceptual documentation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="verify-installation"><a class="anchor" href="#verify-installation"></a>Verify Installation</h3>
+<div class="paragraph">
+<p>Creation of the Couchbase Cluster can take a few minutes.
+Wait for the cluster creation to complete by checking the <code>CouchbaseCluster</code> status:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ kubectl describe couchbasecluster scale-couchbase-cluster
+
+Events:
+  Type    Reason                  Age   From  Message
+  ----    ------                  ----  ----  -------
+	...
+  Normal  EventAutoscalerCreated  22m         Autoscaler for config `query` added <i class="conum" data-value="1"></i><b>(1)</b>
+  Normal  UserCreated             22m         A new user `developer` was created</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Status will show that a <code>CouchbaseAutoscaler</code> resource is created for the query configuration.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Verify that the <code>CouchbaseAutoscaler</code> exists and matches the size of its associated server configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ kubectl get couchbaseautoscalers
+NAME                            SIZE   SERVERS
+query.scale-couchbase-cluster   2      query</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Autonomous Operator automatically creates a <code>CouchbaseAutoscaler</code> resources for each server configuration with <code>autoscaleEnabled</code> set to <code>true</code> and keeps the size of the <code>CouchbaseAutoscaler</code> resource in sync with the size of its associated server configuration.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="opening-the-administrator-console"><a class="anchor" href="#opening-the-administrator-console"></a>Opening the Administrator Console</h3>
+<div class="paragraph">
+<p>Check the status of the helm chart to get username and password of the Couchbase Cluster:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ helm status scale
+
+== Connect to Admin console
+   kubectl port-forward --namespace default scale-couchbase-cluster-0000 8091:8091
+
+   # open http://localhost:8091
+   username: Administrator
+   password: &lt;redacted&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installing-a-monitoring-stack"><a class="anchor" href="#installing-a-monitoring-stack"></a>Installing a Monitoring Stack</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Couchbase resource metrics are collected by the Prometheus adapter and passed to Kubernetes customer metrics API for consumption by the Horizontal Pod Autoscaler.</p>
+</div>
+<div class="paragraph">
+<p>Install the Couchbase monitoring chart which provides Prometheus and a Custom Metrics <code>APIServer</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ helm install --set clusterName=scale-couchbase-cluster monitor couchbase/couchbase-monitor-stack <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>clusterName</code> is the name of the <code>CouchbaseCluster</code> resource from the previous installation section.</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="verify-monitoring"><a class="anchor" href="#verify-monitoring"></a>Verify Monitoring</h3>
+<div class="paragraph">
+<p>Verify that Couchbase metrics are being collected by the custom metrics API server.
+The following command will return the values of the <code>cbquery_requests_1000ms</code> for each Pod.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ kubectl get --raw="/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/cbquery_requests_1000ms" | jq .
+
+{
+  "kind": "MetricValueList",
+  "apiVersion": "custom.metrics.k8s.io/v1beta1",
+	...
+      "metricName": "cbquery_requests_1000ms",
+      "value": "0",
+      "selector": null
+  ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This query is also helpful for debugging as the Horizontal Pod Autoscaler takes the averages of these values when making autoscaling decisions.
+Also, any metric may be provided in place of the <code>cbquery_requests_1000ms</code> metric.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-a-horizontal-pod-autoscaler"><a class="anchor" href="#creating-a-horizontal-pod-autoscaler"></a>Creating a Horizontal Pod Autoscaler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that metrics are being collected on the <code>cbquery_requests_1000ms</code> metric, you can create a <code>HorizontalPodAutoscaler</code> resource with target value for this metric.</p>
+</div>
+<div class="paragraph">
+<p>The following creates a <code>HorizontalPodAutoscaler</code> that will take action when queries with a latency of 1000ms exceed <strong>7</strong> (per second).
+Also, if the number of queries fall below this value then the autoscaler will consider scaling down to reduce overhead.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ cat &lt;&lt; EOF | kubectl create -f -
+---
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta2
+metadata:
+  name: query-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: couchbase.com/v2
+    kind: CouchbaseAutoscaler <i class="conum" data-value="1"></i><b>(1)</b>
+    name: query.scale-couchbase-cluster <i class="conum" data-value="2"></i><b>(2)</b>
+  # autoscale between 2 and 6 replicas
+  minReplicas: 2 <i class="conum" data-value="3"></i><b>(3)</b>
+  maxReplicas: 6
+  metrics:
+  - type: Pods
+    pods:
+      metric:
+        name: cbquery_requests_1000ms <i class="conum" data-value="4"></i><b>(4)</b>
+      target:
+        type: AverageValue <i class="conum" data-value="5"></i><b>(5)</b>
+        averageValue: 7000m <i class="conum" data-value="6"></i><b>(6)</b>
+EOF</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The target ref is set to the <code>CouchbaseAutoscaler</code> kind created by the Operator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The name of the <code>CouchbaseAutoscaler</code> resource being referenced.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>minReplicas</code> sets the minimum number of query nodes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Targeting Couchbase metric for number of requests which exceed 1000ms.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>AverageValue</code> type means that the metric will be averaged across all of the Pods.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Setting <strong>7</strong> queries at 1000ms as an operational baseline.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Details about how sizing decisions are made are discussed in the <a href="concept-couchbase-autoscaling.html" class="page">Couchbase Autoscaling</a> conceptual documentation.</p>
+</div>
+<div class="sect2">
+<h3 id="verify-horizontalpodautoscaler-status"><a class="anchor" href="#verify-horizontalpodautoscaler-status"></a>Verify <code>HorizontalPodAutoscaler</code> status</h3>
+<div class="paragraph">
+<p>The <code>HorizontalPodAutoscaler</code> will begin to monitor the target metric and report that the initial size of the query servers are within desired range.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ kubectl describe hpa query-hpa
+
+Metrics:                              ( current / target )
+  "cbquery_requests_1000ms" on pods:  0 / 7  <i class="conum" data-value="1"></i><b>(1)</b>
+Min replicas:                         2
+Max replicas:                         6
+CouchbaseAutoscaler pods:             2 current / 2 desired  <i class="conum" data-value="2"></i><b>(2)</b>
+Conditions:
+  Type            Status  Reason               Message
+  ----            ------  ------               -------
+  ...
+  ScalingLimited  False   DesiredWithinRange   the desired count is within the acceptable range</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>There are currently 0 queries with latency above 1000ms, and the target is <strong>7</strong> queries.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>There are currently 2 query nodes in the cluster, and 2 are desired to maintain the current target.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="generating-a-workload"><a class="anchor" href="#generating-a-workload"></a>Generating a Workload</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we will load some data into the Couchbase cluster and then query the documents.
+We will use a Kubernetes Job to install the sample travel data set provided by the <code>cbdocloader</code> tool:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ cat &lt;&lt; EOF | kubectl create -f -
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: travel-sample-dataset
+spec:
+  template:
+    spec:
+      containers:
+      - name: travel-sample
+        image: couchbase/server:6.6.0
+        command: ["/opt/couchbase/bin/cbdocloader",
+                  "-c", "scale-couchbase-cluster-0000.default.svc",
+                  "-u", "developer", "-p", "password",
+                  "-b" ,"travel-sample",
+                  "-m", "100",
+                  "-d", "/opt/couchbase/samples/travel-sample.zip"]
+      restartPolicy: Never
+EOF</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Check the Administrator Console to ensure that the data set is being loaded.
+You should also see that indexes are created for querying the documents.</p>
+</div>
+<div class="sect2">
+<h3 id="apply-query-workload"><a class="anchor" href="#apply-query-workload"></a>Apply Query Workload</h3>
+<div class="paragraph">
+<p>Now that travel sample data is loaded and indexed, the data set can be queries in order to generate query latencies that should trigger an autoscale operator to occur.
+At this point any tool an be used to apply stress on the query services.
+For this tutorial we will use an experimental tool called <code>n1qlgen</code> which applies stress for a set duration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ cat &lt;&lt; EOF | kubectl create -f -
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: n1qlgen-1
+spec:
+  template:
+    spec:
+      containers:
+      - name: n1qlgen
+        image: tahmmee/n1qlgen
+        imagePullPolicy: Always
+        command: ["/go/bin/n1qlgen",
+                  "-pod=scale-couchbase-cluster-0003", <i class="conum" data-value="1"></i><b>(1)</b>
+                   "-cluster=scale-couchbase-cluster",
+                   "-bucket=travel-sample",
+                   "-username=developer",
+                   "-password=password",
+                   "-duration=600", "-concurrency=20", <i class="conum" data-value="2"></i><b>(2)</b>
+                   "-seed=1234"] <i class="conum" data-value="3"></i><b>(3)</b>
+      restartPolicy: Never
+EOF</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Name of one of the query Pods within the cluster.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>duration</code> and <code>concurrency</code> can be used to adjust workload stress.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>seed</code> adjusts randomness for running multiple jobs.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="verify-autoscaling"><a class="anchor" href="#verify-autoscaling"></a>Verify Autoscaling</h3>
+<div class="paragraph">
+<p>Latency of the query requests should increase as the query generation tool applies stress to the cluster.
+Watch the Horizontal Pod Autoscaler as it monitors the target metric:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ kubectl get hpa -w
+
+NAME        REFERENCE                        TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+query-hpa   CouchbaseAutoscaler/query.scale  0/7       2         6         2          27m
+query-hpa   CouchbaseAutoscaler/query.scale  3503m/7   2         6         2          31m
+query-hpa   CouchbaseAutoscaler/query.scale  10978m/7  2         6         4          32m <i class="conum" data-value="1"></i><b>(1)</b>
+query-hpa   CouchbaseAutoscaler/query.scale  7251m/7   2         6         4          32m</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The Horizontal Pod Autoscaler detected 10978m (approx. <strong>10</strong>) queries per second which exceeds <strong>7</strong> and scales up from <strong>2</strong> to <strong>4</strong>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details">scaling algorithm</a> was applied by the Horizontal Pod Autoscaler to determine the desired replicas:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">desiredReplicas = ceil[currentReplicas * ( currentMetricValue / desiredMetricValue )]
+              4 = ceil[       2        * (      10.978        /     7.0            )]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See also the <code>HorizontalPodAutoscaler</code> status for additional information:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ kubectl describe hpa query-hpa</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that you will very likely do some experimentation before settling on a target value that make sense for your workload objectives.
+In the example here, the target value is a bit low and this causes scaling up to happen quickly.
+In this case, the target value could be increased to a higher value.
+Nevertheless, the purpose of choosing this value is to demonstrate behavior of the autoscaler.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If your query latency does not reach the target value, you can try with a lower value, or apply additional query generators by adjusting the <code>concurrency</code> and <code>seed</code> value.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After 5 minutes the query generator will complete and the query nodes will eventually scale back down to the 2 node minimum.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cleaning-up"><a class="anchor" href="#cleaning-up"></a>Cleaning up</h3>
+<div class="paragraph">
+<p>The following commands will uninstall all of the resources created by this tutorial:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console"># remove workload jobs
+kubectl delete jobs travel-sample-dataset n1qlgen-1
+# delete hpa
+kubectl delete hpa query-hpa
+# uninstall monitoring stack
+helm delete monitor
+# uninstall Couchbase Operator and cluster
+helm delete scale</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="further-reading"><a class="anchor" href="#further-reading"></a>Further Reading</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="concept-couchbase-autoscaling.html" class="page">Couchbase Cluster Autoscaling</a> concept documentation.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.couchbase.com" class="icon">
+            <img src="../../_/img/couchbase_logo_black.svg" alt="Couchbase">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.couchbase.com" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://forums.couchbase.com" target="_blank" rel="noopener">Forums</a></li>
+          <li><a href="https://support.couchbase.com" target="_blank" rel="noopener">Support</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://developer.couchbase.com" target="_blank" rel="noopener">Developer Portal</a></li>
+          <li><a href="https://blog.couchbase.com" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.couchbase.com/resources">Resources</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.couchbase.com/get-started-developing-nosql">Get Started</a></li>
+          <li><a href="https://www.couchbase.com/downloads">Downloads</a></li>
+          <li><a href="https://learn.couchbase.com/store?utf8=%E2%9C%93&ss=1&ct=78327&commit=Filter" target="_blank" rel="noopener">Training</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/Couchbase" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/couchbase" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/couchbase" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2021 Couchbase, Inc. Couchbase, Couchbase Lite and the Couchbase logo are registered trademarks of Couchbase, Inc.</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.couchbase.com/terms-of-use">Terms of Use</a>
+        <a href="https://www.couchbase.com/privacy-policy">Privacy Policy</a>
+        <a href="https://www.couchbase.com/cookie-policy">Cookie Policy</a>
+        <a href="https://www.couchbase.com/support-policy">Support Policy</a>
+        <a href="https://info.couchbase.com/unsubscribe-or-manage-preferences.html" target="_blank" rel="noopener">Marketing Preference Center</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+</body>
+</html>

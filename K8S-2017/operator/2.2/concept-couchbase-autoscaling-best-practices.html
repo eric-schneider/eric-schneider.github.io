@@ -1103,7 +1103,7 @@ kind: CouchbaseCluster
 metadata:
   name: cb-example
 spec:
-  autoscaleStabilizationPeriod: 0s <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+  autoscaleStabilizationPeriod: 600s <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1120,7 +1120,7 @@ spec:
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">kind: HorizontalPodAutoscaler
 apiVersion: autoscaling/v2beta2
 metadata:
-  name: data-hpa
+  name: query-hpa
 spec:
   behavior:
     scaleUp:
@@ -1132,13 +1132,12 @@ spec:
     scaleDown:
       stabilizationWindowSeconds: 300 <i class="conum" data-value="1"></i><b>(1)</b>
   metrics:
-  - type: Pods
-    pods:
-      metric:
-        name: cbbucketinfo_basic_quota_user_percent <i class="conum" data-value="2"></i><b>(2)</b>
+  - type: Resource
+    resource:
+      name: cpu <i class="conum" data-value="2"></i><b>(2)</b>
       target:
-        type: AverageValue
-        averageValue: 70 <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+        type: Utilization
+        averageUtilization: 70 <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1243,7 +1242,7 @@ This makes the second solution&#8201;&#8212;&#8201;scaling out the number of Dat
 <div class="paragraph">
 <p>The recommended metric for bucket memory utilization is <code>cbbucketinfo_basic_quota_user_percent</code>.
 This metric is a Couchbase "custom metric" provided by the Couchbase Prometheus Exporter.
-It represents the percentage of bucket memory utilization in relation to the bucket&#8217;s quota.</p>
+It represents the percentage of memory used by a bucket in relation to the bucket&#8217;s quota.</p>
 </div>
 <div class="paragraph">
 <p>The following considerations should be taken into account when scaling on this metric:</p>
@@ -1251,10 +1250,10 @@ It represents the percentage of bucket memory utilization in relation to the buc
 <div class="ulist">
 <ul>
 <li>
-<p>The threshold percentage needs to be below the memory high water mark, otherwise data may be ejected from memory before the cluster scales up.</p>
+<p>The threshold percentage needs to be set below the high water mark, otherwise data may be ejected from memory before the cluster scales up.</p>
 </li>
 <li>
-<p>The threshold needs to be low enough that the cluster has enough time to rebalance before the high water mark is reached or the threshold cannot be reached.</p>
+<p>The threshold needs to be low enough that the cluster has enough time to finish rebalancing before the high water mark is reached.</p>
 </li>
 </ul>
 </div>
@@ -1298,6 +1297,21 @@ It represents the percentage of bucket memory utilization in relation to the buc
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+A <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#autoscaling-on-more-specific-metrics" target="_blank" rel="noopener"><em>label selector</em></a> must be used with <code>cbbucketinfo_basic_quota_user_percent</code> in order to scale the cluster based on the memory utilization of individual buckets.
+When configured to scale on this metric <em>without</em> a label selector, the HPA will take the <em>sum</em> memory utilization across buckets.
+(For example, if a cluster has two buckets&#8201;&#8212;&#8201;<code>bucket1</code> and <code>bucket2</code>&#8201;&#8212;&#8201;and both are utilizing 40% of their individual memory quotas, the HPA will read the metric as 80% and thus scale the cluster if the threshold is set to 70%.)
+Refer to the <strong>Example Configs</strong> for an example of how to define a label selector for this metric.
+</td>
+</tr>
+</table>
+</div>
 <div class="ulist">
 <div class="title">General notes:</div>
 <ul>
@@ -1385,9 +1399,12 @@ spec:
     pods:
       metric:
         name: cbbucketinfo_basic_quota_user_percent <i class="conum" data-value="2"></i><b>(2)</b>
+        selector:
+          matchLabels:
+            bucket: travel-sample <i class="conum" data-value="3"></i><b>(3)</b>
       target:
         type: AverageValue
-        averageValue: 70 <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+        averageValue: 70 <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1402,6 +1419,10 @@ spec:
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>A <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#autoscaling-on-more-specific-metrics" target="_blank" rel="noopener">label selector</a> to specify the bucket from which the metric should be read.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>Recommended Threshold</td>
 </tr>
 </table>

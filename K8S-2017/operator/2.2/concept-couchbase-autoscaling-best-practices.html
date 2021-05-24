@@ -1048,7 +1048,7 @@ These recommendations include <em>recommended settings</em> that are based on in
 Additional clarifying notes about the recommended settings, if any, are listed below the table.</p>
 </li>
 <li>
-<p><strong>Example Configs</strong>: This tab provides YAML snippets that show the recommended settings as they are applied in the relevant resources (e.g. <code>CouchbaseCluster</code> and <code>HorizontalPodAutoscaler</code>).</p>
+<p><strong>Example Configs</strong>: This tab provides YAML snippets that show the recommended settings as they are applied in the relevant resources (e.g. <a href="resource/couchbasecluster.html" class="page"><code>CouchbaseCluster</code></a> and <code>HorizontalPodAutoscaler</code>).</p>
 </li>
 </ul>
 </div>
@@ -1175,8 +1175,37 @@ spec:
 <div class="sect1">
 <h2 id="general-best-practices"><a class="anchor" href="#general-best-practices"></a>General Best Practices</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="couchbasecluster-resource"><a class="anchor" href="#couchbasecluster-resource"></a><code>CouchbaseCluster</code> Resource</h3>
+<div class="paragraph">
+<p>The following are general best practices that should be considered when configuring the <a href="resource/couchbasecluster.html" class="page"><code>CouchbaseCluster</code></a> resource for cluster auto-scaling:</p>
+</div>
 <div class="ulist">
-<div class="title">Best Practices for Configuring the <code>HorizontalPodAutoscaler</code> Resource</div>
+<ul>
+<li>
+<p>It is recommended that a value always be defined for <a href="resource/couchbasecluster.html#couchbaseclusters-spec-autoscalestabilizationperiod" class="page"><code>couchbaseclusters.spec.autoscaleStabilizationPeriod</code></a>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>When a valid value is set for this field, even if it is <code>0s</code>, the HPA will be kept in maintenance mode until the rebalance operation has completed.</p>
+</li>
+<li>
+<p>When no value is set for this field, the HPA may request scaling at any point during the rebalance operation.
+This is almost never desirable, since metrics are more likely to be unstable than not; and although any scaling request made by the HPA during a rebalance operation will not be honored until the current rebalance is complete, the risk remains that the request itself is based on invalid metrics that could&#8217;ve been avoided if the HPA was in maintenance mode.
+Therefore, it is recommended that most users set the value of this field to at least <code>0s</code>, unless there is a high degree of confidence in the stability of a metric <em>during</em> rebalance.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="horizontalpodautoscaler-resource"><a class="anchor" href="#horizontalpodautoscaler-resource"></a><code>HorizontalPodAutoscaler</code> Resource</h3>
+<div class="paragraph">
+<p>The following are general best practices that should be considered when configuring the <code>HorizontalPodAutoscaler</code> resource for cluster auto-scaling:</p>
+</div>
+<div class="ulist">
 <ul>
 <li>
 <p>Setting a value for <code>maxReplicas</code> is required because it provides important protection against runaway scaling events.
@@ -1202,6 +1231,7 @@ You should never do this, as the Autonomous Operator prevents server class confi
 </div>
 </li>
 </ul>
+</div>
 </div>
 </div>
 </div>
@@ -1240,7 +1270,7 @@ Each bucket&#8217;s individual memory quota is subtracted from the overall memor
 </ul>
 </div>
 <div class="paragraph">
-<p>If your goal it to prevent document ejection and maintain each bucket&#8217;s data within RAM, then you must prevent each bucket&#8217;s memory utilization from ever reaching the high water mark.
+<p>If your goal is to prevent document ejection and maintain each bucket&#8217;s data within RAM, then you must prevent each bucket&#8217;s memory utilization from ever reaching the high water mark.
 In practice this means that before the high water mark is reached, you must either increase the bucket&#8217;s memory quota, or scale out the cluster with additional nodes running the Data Service (thus increasing the total amount of memory reserved for all buckets).</p>
 </div>
 <div class="paragraph">
@@ -1738,8 +1768,9 @@ This makes the second solution&#8201;&#8212;&#8201;scaling out the number of Ind
 <div class="ulist">
 <ul>
 <li>
-<p>Secondary indexes must utilize <a href="../../server/7.0/learn/services-and-indexes/indexes/index-replication.html#index-partitioning" class="page">partitioning</a> in order for the Index Service to be auto-scaled.
-(Secondary indexes in Couchbase Server Enterprise Edition are created with partitions by default.)</p>
+<p>Indexes must be <a href="../../server/7.0/learn/services-and-indexes/indexes/index-replication.html#index-partitioning" class="page">partitioned</a> in order for the Index Service to be auto-scaled.
+Indexes that don&#8217;t utilize partitioning reside on a single node with underlying memory and compute resources that cannot be resized in-place after creation.
+You will need to delete and re-create any non-partitioned indexes before you can auto-scale the underlying Index nodes.</p>
 <div class="ulist">
 <ul>
 <li>

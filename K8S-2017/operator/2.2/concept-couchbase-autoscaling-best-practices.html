@@ -1270,7 +1270,7 @@ Each bucket&#8217;s individual memory quota is subtracted from the overall memor
 </ul>
 </div>
 <div class="paragraph">
-<p>If your goal is to prevent document ejection and maintain each bucket&#8217;s data within RAM, then you must prevent each bucket&#8217;s memory utilization from ever reaching the high water mark.
+<p>If your goal is to prevent document ejection and maintain the active data-set for each bucket entirely within memory, then you must prevent each bucket&#8217;s memory utilization from ever reaching the high water mark.
 In practice this means that before the high water mark is reached, you must either increase the bucket&#8217;s memory quota, or scale out the cluster with additional nodes running the Data Service (thus increasing the total amount of memory reserved for all buckets).</p>
 </div>
 <div class="paragraph">
@@ -1328,7 +1328,7 @@ This makes the second solution&#8201;&#8212;&#8201;scaling out the number of Dat
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbbucketinfo_basic_quota_user_percent</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>70%</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>scaleUp: 30s</code></p>
-<p class="tableblock"><code>scaleDown:</code> default</p></td>
+<p class="tableblock"><code>scaleDown:</code> <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#default-behavior" target="_blank" rel="noopener">default</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>0s</code></p></td>
 </tr>
 </tbody>
@@ -1490,7 +1490,7 @@ spec:
 <div class="sect2">
 <h3 id="metric-cpu-utilization"><a class="anchor" href="#metric-cpu-utilization"></a>Metric: CPU Utilization</h3>
 <div class="paragraph">
-<p>Couchbase nodes that run the Query Service execute queries for your application needs.
+<p>Couchbase nodes that run the Query Service execute <code>N1QL</code> queries for your application needs.
 When a query string is sent to Couchbase Server, the Query Service will inspect the string and parse it, planning which indexes to query.
 Once this is done, it generates a query plan.
 These steps require computation and processing that is heavily dependent on CPU resources.</p>
@@ -1570,7 +1570,7 @@ Therefore, this metric also includes the CPU usage of other containers such as t
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cpu</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>70%</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>scaleUp: 300s</code></p>
-<p class="tableblock"><code>scaleDown:</code> default</p></td>
+<p class="tableblock"><code>scaleDown:</code> <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#default-behavior" target="_blank" rel="noopener">default</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>600s</code></p></td>
 </tr>
 </tbody>
@@ -1822,7 +1822,7 @@ To configure the Index Service to use the standard index storage mode, set this 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbindex_ram_percent</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>60%</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>scaleUp: 30s</code></p>
-<p class="tableblock"><code>scaleDown:</code> default</p></td>
+<p class="tableblock"><code>scaleDown:</code> <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#default-behavior" target="_blank" rel="noopener">default</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>0s</code></p></td>
 </tr>
 </tbody>
